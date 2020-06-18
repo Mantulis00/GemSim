@@ -9,10 +9,13 @@ namespace Assets.Scripts.Controls
 {
     static class MouseControls 
     {
-        public static  void DetectClick()
+        public static  MouseActions DetectClick()
         {
-            if (Input.GetMouseButtonDown(0))
-                Debug.Log("Pressed primary button.");
+            if (Input.GetMouseButtonDown(0)) return MouseActions.Select;
+                
+
+
+            return 0;
         }
 
          

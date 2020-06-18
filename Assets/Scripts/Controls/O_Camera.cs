@@ -27,7 +27,7 @@ namespace Assets.Scripts.Controls
             if (controls.DetectRotation()) // if change detected rotate
             {
                  rotation = new Vector3(
-                    controls.mouseMovementValue.y + camRotation.x,
+                    -controls.mouseMovementValue.y + camRotation.x,
                     controls.mouseMovementValue.x + camRotation.y,
                     0);
 
