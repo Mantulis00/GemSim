@@ -4,18 +4,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.XR.WSA.Input;
 
 namespace Assets.Scripts.Controls
 {
-    static class MouseControls 
+    class ManagerControls:MonoBehaviour
     {
-        public static  void DetectClick()
+      
+
+
+        private void Start()
         {
-            if (Input.GetMouseButtonDown(0))
-                Debug.Log("Pressed primary button.");
+            
+        }
+        private void Update()
+        {
+            
         }
 
-         
 
     }
 }
