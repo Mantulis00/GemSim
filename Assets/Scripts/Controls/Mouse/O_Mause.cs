@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Assets.Scripts.Controls
 {
@@ -9,27 +10,51 @@ namespace Assets.Scripts.Controls
     /// ray cast
     /// </summary>
 
-
-    class O_Mause 
+    class O_Mause
     {
-        public GameObject selectedObjet; // temp public, later selected object
+        public GameObject selectedObjet { get; private set; }
+        private bool noHoldLastFrame = true;
 
-        private float rotationSensitivity = 50f;
+        public ActionsQue a_que { get; private set; }
+        private struct spawnDetails
+        {
+            int n_element;
+            Vector3 coords;
+        };
+
 
         public O_Mause()
         {
-
+            a_que = 0;
         }
-        public void Update()
+
+        public void ActionAddressed(ActionsQue action)
         {
-            MouseOptions();
-            RotateObject();
+            Debug.Log(action);
+            a_que -= action;
+        }
+
+
+        public void Update(KeyboardActions action)
+        {
+
+            if (action == KeyboardActions.Spawn)
+            {
+                SpawnOptions();
+            }
+
+            else
+            {
+                SelectionOptions();
+            }
+
+
         }
 
         // Mouse
-        private void MouseOptions()
+        private void SelectionOptions()
         {
-            MouseActions action = MouseControls.DetectClick();
+            MouseActions action = MouseControls.DetectClick(false);
 
             if (action == MouseActions.Select)
             {
@@ -39,6 +64,25 @@ namespace Assets.Scripts.Controls
             {
                 selectedObjet = null;
             }
+        }
+
+        private void SpawnOptions()
+        {
+            if (MouseControls.DetectClick(true) == MouseActions.Select)
+            {
+                if (noHoldLastFrame)
+                {
+                    a_que |= ActionsQue.SpawnStart;
+                    noHoldLastFrame = false;
+                }
+            }
+
+            else if (!noHoldLastFrame)
+            {
+                a_que |= ActionsQue.SpawnFinish;
+                noHoldLastFrame = true;
+            }
+            
         }
 
 
@@ -52,55 +96,6 @@ namespace Assets.Scripts.Controls
                  selectedObjet = hit.transform.gameObject;
             }
         }
-
-
-        // Keyboard
-        private void RotateObject()
-        {
-            if (selectedObjet == null) return;
-
-            KeyboardActions action = KeyboardControls.GetRotationInput();
-
-            if (action == KeyboardActions.Hold ) return;
-
-            Vector3 rotation = new Vector3();
-            rotation = selectedObjet.transform.rotation.eulerAngles;
-
-
-
-
-
-            // horizontal
-            if ((action & KeyboardActions.RotateLeft) == KeyboardActions.RotateLeft)
-            {
-                rotation.y += rotationSensitivity * Time.deltaTime;
-            }
-            else if((action & KeyboardActions.RotateRight) == KeyboardActions.RotateRight)
-            {
-                rotation.y -= rotationSensitivity * Time.deltaTime;
-            }
-
-            // vertical
-            if ((action & KeyboardActions.RotateUp) == KeyboardActions.RotateUp)
-            {
-                if (rotation.z > 1)
-                     rotation.x += rotationSensitivity * Time.deltaTime;
-                else
-                    rotation.x -= rotationSensitivity * Time.deltaTime;
-            }
-            else if ((action & KeyboardActions.RotateDown) == KeyboardActions.RotateDown)
-            {
-                if (rotation.z > 1)
-                    rotation.x -= rotationSensitivity * Time.deltaTime;
-                else
-                    rotation.x += rotationSensitivity * Time.deltaTime;
-            }
-
-
-
-            selectedObjet.transform.rotation = Quaternion.Euler(rotation);
-        }
-
 
 
 

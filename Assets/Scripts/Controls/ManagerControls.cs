@@ -1,30 +1,52 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Assets.Scripts.Controls.Keyboard;
 using UnityEngine;
-using UnityEngine.XR.WSA.Input;
 
 namespace Assets.Scripts.Controls
 {
-    class ManagerControls:MonoBehaviour
+    class ManagerControls : MonoBehaviour
     {
-        public Camera cam;
-
+        public SpawnerManager spawner;
 
         O_Camera o_camera;
         O_Mause o_mouse;
+        O_Keyboard o_keyboard;
 
         private void Start()
         {
-            o_camera = new O_Camera(cam);
+            o_camera = new O_Camera(Camera.main);
             o_mouse = new O_Mause();
+            o_keyboard = new O_Keyboard();
         }
         private void Update()
         {
+             UpdateOStatus();
+
+            if (o_mouse.a_que != 0)
+                PerformActions();
+
+        }
+
+        private bool UpdateOStatus()
+        {
+            bool actionsExist = false;
             o_camera.Update();
-            o_mouse.Update();
+            o_keyboard.Update(o_mouse.selectedObjet);
+            o_mouse.Update(o_keyboard.action);
+
+            return actionsExist;
+        }
+
+        private void PerformActions()
+        {
+            if ((o_mouse.a_que & ActionsQue.SpawnStart) == ActionsQue.SpawnStart)
+            {
+                o_mouse.ActionAddressed(ActionsQue.SpawnStart);
+                spawner.CreateLine(o_mouse.selectedObjet);
+            }
+            if ((o_mouse.a_que & ActionsQue.SpawnFinish) == ActionsQue.SpawnFinish)
+            {
+                o_mouse.ActionAddressed(ActionsQue.SpawnFinish);
+            }
         }
 
 

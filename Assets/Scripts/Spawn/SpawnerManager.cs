@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class SpawnerManager : MonoBehaviour
 {
-
     void Start()
     {
         
@@ -17,11 +16,13 @@ public class SpawnerManager : MonoBehaviour
     }
 
 
-    void CreateLine(GameObject obModel)
+    public void CreateLine(GameObject obModel)
     {
         GameObject go;
         go = Instantiate(obModel) as GameObject;
         go.transform.SetParent(this.transform);
+
+        go.transform.position = new Vector3(0, 0, 0);
     }
 
 }
