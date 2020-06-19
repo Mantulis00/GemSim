@@ -3,21 +3,21 @@ using UnityEngine;
 
 namespace Assets.Scripts.Controls
 {
-     class O_Camera : MonoBehaviour
+     class O_Camera
     {
-        public Camera cam;
-
-       private CameraControls controls;
+        private Camera cam;
+        private CameraControls controls;
 
         private Vector3 camRotation, rotation;
 
-        private void Start()
+        public  O_Camera(Camera cam)
         {
+            this.cam = cam;
             controls = new CameraControls();
             camRotation = cam.transform.rotation.eulerAngles;
             controls.Start();
         }
-        private void Update()
+        public void Update()
         {
             RotateCamera();
         }

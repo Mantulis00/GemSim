@@ -10,17 +10,17 @@ namespace Assets.Scripts.Controls
     /// </summary>
 
 
-    class O_Mause : MonoBehaviour
+    class O_Mause 
     {
         public GameObject selectedObjet; // temp public, later selected object
 
         private float rotationSensitivity = 50f;
 
-        private void Start()
+        public O_Mause()
         {
 
         }
-        private void Update()
+        public void Update()
         {
             MouseOptions();
             RotateObject();
@@ -61,11 +61,13 @@ namespace Assets.Scripts.Controls
 
             KeyboardActions action = KeyboardControls.GetRotationInput();
 
+            if (action == KeyboardActions.Hold ) return;
+
             Vector3 rotation = new Vector3();
             rotation = selectedObjet.transform.rotation.eulerAngles;
-            //rotation = TransformHalfToFull(rotation);
 
-            Debug.Log(rotation);
+
+
 
 
             // horizontal
@@ -99,21 +101,7 @@ namespace Assets.Scripts.Controls
             selectedObjet.transform.rotation = Quaternion.Euler(rotation);
         }
 
-        private Vector3 TransformHalfToFull(Vector3 rotation)
-        {
-            if (rotation.x >=180)
-            {
-                rotation.x += 360;
-            }
 
-            if (rotation.y >= 180)
-            {
-                rotation.y += 360;
-            }
-
-
-            return rotation;
-        }
 
 
     }
