@@ -19,7 +19,7 @@ namespace Assets.Scripts.Controls
         }
         private void Update()
         {
-             UpdateOStatus();
+            UpdateOStatus();
 
             if (o_mouse.a_que != 0)
                 PerformActions();
@@ -38,10 +38,15 @@ namespace Assets.Scripts.Controls
 
         private void PerformActions()
         {
+            SpawnLine();
+        }
+
+        private void SpawnLine()
+        {
             if ((o_mouse.a_que & ActionsQue.SpawnStart) == ActionsQue.SpawnStart)
             {
                 o_mouse.ActionAddressed(ActionsQue.SpawnStart);
-                spawner.CreateLine(o_mouse.selectedObjet);
+                spawner.MakeEndPoints(this.transform, o_mouse.selectedObjet, true);
             }
             if ((o_mouse.a_que & ActionsQue.SpawnFinish) == ActionsQue.SpawnFinish)
             {
