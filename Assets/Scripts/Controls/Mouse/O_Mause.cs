@@ -16,11 +16,7 @@ namespace Assets.Scripts.Controls
         private bool noHoldLastFrame = true;
 
         public ActionsQue a_que { get; private set; }
-        private struct spawnDetails
-        {
-            int n_element;
-            Vector3 coords;
-        };
+        public Vector2 clickCoords_s, clickCoords_f;
 
 
         public O_Mause()
@@ -32,6 +28,7 @@ namespace Assets.Scripts.Controls
         {
             Debug.Log(action);
             a_que -= action;
+
         }
 
 
@@ -54,7 +51,7 @@ namespace Assets.Scripts.Controls
         // Mouse
         private void SelectionOptions()
         {
-            MouseActions action = MouseControls.DetectClick(false);
+            MouseActions action = MouseControls.DetectClick(false); // to be done if holdind press or hit press
 
             if (action == MouseActions.Select)
             {
@@ -72,6 +69,8 @@ namespace Assets.Scripts.Controls
             {
                 if (noHoldLastFrame)
                 {
+                    clickCoords_s = MouseControls.GetMouseLocation();
+
                     a_que |= ActionsQue.SpawnStart;
                     noHoldLastFrame = false;
                 }
@@ -79,6 +78,8 @@ namespace Assets.Scripts.Controls
 
             else if (!noHoldLastFrame)
             {
+                clickCoords_f = MouseControls.GetMouseLocation();
+
                 a_que |= ActionsQue.SpawnFinish;
                 noHoldLastFrame = true;
             }

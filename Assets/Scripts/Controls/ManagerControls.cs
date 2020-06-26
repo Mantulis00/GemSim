@@ -46,7 +46,7 @@ namespace Assets.Scripts.Controls
             if ((o_mouse.a_que & ActionsQue.SpawnStart) == ActionsQue.SpawnStart)
             {
                 o_mouse.ActionAddressed(ActionsQue.SpawnStart);
-                spawner.MakeEndPoints(this.transform, o_mouse.selectedObjet, true);
+                spawner.MakeEndPoints(this.transform, o_mouse.selectedObjet, o_mouse.clickCoords_s, true);
             }
             if ((o_mouse.a_que & ActionsQue.SpawnFinish) == ActionsQue.SpawnFinish)
             {

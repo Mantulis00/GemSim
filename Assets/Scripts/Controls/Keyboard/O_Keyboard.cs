@@ -53,7 +53,7 @@ namespace Assets.Scripts.Controls.Keyboard
             // vertical
             if ((action & KeyboardRotations.RotateUp) == KeyboardRotations.RotateUp)
             {
-                if (rotation.z > 1)
+                if (rotation.z > 1) // adjusted for "Unity angles"
                     rotation.x += rotationSensitivity * Time.deltaTime;
                 else
                     rotation.x -= rotationSensitivity * Time.deltaTime;

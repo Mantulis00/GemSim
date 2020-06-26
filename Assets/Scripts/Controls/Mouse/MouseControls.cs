@@ -18,6 +18,16 @@ namespace Assets.Scripts.Controls
             return 0;
         }
 
+        public static Vector2 GetMouseLocation()
+        {
+            Vector2 coords = new Vector2();
+            coords.x = Input.mousePosition.x;
+            coords.y = Input.mousePosition.y;
+
+
+            return coords;
+        }
+
          
 
     }
