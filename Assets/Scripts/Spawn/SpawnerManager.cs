@@ -58,9 +58,15 @@ public class SpawnerManager : MonoBehaviour
                  (float)Math.Cos(camPos.rotation.eulerAngles.y * Math.PI / 180 +
                  ProjectedAngle(camPos.gameObject.GetComponent<Camera>(), mousePos.x, true) );
 
+        float verticalAngle = ProjectedAngle(camPos.gameObject.GetComponent<Camera>(), mousePos.y, false);
         float spawnProjected_y = spawnDistance *
-                (float)Math.Sin(camPos.rotation.eulerAngles.x * Math.PI / 180 +
-                ProjectedAngle(camPos.gameObject.GetComponent<Camera>(), mousePos.y, false) );
+                (float)Math.Sin((-camPos.rotation.eulerAngles.x * Math.PI / 180) + verticalAngle);
+
+
+        Debug.Log(verticalAngle);
+
+        spawnProjected_x *=  (float)Math.Cos(camPos.rotation.eulerAngles.x * Math.PI / 180 + verticalAngle);
+        spawnProjected_z *=  (float)Math.Cos(camPos.rotation.eulerAngles.x * Math.PI / 180 + verticalAngle);
 
         //Debug.Log(ProjectedAngle(camPos.gameObject.GetComponent<Camera>(), mousePos.x, true));
 
@@ -93,9 +99,6 @@ public class SpawnerManager : MonoBehaviour
            
         }
       //  if (!horizontal)
-           
-
-
 
         float angle;
 
@@ -104,7 +107,14 @@ public class SpawnerManager : MonoBehaviour
         else
             angle = (float)Math.Atan((2 * pos / cam.scaledPixelHeight - 1) * axisFOV); // (IMG) FOV_1 attached
 
-         Debug.Log(angle);
+   
+
+        return angle;
+    }
+
+    private float AdjustmentsByVerticalProjection(Camera cam, float pos)
+    {
+        float angle = 0;
 
         return angle;
     }
