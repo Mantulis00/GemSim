@@ -43,11 +43,11 @@ namespace Assets.Scripts.Controls.Keyboard
             // horizontal
             if ((action & KeyboardRotations.RotateLeft) == KeyboardRotations.RotateLeft)
             {
-                rotation.y += rotationSensitivity * Time.deltaTime;
+                rotation.y -= rotationSensitivity * Time.deltaTime;
             }
             else if ((action & KeyboardRotations.RotateRight) == KeyboardRotations.RotateRight)
             {
-                rotation.y -= rotationSensitivity * Time.deltaTime;
+                rotation.y += rotationSensitivity * Time.deltaTime;
             }
 
             // vertical

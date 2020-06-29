@@ -2,7 +2,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.ComTypes;
 using UnityEngine;
+using UnityEngine.Animations;
 
 public class SpawnerManager : MonoBehaviour
 {
@@ -48,37 +50,62 @@ public class SpawnerManager : MonoBehaviour
     {
         Vector3 spawnLocation = new Vector3();
 
-        Debug.Log(ProjectedAngle(camPos.gameObject.GetComponent<Camera>(), mousePos.x));
-        Debug.Log(camPos.rotation.eulerAngles.y);
+        float spawnProjected_x = spawnDistance * 
+            (float)Math.Sin(camPos.rotation.eulerAngles.y * Math.PI / 180 +
+            ProjectedAngle(camPos.gameObject.GetComponent<Camera>(), mousePos.x, true) ); 
 
-        if (Math.Abs(camPos.rotation.y + ProjectedAngle(camPos.gameObject.GetComponent<Camera>(), mousePos.x)) > 90)
+        float spawnProjected_z = spawnDistance *
+                 (float)Math.Cos(camPos.rotation.eulerAngles.y * Math.PI / 180 +
+                 ProjectedAngle(camPos.gameObject.GetComponent<Camera>(), mousePos.x, true) );
+
+        float spawnProjected_y = spawnDistance *
+                (float)Math.Sin(camPos.rotation.eulerAngles.x * Math.PI / 180 +
+                ProjectedAngle(camPos.gameObject.GetComponent<Camera>(), mousePos.y, false) );
+
+        //Debug.Log(ProjectedAngle(camPos.gameObject.GetComponent<Camera>(), mousePos.x, true));
+
+        if (Math.Abs(camPos.rotation.y + ProjectedAngle(camPos.gameObject.GetComponent<Camera>(), mousePos.x, true)) > 90)
         {
-            spawnLocation.x = camPos.position.x - spawnDistance *
-                 (float)Math.Sin((camPos.rotation.eulerAngles.y + ProjectedAngle(camPos.gameObject.GetComponent<Camera>(), mousePos.x)) * (Math.PI / 180f));
-            spawnLocation.z = camPos.position.z - spawnDistance *
-                 (float)Math.Cos((camPos.rotation.eulerAngles.y + ProjectedAngle(camPos.gameObject.GetComponent<Camera>(), mousePos.x)) * (Math.PI / 180f));
-
+            spawnLocation.x = camPos.position.x - spawnProjected_x;
+            spawnLocation.z = camPos.position.z - spawnProjected_z;
         }
         else
         {
-            spawnLocation.x = camPos.position.x + spawnDistance * 
-                (float)Math.Sin((camPos.rotation.eulerAngles.y + ProjectedAngle(camPos.gameObject.GetComponent<Camera>(), mousePos.x)) *(Math.PI/180f));
-            spawnLocation.z = camPos.position.z + spawnDistance *
-                (float)Math.Cos((camPos.rotation.eulerAngles.y + ProjectedAngle(camPos.gameObject.GetComponent<Camera>(), mousePos.x)) * (Math.PI / 180f));
+            spawnLocation.x = camPos.position.x + spawnProjected_x;
+            spawnLocation.z = camPos.position.z + spawnProjected_z;
         }
-        spawnLocation.y = camPos.position.y;
+        spawnLocation.y = camPos.position.y + spawnProjected_y;
 
         return spawnLocation;
     }
 
-    private float ProjectedAngle(Camera cam, float pos)
+    private float ProjectedAngle(Camera cam, float pos, bool horizontal)
     {
+        float axisFOV;
+
+        axisFOV = (float)Math.Tan(cam.fieldOfView / 360 * Math.PI) * cam.aspect; // tan of horizontal fov
+
+        if (!horizontal)
+        {
+            axisFOV = (float)(Math.Atan(axisFOV) * 180 / Math.PI);
+            axisFOV /= cam.aspect;
+            axisFOV = (float)(Math.Tan(axisFOV/180*Math.PI));
+           
+        }
+      //  if (!horizontal)
+           
+
+
+
         float angle;
-       
-            angle = 2 * cam.fieldOfView/4*3 * ( pos / cam.pixelWidth - 0.5f );
-           // Debug.Log(angle);
-       
-       
+
+        if (horizontal)
+             angle = (float)Math.Atan((2 * pos / cam.scaledPixelWidth - 1) * axisFOV); // (IMG) FOV_1 attached
+        else
+            angle = (float)Math.Atan((2 * pos / cam.scaledPixelHeight - 1) * axisFOV); // (IMG) FOV_1 attached
+
+         Debug.Log(angle);
+
         return angle;
     }
 
