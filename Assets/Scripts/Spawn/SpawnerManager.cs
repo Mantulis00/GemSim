@@ -49,75 +49,93 @@ public class SpawnerManager : MonoBehaviour
     private Vector3 SetupSpawnDistance(Transform camPos, Vector2 mousePos)
     {
         Vector3 spawnLocation = new Vector3();
-
-        float spawnProjected_x = spawnDistance * 
-            (float)Math.Sin(camPos.rotation.eulerAngles.y * Math.PI / 180 +
-            ProjectedAngle(camPos.gameObject.GetComponent<Camera>(), mousePos.x, true) ); 
-
-        float spawnProjected_z = spawnDistance *
-                 (float)Math.Cos(camPos.rotation.eulerAngles.y * Math.PI / 180 +
-                 ProjectedAngle(camPos.gameObject.GetComponent<Camera>(), mousePos.x, true) );
-
-        float verticalAngle = ProjectedAngle(camPos.gameObject.GetComponent<Camera>(), mousePos.y, false);
-        float spawnProjected_y = spawnDistance *
-                (float)Math.Sin((-camPos.rotation.eulerAngles.x * Math.PI / 180) + verticalAngle);
+        Vector3 tangentProjectionOffsets = ProjectToScreen(camPos.gameObject.GetComponent<Camera>(), mousePos);
 
 
-        Debug.Log(verticalAngle);
 
-        spawnProjected_x *=  (float)Math.Cos(camPos.rotation.eulerAngles.x * Math.PI / 180 + verticalAngle);
-        spawnProjected_z *=  (float)Math.Cos(camPos.rotation.eulerAngles.x * Math.PI / 180 + verticalAngle);
-
-        //Debug.Log(ProjectedAngle(camPos.gameObject.GetComponent<Camera>(), mousePos.x, true));
-
-        if (Math.Abs(camPos.rotation.y + ProjectedAngle(camPos.gameObject.GetComponent<Camera>(), mousePos.x, true)) > 90)
+        if (Math.Abs(camPos.rotation.y + ProjectedAngle(camPos.gameObject.GetComponent<Camera>(), mousePos.x, true)) >= 90) // temp. need 2b cleaned
         {
-            spawnLocation.x = camPos.position.x - spawnProjected_x;
-            spawnLocation.z = camPos.position.z - spawnProjected_z;
+            spawnLocation.x = camPos.position.x - tangentProjectionOffsets.x;
+            spawnLocation.z = camPos.position.z - (tangentProjectionOffsets.z);
         }
         else
         {
-            spawnLocation.x = camPos.position.x + spawnProjected_x;
-            spawnLocation.z = camPos.position.z + spawnProjected_z;
+            spawnLocation.x = camPos.position.x + (tangentProjectionOffsets.x);
+            spawnLocation.z = camPos.position.z + (tangentProjectionOffsets.z);
         }
-        spawnLocation.y = camPos.position.y + spawnProjected_y;
+
+
+
+        spawnLocation.y = camPos.position.y + tangentProjectionOffsets.y;
 
         return spawnLocation;
     }
 
-    private float ProjectedAngle(Camera cam, float pos, bool horizontal)
+
+    private Vector3 ProjectToScreen(Camera cam, Vector2 mousePos)
+    {
+        Vector3 distances = new Vector3();
+
+        float horizontalAngle = ProjectedAngle(cam, mousePos.x, true);
+        float offsetDistance = spawnDistance / (float)Math.Cos(horizontalAngle);
+
+         distances.x = offsetDistance *
+            (float)Math.Sin(cam.transform.rotation.eulerAngles.y * Math.PI / 180 + horizontalAngle);
+
+         distances.z = offsetDistance *
+            (float)Math.Cos(cam.transform.rotation.eulerAngles.y * Math.PI / 180 + horizontalAngle);
+
+
+        float verticalAngle = ProjectedAngle(cam, mousePos.y, false);
+        // offsetDistance = spawnDistance / (float)Math.Cos(verticalAngle);
+
+        offsetDistance = spawnDistance * (float)Math.Sqrt(Math.Tan(horizontalAngle) * Math.Tan(horizontalAngle)
+            + Math.Tan(verticalAngle) * Math.Tan(verticalAngle) + 1);
+
+        distances.y = offsetDistance *
+            (float)Math.Sin(-(cam.transform.rotation.eulerAngles.x * Math.PI / 180) + verticalAngle);
+
+        distances.x = offsetDistance *
+            (float)Math.Cos(-(cam.transform.rotation.eulerAngles.x * Math.PI / 180) + verticalAngle) *
+            (float)Math.Sin(cam.transform.rotation.eulerAngles.y * Math.PI / 180 + horizontalAngle);
+
+        distances.z = offsetDistance *
+            (float)Math.Cos(-(cam.transform.rotation.eulerAngles.x * Math.PI / 180) + verticalAngle) *
+            (float)Math.Cos(cam.transform.rotation.eulerAngles.y * Math.PI / 180 + horizontalAngle);
+
+        return distances;
+    }
+
+
+        private float ProjectedAngle(Camera cam, float pos, bool horizontal) // unused
     {
         float axisFOV;
 
-        axisFOV = (float)Math.Tan(cam.fieldOfView / 360 * Math.PI) * cam.aspect; // tan of horizontal fov
-
-        if (!horizontal)
+        if (horizontal)
         {
-            axisFOV = (float)(Math.Atan(axisFOV) * 180 / Math.PI);
-            axisFOV /= cam.aspect;
-            axisFOV = (float)(Math.Tan(axisFOV/180*Math.PI));
-           
+            axisFOV = (float)Math.Tan(cam.fieldOfView / 360 * Math.PI) * cam.aspect; // tan of horizontal fov
         }
-      //  if (!horizontal)
+        else
+        {
+            axisFOV = (float)Math.Tan(cam.fieldOfView / 360 * Math.PI) / cam.aspect; // tan of horizontal fov
+        }
 
         float angle;
 
         if (horizontal)
              angle = (float)Math.Atan((2 * pos / cam.scaledPixelWidth - 1) * axisFOV); // (IMG) FOV_1 attached
         else
-            angle = (float)Math.Atan((2 * pos / cam.scaledPixelHeight - 1) * axisFOV); // (IMG) FOV_1 attached
+        {
+            angle = 2 * (float)Math.Atan((2 * pos / cam.scaledPixelHeight - 1) * axisFOV); // (IMG) FOV_1 attached
+        }
+            
 
    
 
         return angle;
     }
 
-    private float AdjustmentsByVerticalProjection(Camera cam, float pos)
-    {
-        float angle = 0;
-
-        return angle;
-    }
+ 
 
 
 }
