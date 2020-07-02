@@ -16,19 +16,25 @@ public class SpawnerManager : MonoBehaviour
         objectList = new List<GameObject>();
     }
 
-
-
-
-    public Vector3 MakeEndPoints(Transform cameraPos, GameObject obModel, Vector2 mouseLocation)
+    public GameObject MakeGO(GameObject obModel)
     {
         GameObject go;
         go = Instantiate(obModel) as GameObject;
         go.transform.SetParent(this.transform);
 
+        objectList.Add(go);
 
+        return go;
+    }
+
+
+    public Vector3 MakeEndPoints(GameObject go, Transform cameraPos, Vector2 mouseLocation)
+    {
+        // position
         Vector3 goPosition = TangentProjection.SetupSpawnDistance(cameraPos, mouseLocation, spawnDistance); // location + mqpw
         go.transform.position = goPosition;
 
+        // rotation
         Vector3 goRotation = cameraPos.transform.rotation.eulerAngles;
         goRotation.x = 0;
         go.transform.rotation = Quaternion.Euler(goRotation);
@@ -36,36 +42,28 @@ public class SpawnerManager : MonoBehaviour
         return goPosition;
     }
 
-    public void ConnectEndPoints(GameObject obModel, Vector3 start, Vector3 finish)
+    public void ConnectEndPoints(GameObject go, Vector3 start, Vector3 finish)
     {
-        GameObject go;
-        go = Instantiate(obModel) as GameObject;
-        go.transform.SetParent(this.transform);
-
+        // set location
         Vector3 lineDistance = new Vector3();
 
         lineDistance =  finish - start;
+        go.transform.position = lineDistance / 2 + start;
 
-       
-
+        // set rotation
         Vector3 lineRotation = new Vector3();
 
         lineRotation.y = ((float)Math.Atan(lineDistance.x / lineDistance.z) + 1.5708f);
-        //lineRotation.x = (float)Math.Atan(lineDistance.y / lineDistance.z) ;
         lineRotation.z = (float)Math.Atan(lineDistance.y / Linear.Pythagoras(lineDistance.x, lineDistance.z));
-
-        Debug.Log(lineDistance);
 
         go.transform.rotation = Quaternion.Euler(lineRotation * 180 / (float)Math.PI);
 
-        go.transform.position = lineDistance/2 + start;
 
+        // set scale
         Vector3 scales = new Vector3();
         scales.y = go.transform.localScale.y;
         scales.z = go.transform.localScale.z;
-
         scales.x = Linear.Pythagoras3(lineDistance);
-
         go.transform.localScale = scales;
 
     }

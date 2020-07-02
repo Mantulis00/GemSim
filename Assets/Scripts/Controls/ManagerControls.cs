@@ -49,15 +49,15 @@ namespace Assets.Scripts.Controls
             {
                 o_mouse.ActionAddressed(ActionsQue.SpawnStart);
 
-                startPos = spawner.MakeEndPoints(this.transform, o_mouse.selectedObjet, o_mouse.clickCoords_s);
+                startPos = spawner.MakeEndPoints(spawner.MakeGO(o_mouse.selectedObjet), this.transform, o_mouse.clickCoords_s);
             }
             if ((o_mouse.a_que & ActionsQue.SpawnFinish) == ActionsQue.SpawnFinish)
             {
                 o_mouse.ActionAddressed(ActionsQue.SpawnFinish);
 
-                finishPos = spawner.MakeEndPoints(this.transform, o_mouse.selectedObjet, o_mouse.clickCoords_f);
+                finishPos = spawner.MakeEndPoints(spawner.MakeGO(o_mouse.selectedObjet), this.transform, o_mouse.clickCoords_f);
 
-                spawner.ConnectEndPoints(o_mouse.selectedObjet, startPos, finishPos);
+                spawner.ConnectEndPoints(spawner.MakeGO(o_mouse.selectedObjet), startPos, finishPos);
             }
         }
 
