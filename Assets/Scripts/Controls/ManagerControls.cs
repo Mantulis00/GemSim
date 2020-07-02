@@ -11,6 +11,8 @@ namespace Assets.Scripts.Controls
         O_Mause o_mouse;
         O_Keyboard o_keyboard;
 
+        Vector3 startPos, finishPos;
+
         private void Start()
         {
             o_camera = new O_Camera(Camera.main);
@@ -46,11 +48,16 @@ namespace Assets.Scripts.Controls
             if ((o_mouse.a_que & ActionsQue.SpawnStart) == ActionsQue.SpawnStart)
             {
                 o_mouse.ActionAddressed(ActionsQue.SpawnStart);
-                spawner.MakeEndPoints(this.transform, o_mouse.selectedObjet, o_mouse.clickCoords_s, true);
+
+                startPos = spawner.MakeEndPoints(this.transform, o_mouse.selectedObjet, o_mouse.clickCoords_s);
             }
             if ((o_mouse.a_que & ActionsQue.SpawnFinish) == ActionsQue.SpawnFinish)
             {
                 o_mouse.ActionAddressed(ActionsQue.SpawnFinish);
+
+                finishPos = spawner.MakeEndPoints(this.transform, o_mouse.selectedObjet, o_mouse.clickCoords_f);
+
+                spawner.ConnectEndPoints(o_mouse.selectedObjet, startPos, finishPos);
             }
         }
 

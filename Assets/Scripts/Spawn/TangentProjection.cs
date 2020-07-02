@@ -1,9 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
+
+/// <summary>
+///  Purpose: takes objact to be cloned, mouse position on the screen, distance to tangent plane
+///  when SetupSpawnDistance() is called chosen object is spawned in the location when mouse was when it was called
+/// </summary>
+
+
 
 namespace Assets.Scripts.Spawn
 {
@@ -19,12 +22,12 @@ namespace Assets.Scripts.Spawn
             if (Math.Abs(camPos.rotation.y + ProjectedAngle(camPos.gameObject.GetComponent<Camera>(), mousePos.x, true)) >= 90) // temp. need 2b cleaned
             {
                 spawnLocation.x = camPos.position.x - tangentProjectionOffsets.x;
-                spawnLocation.z = camPos.position.z - (tangentProjectionOffsets.z);
+                spawnLocation.z = camPos.position.z - tangentProjectionOffsets.z;
             }
             else
             {
-                spawnLocation.x = camPos.position.x + (tangentProjectionOffsets.x);
-                spawnLocation.z = camPos.position.z + (tangentProjectionOffsets.z);
+                spawnLocation.x = camPos.position.x + tangentProjectionOffsets.x;
+                spawnLocation.z = camPos.position.z + tangentProjectionOffsets.z;
             }
 
 
@@ -47,14 +50,14 @@ namespace Assets.Scripts.Spawn
 
 
             distances.y = distanceByVertical *
-                (float)Math.Sin(-(cam.transform.rotation.eulerAngles.x * Math.PI / 180) + verticalAngle); // get hight (only line that regulates y coordinate)
+                (float)Math.Sin(-(cam.transform.rotation.eulerAngles.x * Math.PI / 180) + verticalAngle); // get height (only line that regulates y coordinate)
 
             distances.x = distanceByVertical *
-                (float)Math.Cos(-(cam.transform.rotation.eulerAngles.x * Math.PI / 180) + verticalAngle) * // adjust tu vertical rotation
+                (float)Math.Cos(-(cam.transform.rotation.eulerAngles.x * Math.PI / 180) + verticalAngle) * // adjust to vertical rotation
                 (float)Math.Sin(cam.transform.rotation.eulerAngles.y * Math.PI / 180); // adjust to horzontal rotation
 
             distances.z = distanceByVertical *
-                (float)Math.Cos(-(cam.transform.rotation.eulerAngles.x * Math.PI / 180) + verticalAngle) * // adjust tu vertical rotation
+                (float)Math.Cos(-(cam.transform.rotation.eulerAngles.x * Math.PI / 180) + verticalAngle) * // adjust to vertical rotation
                 (float)Math.Cos(cam.transform.rotation.eulerAngles.y * Math.PI / 180); // adjust tu horizontal rotation
 
             // then adjust horizontally
@@ -92,7 +95,6 @@ namespace Assets.Scripts.Spawn
                 angle = 2 * (float)Math.Atan((2 * pos / cam.scaledPixelHeight - 1) * axisFOV); // (IMG) FOV_1 attached
             }
 
-            Debug.Log(angle * 180 / Math.PI);
 
 
             return angle;

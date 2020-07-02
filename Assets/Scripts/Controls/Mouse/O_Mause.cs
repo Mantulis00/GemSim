@@ -16,7 +16,7 @@ namespace Assets.Scripts.Controls
         private bool noHoldLastFrame = true;
 
         public ActionsQue a_que { get; private set; }
-        public Vector2 clickCoords_s, clickCoords_f;
+        public Vector2 clickCoords_s, clickCoords_f; // s - start clicking , f - finish clicking
 
 
         public O_Mause()
