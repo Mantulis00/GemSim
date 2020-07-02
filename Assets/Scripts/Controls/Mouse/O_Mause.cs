@@ -39,10 +39,14 @@ namespace Assets.Scripts.Controls
             {
                 SpawnOptions();
             }
+            else if (action == KeyboardActions.Move)
+            {
+                MoveOptions();
+            }
 
             else
             {
-                SelectionOptions();
+                SelectionOptions(); // space to select object
             }
 
 
@@ -63,11 +67,24 @@ namespace Assets.Scripts.Controls
             }
         }
 
+        private void MoveOptions()
+        {
+            if (MouseControls.DetectClick(true) == MouseActions.Select) // til holding click
+            {
+                if ((a_que & ActionsQue.Move) != ActionsQue.Move)
+                {
+                    clickCoords_s = MouseControls.GetMouseLocation();
+
+                    a_que |= ActionsQue.Move;
+                }
+            }
+        }
+
         private void SpawnOptions()
         {
-            if (MouseControls.DetectClick(true) == MouseActions.Select)
+            if (MouseControls.DetectClick(true) == MouseActions.Select) // til holding click
             {
-                if (noHoldLastFrame)
+                if (noHoldLastFrame) // after 1st frame doesnt enter
                 {
                     clickCoords_s = MouseControls.GetMouseLocation();
 
@@ -76,7 +93,7 @@ namespace Assets.Scripts.Controls
                 }
             }
 
-            else if (!noHoldLastFrame)
+            else if (!noHoldLastFrame) // when stopped clicking
             {
                 clickCoords_f = MouseControls.GetMouseLocation();
 

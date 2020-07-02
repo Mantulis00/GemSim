@@ -15,8 +15,11 @@ enum KeyboardRotations
 enum ActionsQue
 {
     Hold = 0,
+    //Spawn
     SpawnStart = 1,
     SpawnFinish = 2,
+    //Move
+    Move = 4,
 }
 
 
@@ -26,6 +29,7 @@ enum KeyboardActions
    Reset,
    Rotate,
    Spawn,
+   Move,
 }
 
 

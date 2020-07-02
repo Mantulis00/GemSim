@@ -18,7 +18,6 @@ namespace Assets.Scripts.Spawn
             Vector3 tangentProjectionOffsets = ProjectToScreen(camPos.gameObject.GetComponent<Camera>(), mousePos, tangentDistance);
 
 
-
             if (Math.Abs(camPos.rotation.y + ProjectedAngle(camPos.gameObject.GetComponent<Camera>(), mousePos.x, true)) >= 90) // temp. need 2b cleaned
             {
                 spawnLocation.x = camPos.position.x - tangentProjectionOffsets.x;
@@ -29,8 +28,6 @@ namespace Assets.Scripts.Spawn
                 spawnLocation.x = camPos.position.x + tangentProjectionOffsets.x;
                 spawnLocation.z = camPos.position.z + tangentProjectionOffsets.z;
             }
-
-
 
             spawnLocation.y = camPos.position.y + tangentProjectionOffsets.y;
 

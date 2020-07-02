@@ -7,24 +7,62 @@ using UnityEngine;
 
 public class SpawnerManager : MonoBehaviour
 {
-    List<GameObject> objectList;
+    List<Line> LineList;
+    Line currentLine;
 
     float spawnDistance = 10;
 
-    void Start()
-    {
-        objectList = new List<GameObject>();
+    struct Line{
+        public GameObject start;
+        public GameObject finish;
+        public GameObject connect;
     }
 
-    public GameObject MakeGO(GameObject obModel)
+
+    void Start()
+    {
+        LineList = new List<Line>();
+    }
+
+    public GameObject MakeGO(GameObject obModel, byte n)
     {
         GameObject go;
         go = Instantiate(obModel) as GameObject;
         go.transform.SetParent(this.transform);
 
-        objectList.Add(go);
+        if (n == 1)
+        {
+            currentLine = new Line();
+            currentLine.start = go;
+        }
+        else if (n == 2)
+        {
+            currentLine.finish = go;
+        }
+        else
+        {
+            currentLine.connect = go;
+            LineList.Add(currentLine);
+        }
 
         return go;
+    }
+
+    public GameObject FindConnector(GameObject go)
+    {
+        foreach(Line line in LineList)
+        {
+            if (line.start == go || line.finish == go)
+            {
+                return line.connect;
+            }
+        }
+        return null;
+    }
+
+    public void DeleteGo(GameObject selectedObject)
+    {
+
     }
 
 
