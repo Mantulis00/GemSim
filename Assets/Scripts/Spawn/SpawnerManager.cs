@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices.ComTypes;
 using UnityEngine;
 using UnityEngine.Animations;
+using UnityEngine.UIElements;
 
 public class SpawnerManager : MonoBehaviour
 {
@@ -89,19 +90,27 @@ public class SpawnerManager : MonoBehaviour
         float verticalAngle = ProjectedAngle(cam, mousePos.y, false);
         // offsetDistance = spawnDistance / (float)Math.Cos(verticalAngle);
 
-        offsetDistance = spawnDistance * (float)Math.Sqrt(Math.Tan(horizontalAngle) * Math.Tan(horizontalAngle)
-            + Math.Tan(verticalAngle) * Math.Tan(verticalAngle) + 1);
+        //  offsetDistance = spawnDistance * (float)Math.Sqrt(Math.Tan(horizontalAngle) * Math.Tan(horizontalAngle)
+        //     + Math.Tan(verticalAngle) * Math.Tan(verticalAngle) + 1);
 
-        distances.y = offsetDistance *
+        offsetDistance = spawnDistance / (float)(Math.Cos(verticalAngle) * Math.Cos(horizontalAngle));
+        float offs = spawnDistance / (float)(Math.Cos(verticalAngle));
+
+        distances.y = offs *
             (float)Math.Sin(-(cam.transform.rotation.eulerAngles.x * Math.PI / 180) + verticalAngle);
 
-        distances.x = offsetDistance *
-            (float)Math.Cos(-(cam.transform.rotation.eulerAngles.x * Math.PI / 180) + verticalAngle) *
-            (float)Math.Sin(cam.transform.rotation.eulerAngles.y * Math.PI / 180 + horizontalAngle);
+        distances.x = offs *
+            (float)Math.Cos(-(cam.transform.rotation.eulerAngles.x * Math.PI / 180) + verticalAngle) * // adjust tu vertical rotation
+            (float)Math.Sin(cam.transform.rotation.eulerAngles.y * Math.PI / 180  ); // adjust to horzontal rotation
 
-        distances.z = offsetDistance *
-            (float)Math.Cos(-(cam.transform.rotation.eulerAngles.x * Math.PI / 180) + verticalAngle) *
-            (float)Math.Cos(cam.transform.rotation.eulerAngles.y * Math.PI / 180 + horizontalAngle);
+        distances.z = offs *
+            (float)Math.Cos(-(cam.transform.rotation.eulerAngles.x * Math.PI / 180) + verticalAngle) * // adjust tu vertical rotation
+            (float)Math.Cos(cam.transform.rotation.eulerAngles.y * Math.PI / 180  ); // adjust tu horizontal rotation
+
+        float offse = spawnDistance * (float)(Math.Tan(horizontalAngle));
+
+        distances.x += offse * (float)Math.Cos(cam.transform.rotation.eulerAngles.y * Math.PI / 180 );
+        distances.z += offse * (float)Math.Sin(cam.transform.rotation.eulerAngles.y * Math.PI / 180 );
 
         return distances;
     }
@@ -128,8 +137,8 @@ public class SpawnerManager : MonoBehaviour
         {
             angle = 2 * (float)Math.Atan((2 * pos / cam.scaledPixelHeight - 1) * axisFOV); // (IMG) FOV_1 attached
         }
-            
 
+        Debug.Log(angle * 180/Math.PI);
    
 
         return angle;
