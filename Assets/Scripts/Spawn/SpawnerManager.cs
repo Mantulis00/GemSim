@@ -60,6 +60,22 @@ public class SpawnerManager : MonoBehaviour
         return null;
     }
 
+    public Transform FindSecondPointLocation(GameObject go)
+    {
+        foreach (Line line in LineList)
+        {
+            if (line.start == go )
+            {
+                return line.finish.transform;
+            }
+            else if (line.finish == go)
+            {
+                return line.start.transform;
+            }
+        }
+        return null;
+    }
+
     public void DeleteGo(GameObject selectedObject)
     {
 
@@ -94,6 +110,7 @@ public class SpawnerManager : MonoBehaviour
         lineRotation.y = ((float)Math.Atan(lineDistance.x / lineDistance.z) + 1.5708f);
         lineRotation.z = (float)Math.Atan(lineDistance.y / Linear.Pythagoras(lineDistance.x, lineDistance.z));
 
+        if (lineDistance.z >=0) lineRotation.z *= -1;
         go.transform.rotation = Quaternion.Euler(lineRotation * 180 / (float)Math.PI);
 
 

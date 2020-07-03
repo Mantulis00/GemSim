@@ -74,12 +74,14 @@ namespace Assets.Scripts.Controls
 
         private void MoveLine()
         {
-            Debug.Log("Object moved");
             if ((o_mouse.a_que & ActionsQue.Move) == ActionsQue.Move)
             {
-                finishPos = spawner.MakeEndPoints(o_mouse.selectedObjet, this.transform, o_mouse.clickCoords_s);
+                spawner.MakeEndPoints(o_mouse.selectedObjet, this.transform, o_mouse.clickCoords_s);
 
-                spawner.ConnectEndPoints(spawner.FindConnector(o_mouse.selectedObjet), startPos, finishPos);
+                spawner.ConnectEndPoints(
+                    spawner.FindConnector(o_mouse.selectedObjet), 
+                    spawner.FindSecondPointLocation(o_mouse.selectedObjet).position, 
+                    o_mouse.selectedObjet.transform.position);
 
 
                 o_mouse.ActionAddressed(ActionsQue.Move);
