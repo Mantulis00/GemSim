@@ -7,79 +7,19 @@ using UnityEngine;
 
 public class SpawnerManager : MonoBehaviour
 {
-    List<Line> LineList;
-    Line currentLine;
+
 
     float spawnDistance = 10;
 
-    struct Line{
-        public GameObject start;
-        public GameObject finish;
-        public GameObject connect;
-    }
+
 
 
     void Start()
     {
-        LineList = new List<Line>();
+       
     }
 
-    public GameObject MakeGO(GameObject obModel, byte n)
-    {
-        GameObject go;
-        go = Instantiate(obModel) as GameObject;
-        go.transform.SetParent(this.transform);
 
-        if (n == 1)
-        {
-            currentLine = new Line();
-            currentLine.start = go;
-        }
-        else if (n == 2)
-        {
-            currentLine.finish = go;
-        }
-        else
-        {
-            currentLine.connect = go;
-            LineList.Add(currentLine);
-        }
-
-        return go;
-    }
-
-    public GameObject FindConnector(GameObject go)
-    {
-        foreach(Line line in LineList)
-        {
-            if (line.start == go || line.finish == go)
-            {
-                return line.connect;
-            }
-        }
-        return null;
-    }
-
-    public Transform FindSecondPointLocation(GameObject go)
-    {
-        foreach (Line line in LineList)
-        {
-            if (line.start == go )
-            {
-                return line.finish.transform;
-            }
-            else if (line.finish == go)
-            {
-                return line.start.transform;
-            }
-        }
-        return null;
-    }
-
-    public void DeleteGo(GameObject selectedObject)
-    {
-
-    }
 
 
     public Vector3 MakeEndPoints(GameObject go, Transform cameraPos, Vector2 mouseLocation)
