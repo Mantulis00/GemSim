@@ -10,19 +10,36 @@ public class SpawnerManager : MonoBehaviour
 
 
     float spawnDistance = 10;
-
+    LinesManager linesManager;
 
 
 
     void Start()
     {
-       
+        linesManager = new LinesManager();
+    }
+
+    internal GameObject MakeGO (GameObject obModel, byte n)
+    {
+        return linesManager.MakeGO(this.transform, obModel, n);
+    }
+
+    internal GameObject FindConnector(GameObject go)
+    {
+        return linesManager.FindConnector(go);
+    }
+
+    internal Transform FindSecondPointLocation(GameObject go)
+    {
+       return linesManager.FindSecondPointLocation(go);
+    }
+
+    internal void DeleteGo(GameObject selectedObject)
+    { 
     }
 
 
-
-
-    public Vector3 MakeEndPoints(GameObject go, Transform cameraPos, Vector2 mouseLocation)
+        public Vector3 MakeEndPoints(GameObject go, Transform cameraPos, Vector2 mouseLocation)
     {
         // position
         Vector3 goPosition = TangentProjection.SetupSpawnDistance(cameraPos, mouseLocation, spawnDistance); // location + mqpw

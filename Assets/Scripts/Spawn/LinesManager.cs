@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Spawn
 {
-    public  class LinesManager
+    public  class LinesManager : MonoBehaviour
     {
         List<Line> LineList;
         Line currentLine;
@@ -14,13 +14,13 @@ namespace Assets.Scripts.Spawn
             public GameObject finish;
             public GameObject connect;
         }
-        public LinesManager()
+        internal LinesManager()
         {
             LineList = new List<Line>();
         }
 
 
-        public  GameObject MakeGO(Transform spawner,GameObject obModel, byte n)
+        internal GameObject MakeGO(Transform spawner,GameObject obModel, byte n)
         {
             GameObject go;
             go = Instantiate(obModel) as GameObject;
@@ -44,7 +44,7 @@ namespace Assets.Scripts.Spawn
             return go;
         }
 
-        public  GameObject FindConnector(GameObject go)
+        internal GameObject FindConnector(GameObject go)
         {
             foreach (Line line in LineList)
             {
@@ -56,7 +56,7 @@ namespace Assets.Scripts.Spawn
             return null;
         }
 
-        public  Transform FindSecondPointLocation(GameObject go)
+        internal Transform FindSecondPointLocation(GameObject go)
         {
             foreach (Line line in LineList)
             {
@@ -72,7 +72,7 @@ namespace Assets.Scripts.Spawn
             return null;
         }
 
-        public  void DeleteGo(GameObject selectedObject)
+        internal void DeleteGo(GameObject selectedObject)
         {
 
         }
