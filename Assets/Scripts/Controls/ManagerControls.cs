@@ -40,16 +40,10 @@ namespace Assets.Scripts.Controls
 
         private void PerformActions()
         {
-            Debug.Log(o_keyboard.action);
-
             if (o_keyboard.action == KeyboardActions.Spawn)
                 SpawnLine();
             else if (o_keyboard.action == KeyboardActions.Move)
-            {
                 MoveLine();
-            }
- 
-            
         }
 
         private void SpawnLine()

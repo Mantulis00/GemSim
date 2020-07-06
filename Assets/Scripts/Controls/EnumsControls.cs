@@ -20,6 +20,8 @@ enum ActionsQue
     SpawnFinish = 2,
     //Move
     Move = 4,
+    // Delete
+    Delete = 8,
 }
 
 
@@ -30,6 +32,7 @@ enum KeyboardActions
    Rotate,
    Spawn,
    Move,
+   Delete,
 }
 
 

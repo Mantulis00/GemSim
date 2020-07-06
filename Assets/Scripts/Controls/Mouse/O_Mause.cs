@@ -43,7 +43,6 @@ namespace Assets.Scripts.Controls
             {
                 MoveOptions();
             }
-
             else
             {
                 SelectionOptions(); // space to select object

@@ -2,12 +2,13 @@
 using Assets.Scripts.Spawn;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using UnityEngine;
 
 
 public class SpawnerManager : MonoBehaviour
 {
-
+    Dictionary<GameObject, StructureType> objectTypes;
 
     float spawnDistance = 10;
     LinesManager linesManager;
@@ -17,6 +18,7 @@ public class SpawnerManager : MonoBehaviour
     void Start()
     {
         linesManager = new LinesManager();
+        objectTypes = new Dictionary<GameObject, StructureType>();
     }
 
     internal GameObject MakeGO (GameObject obModel, byte n)
@@ -34,8 +36,9 @@ public class SpawnerManager : MonoBehaviour
        return linesManager.FindSecondPointLocation(go);
     }
 
-    internal void DeleteGo(GameObject selectedObject)
-    { 
+    internal void DeleteGo(GameObject go)
+    {
+        linesManager.DeleteGo(go);
     }
 
 
@@ -64,7 +67,7 @@ public class SpawnerManager : MonoBehaviour
         // set rotation
         Vector3 lineRotation = new Vector3();
 
-        lineRotation.y = ((float)Math.Atan(lineDistance.x / lineDistance.z) + 1.5708f);
+        lineRotation.y = ((float)Math.Atan(lineDistance.x / lineDistance.z) + (float)Math.PI/2);
         lineRotation.z = (float)Math.Atan(lineDistance.y / Linear.Pythagoras(lineDistance.x, lineDistance.z));
 
         if (lineDistance.z >=0) lineRotation.z *= -1;

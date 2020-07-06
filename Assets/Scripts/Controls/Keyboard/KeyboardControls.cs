@@ -17,6 +17,8 @@ namespace Assets.Scripts.Controls
             else if (Input.GetKeyDown(KeyCode.R)) action = KeyboardActions.Rotate;
             else if (Input.GetKeyDown(KeyCode.S)) action = KeyboardActions.Spawn;
             else if (Input.GetKeyDown(KeyCode.M)) action = KeyboardActions.Move;
+            else if (Input.GetKeyDown(KeyCode.D)) action = KeyboardActions.Delete;
+
 
             return action;
         }

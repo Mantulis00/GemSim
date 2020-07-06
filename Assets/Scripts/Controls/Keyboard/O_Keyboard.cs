@@ -9,6 +9,11 @@ namespace Assets.Scripts.Controls.Keyboard
         public KeyboardActions action { get; private set; }
 
 
+        internal O_Keyboard()
+        {
+            action = KeyboardActions.Reset;
+        }
+
         public void Update(GameObject selectedObject)
         {
             GetKeyboardAction();
