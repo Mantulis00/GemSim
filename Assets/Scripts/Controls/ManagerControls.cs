@@ -40,26 +40,29 @@ namespace Assets.Scripts.Controls
 
         private void PerformActions()
         {
-            if (o_keyboard.action == KeyboardActions.Spawn)
-                SpawnLine();
-            else if (o_keyboard.action == KeyboardActions.Move)
-                MoveLine();
+            if (o_mouse.selectedObjet != null)
+            {
+                if (o_keyboard.action == KeyboardActions.Spawn)
+                    SpawnLine();
+                else if (o_keyboard.action == KeyboardActions.Move)
+                    MoveLine();
+            }
         }
 
         private void SpawnLine()
         {
             if ((o_mouse.a_que & ActionsQue.SpawnStart) == ActionsQue.SpawnStart)
             {
-                startPos = spawner.MakeEndPoints(spawner.MakeGO(o_mouse.selectedObjet), this.transform, o_mouse.clickCoords_s);
+                startPos = spawner.MovePoint(spawner.MakeGO(o_mouse.selectedObjet), this.transform, o_mouse.clickCoords_s);
 
 
                 o_mouse.ActionAddressed(ActionsQue.SpawnStart);
             }
             if ((o_mouse.a_que & ActionsQue.SpawnFinish) == ActionsQue.SpawnFinish)
             {
-                finishPos = spawner.MakeEndPoints(spawner.MakeGO(o_mouse.selectedObjet), this.transform, o_mouse.clickCoords_f);
+                finishPos = spawner.MovePoint(spawner.MakeGO(o_mouse.selectedObjet), this.transform, o_mouse.clickCoords_f);
 
-                spawner.ConnectEndPoints(spawner.MakeGO(o_mouse.selectedObjet), startPos, finishPos);
+                spawner.MoveConnection(spawner.MakeGO(o_mouse.selectedObjet), startPos, finishPos);
 
 
                 o_mouse.ActionAddressed(ActionsQue.SpawnFinish);
@@ -70,9 +73,9 @@ namespace Assets.Scripts.Controls
         {
             if ((o_mouse.a_que & ActionsQue.Move) == ActionsQue.Move)
             {
-                spawner.MakeEndPoints(o_mouse.selectedObjet, this.transform, o_mouse.clickCoords_s);
+                spawner.MovePoint(o_mouse.selectedObjet, this.transform, o_mouse.clickCoords_s);
 
-                spawner.ConnectEndPoints(
+                spawner.MoveConnection(
                     spawner.FindConnector(o_mouse.selectedObjet), 
                     spawner.FindSecondPointLocation(o_mouse.selectedObjet).position, 
                     o_mouse.selectedObjet.transform.position);

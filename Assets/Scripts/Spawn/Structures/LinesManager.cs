@@ -8,9 +8,9 @@ namespace Assets.Scripts.Spawn
     public  class LinesManager : MonoBehaviour, IStructure
     {
         private List<Line> LineList;
-        private List<GameObject> PointList;
-        private byte n;
         private Line currentLine;
+        private byte n;
+        
 
         private struct Line
         {
@@ -22,7 +22,6 @@ namespace Assets.Scripts.Spawn
         {
             n = 1;
             LineList = new List<Line>();
-            PointList = new List<GameObject>();
         }
 
 
@@ -54,7 +53,18 @@ namespace Assets.Scripts.Spawn
             return go;
         }
 
-        public void DeleteGo(GameObject go)
+        public GameObject MakeGO2(Transform spawner, GameObject obModel, Dictionary<GameObject, StructureType> objectTypes)
+        {
+            GameObject go;
+            go = Instantiate(obModel) as GameObject;
+            go.transform.SetParent(spawner);
+
+            objectTypes.Add(go, StructureType.Line);
+            return go;
+        }
+
+
+            public void DeleteGo(GameObject go)
         {
             foreach (Line line in LineList)
             {
@@ -64,12 +74,12 @@ namespace Assets.Scripts.Spawn
                     if (line.start == go)
                     {
                         Destroy(line.start);
-                        PointList.Add(line.finish);
+                      //  PointList.Add(line.finish);
                     }
                     else
                     {
                         Destroy(line.finish);
-                        PointList.Add(line.start);
+                      //  PointList.Add(line.start);
                     }
                     LineList.Remove(line);
                     break;

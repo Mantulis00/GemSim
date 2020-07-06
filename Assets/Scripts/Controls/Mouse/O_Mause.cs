@@ -35,11 +35,11 @@ namespace Assets.Scripts.Controls
         public void Update(KeyboardActions action)
         {
 
-            if (action == KeyboardActions.Spawn)
+            if (action == KeyboardActions.Spawn && selectedObjet != null)
             {
                 SpawnOptions();
             }
-            else if (action == KeyboardActions.Move)
+            else if (action == KeyboardActions.Move && selectedObjet != null)
             {
                 MoveOptions();
             }
@@ -111,6 +111,10 @@ namespace Assets.Scripts.Controls
             if (Physics.Raycast(ray, out hit))
             {
                  selectedObjet = hit.transform.gameObject;
+            }
+            else
+            {
+                selectedObjet = null;
             }
         }
 

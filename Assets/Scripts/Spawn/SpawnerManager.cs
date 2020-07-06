@@ -3,6 +3,7 @@ using Assets.Scripts.Spawn;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using UnityEditorInternal;
 using UnityEngine;
 
 
@@ -10,19 +11,40 @@ public class SpawnerManager : MonoBehaviour
 {
     Dictionary<GameObject, StructureType> objectTypes;
 
-    float spawnDistance = 10;
-    LinesManager linesManager;
+    private float spawnDistance = 10;
+    private LinesManager linesManager;
 
-
+    private int enableSpawning;
 
     void Start()
     {
+        enableSpawning = 0;
         linesManager = new LinesManager();
         objectTypes = new Dictionary<GameObject, StructureType>();
     }
 
     internal GameObject MakeGO (GameObject obModel)
     {
+        if (objectTypes.ContainsKey(obModel))
+        {
+            if (enableSpawning > 0)
+            {
+                Debug.Log("imahere");
+                enableSpawning++ ;
+                if (enableSpawning == 3) enableSpawning = 0;
+
+                return linesManager.MakeGO2(this.transform, obModel, objectTypes);
+            }
+
+            else
+            {
+                enableSpawning = 1 ;
+                
+
+                return obModel;
+            }
+        }
+
         return linesManager.MakeGO(this.transform, obModel, objectTypes);
     }
     internal void DeleteGo(GameObject go)
@@ -43,8 +65,9 @@ public class SpawnerManager : MonoBehaviour
 
 
 
-        public Vector3 MakeEndPoints(GameObject go, Transform cameraPos, Vector2 mouseLocation)
+        public Vector3 MovePoint(GameObject go, Transform cameraPos, Vector2 mouseLocation)
     {
+
         // position
         Vector3 goPosition = TangentProjection.SetupSpawnDistance(cameraPos, mouseLocation, spawnDistance); // location + mqpw
         go.transform.position = goPosition;
@@ -57,7 +80,7 @@ public class SpawnerManager : MonoBehaviour
         return goPosition;
     }
 
-    public void ConnectEndPoints(GameObject go, Vector3 start, Vector3 finish)
+    public void MoveConnection(GameObject go, Vector3 start, Vector3 finish)
     {
         // set location
         Vector3 lineDistance = new Vector3();
