@@ -1,4 +1,4 @@
-﻿enum StructureType
+﻿public enum StructureType
 { 
     NoType,
     Point,

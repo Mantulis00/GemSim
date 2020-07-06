@@ -21,9 +21,13 @@ public class SpawnerManager : MonoBehaviour
         objectTypes = new Dictionary<GameObject, StructureType>();
     }
 
-    internal GameObject MakeGO (GameObject obModel, byte n)
+    internal GameObject MakeGO (GameObject obModel)
     {
-        return linesManager.MakeGO(this.transform, obModel, n);
+        return linesManager.MakeGO(this.transform, obModel, objectTypes);
+    }
+    internal void DeleteGo(GameObject go)
+    {
+        linesManager.DeleteGo(go);
     }
 
     internal GameObject FindConnector(GameObject go)
@@ -36,10 +40,7 @@ public class SpawnerManager : MonoBehaviour
        return linesManager.FindSecondPointLocation(go);
     }
 
-    internal void DeleteGo(GameObject go)
-    {
-        linesManager.DeleteGo(go);
-    }
+
 
 
         public Vector3 MakeEndPoints(GameObject go, Transform cameraPos, Vector2 mouseLocation)

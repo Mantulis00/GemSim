@@ -50,16 +50,16 @@ namespace Assets.Scripts.Controls
         {
             if ((o_mouse.a_que & ActionsQue.SpawnStart) == ActionsQue.SpawnStart)
             {
-                startPos = spawner.MakeEndPoints(spawner.MakeGO(o_mouse.selectedObjet, 1), this.transform, o_mouse.clickCoords_s);
+                startPos = spawner.MakeEndPoints(spawner.MakeGO(o_mouse.selectedObjet), this.transform, o_mouse.clickCoords_s);
 
 
                 o_mouse.ActionAddressed(ActionsQue.SpawnStart);
             }
             if ((o_mouse.a_que & ActionsQue.SpawnFinish) == ActionsQue.SpawnFinish)
             {
-                finishPos = spawner.MakeEndPoints(spawner.MakeGO(o_mouse.selectedObjet, 2), this.transform, o_mouse.clickCoords_f);
+                finishPos = spawner.MakeEndPoints(spawner.MakeGO(o_mouse.selectedObjet), this.transform, o_mouse.clickCoords_f);
 
-                spawner.ConnectEndPoints(spawner.MakeGO(o_mouse.selectedObjet, 3), startPos, finishPos);
+                spawner.ConnectEndPoints(spawner.MakeGO(o_mouse.selectedObjet), startPos, finishPos);
 
 
                 o_mouse.ActionAddressed(ActionsQue.SpawnFinish);

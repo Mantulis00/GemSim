@@ -1,13 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using UnityEngine;
 
 namespace Assets.Scripts.Spawn
 {
-    public  class LinesManager : MonoBehaviour
+    public  class LinesManager : MonoBehaviour, IStructure
     {
         private List<Line> LineList;
         private List<GameObject> PointList;
+        private byte n;
         private Line currentLine;
 
         private struct Line
@@ -18,12 +20,13 @@ namespace Assets.Scripts.Spawn
         }
         internal LinesManager()
         {
+            n = 1;
             LineList = new List<Line>();
             PointList = new List<GameObject>();
         }
 
 
-        internal GameObject MakeGO(Transform spawner,GameObject obModel, byte n)
+       public GameObject MakeGO(Transform spawner,GameObject obModel, Dictionary<GameObject, StructureType> objectTypes)
         {
             GameObject go;
             go = Instantiate(obModel) as GameObject;
@@ -42,10 +45,38 @@ namespace Assets.Scripts.Spawn
             {
                 currentLine.connect = go;
                 LineList.Add(currentLine);
+                n = 1;
             }
+            n++;
 
+
+            objectTypes.Add(go, StructureType.Line);
             return go;
         }
+
+        public void DeleteGo(GameObject go)
+        {
+            foreach (Line line in LineList)
+            {
+                if (line.start == go || line.finish == go)
+                {
+                    Destroy(line.connect);
+                    if (line.start == go)
+                    {
+                        Destroy(line.start);
+                        PointList.Add(line.finish);
+                    }
+                    else
+                    {
+                        Destroy(line.finish);
+                        PointList.Add(line.start);
+                    }
+                    LineList.Remove(line);
+                    break;
+                }
+            }
+        }
+
 
         internal GameObject FindConnector(GameObject go)
         {
@@ -75,28 +106,7 @@ namespace Assets.Scripts.Spawn
             return null;
         }
 
-        internal void DeleteGo(GameObject go)
-        {
-            foreach (Line line in LineList)
-            {
-                if (line.start == go || line.finish == go)
-                {
-                     Destroy(line.connect);
-                    if (line.start == go)
-                    {
-                        Destroy(line.start);
-                        PointList.Add(line.finish);
-                    }
-                    else
-                    {
-                        Destroy(line.finish);
-                        PointList.Add(line.start);
-                    }
-                    LineList.Remove(line);
-                    break;
-                }
-            }
-        }
+       
 
 
     }
