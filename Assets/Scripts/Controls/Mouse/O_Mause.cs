@@ -85,6 +85,9 @@ namespace Assets.Scripts.Controls
             {
                 if (noHoldLastFrame) // after 1st frame doesnt enter
                 {
+                    SelectionOptions(); // to check if try to spawn on same object
+
+
                     clickCoords_s = MouseControls.GetMouseLocation();
 
                     a_que |= ActionsQue.SpawnStart;

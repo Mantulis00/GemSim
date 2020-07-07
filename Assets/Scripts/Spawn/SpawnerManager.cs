@@ -25,7 +25,7 @@ public class SpawnerManager : MonoBehaviour
 
     internal GameObject MakeGO (GameObject obModel)
     {
-        if (objectTypes.ContainsKey(obModel))
+        if (objectTypes.ContainsKey(obModel)) // need fixes
         {
             if (enableSpawning > 0)
             {
@@ -40,7 +40,6 @@ public class SpawnerManager : MonoBehaviour
             {
                 enableSpawning = 1 ;
                 
-
                 return obModel;
             }
         }

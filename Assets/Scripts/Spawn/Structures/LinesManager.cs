@@ -53,7 +53,7 @@ namespace Assets.Scripts.Spawn
             return go;
         }
 
-        public GameObject MakeGO2(Transform spawner, GameObject obModel, Dictionary<GameObject, StructureType> objectTypes)
+        public GameObject MakeGO2(Transform spawner, GameObject obModel, Dictionary<GameObject, StructureType> objectTypes) //needs renaming
         {
             GameObject go;
             go = Instantiate(obModel) as GameObject;
