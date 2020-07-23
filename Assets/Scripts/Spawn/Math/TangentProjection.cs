@@ -2,8 +2,8 @@
 using UnityEngine;
 
 /// <summary>
-///  Purpose: takes objact to be cloned, mouse position on the screen, distance to tangent plane
-///  when SetupSpawnDistance() is called chosen object is spawned in the location when mouse was when it was called
+///  Purpose: takes object to be cloned, mouse position on the screen, distance to tangent plane
+///  when SetupSpawnDistance() is called chosen object is spawned in the location where mouse was when it was called
 /// </summary>
 
 
