@@ -15,7 +15,7 @@ namespace Assets.Scripts.Spawn
             PointList = new List<GameObject>();
         }
 
-        public GameObject MakeGO(Transform spawner, GameObject obModel, Dictionary<GameObject, StructureType> objectTypes)
+        public GameObject MakeGO(Transform spawner, GameObject obModel, bool extension, Dictionary<GameObject, StructureType> objectTypes)
         {
             GameObject go;
             go = Instantiate(obModel) as GameObject;

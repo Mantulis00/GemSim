@@ -24,30 +24,20 @@ public class SpawnerManager : MonoBehaviour
     }
 
 
-    internal GameObject MakeGO (GameObject obModel)
+    internal GameObject MakeGO (GameObject obModel, bool extension)
     {
 
         if (objectTypes.ContainsKey(obModel)) // need fixes // enables to connect to  clicked block
         {
-            if (enableSpawning > 0)
-            {
-                enableSpawning++ ;
-                if (enableSpawning == 3) enableSpawning = 0;
 
 
-                return linesManager.MakeGO(this.transform, obModel, objectTypes); // new line
-            }
-
-            else
-            {
-                enableSpawning = 1 ; 
-                return obModel;
-            }
+                return linesManager.MakeGO(this.transform, obModel, extension, objectTypes); // new line
+          
         }
 
 
 
-        return linesManager.MakeGO(this.transform, obModel, objectTypes); // line from obj
+        return linesManager.MakeGO(this.transform, obModel,extension, objectTypes); // line from obj
     }
     internal void DeleteGo(GameObject go)
     {
@@ -77,12 +67,16 @@ public class SpawnerManager : MonoBehaviour
 
         // position
         Vector3 goPosition = TangentProjection.SetupSpawnDistance(cameraPos, mouseLocation, spawnDistance); // location + mqpw
-        go.transform.position = goPosition;
+
+        if (go!=null)
+             go.transform.position = goPosition;
 
         // rotation
         Vector3 goRotation = cameraPos.transform.rotation.eulerAngles;
         goRotation.x = 0;
-        go.transform.rotation = Quaternion.Euler(goRotation);
+
+        if (go != null)
+            go.transform.rotation = Quaternion.Euler(goRotation);
 
         return goPosition;
     }
@@ -107,8 +101,8 @@ public class SpawnerManager : MonoBehaviour
 
         // set scale
         Vector3 scales = new Vector3();
-        scales.y = go.transform.localScale.y;
-        scales.z = go.transform.localScale.z;
+        scales.y = go.transform.localScale.y/10;
+        scales.z = go.transform.localScale.z/10;
         scales.x = Linear.Pythagoras3(lineDistance);
         go.transform.localScale = scales;
 

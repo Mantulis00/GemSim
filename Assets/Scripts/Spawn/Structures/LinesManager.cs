@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Drawing;
 using UnityEngine;
 
@@ -20,37 +21,48 @@ namespace Assets.Scripts.Spawn
         }
         internal LinesManager()
         {
-            n = 1;
+            n = 0;
             LineList = new List<Line>();
         }
 
 
-       public GameObject MakeGO(Transform spawner,GameObject obModel, Dictionary<GameObject, StructureType> objectTypes)
+       public GameObject MakeGO(Transform spawner,GameObject obModel, bool extension, Dictionary<GameObject, StructureType> objectTypes)
         {
-            GameObject go;
-            go = Instantiate(obModel) as GameObject;
-            go.transform.SetParent(spawner);
-
-            if (n == 1)
+            n++;
+            if (extension)
             {
                 currentLine = new Line();
-                currentLine.start = go;
-            }
-            else if (n == 2)
-            {
-                currentLine.finish = go;
+                currentLine.start = obModel;
+               // objectTypes.Add(obModel, StructureType.Line);
+                return null;
             }
             else
             {
-                currentLine.connect = go;
-                LineList.Add(currentLine);
-                n = 1;
+                GameObject go;
+                go = Instantiate(obModel) as GameObject;
+                go.transform.SetParent(spawner);
+
+                go.name = LineList.Count.ToString();
+                go.name += (n - 1).ToString();
+
+                if (n == 1)
+                {
+                    currentLine = new Line();
+                    currentLine.start = go;
+                }
+                else if (n == 2)
+                {
+                    currentLine.finish = go;
+                }
+                else
+                {
+                    currentLine.connect = go;
+                    LineList.Add(currentLine);
+                    n = 0;
+                }
+                objectTypes.Add(go, StructureType.Line);
+                return go;
             }
-            n++;
-
-
-            objectTypes.Add(go, StructureType.Line);
-            return go;
         }
 
         public GameObject MakeGO2(Transform spawner, GameObject obModel, Dictionary<GameObject, StructureType> objectTypes) //needs renaming

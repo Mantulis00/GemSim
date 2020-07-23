@@ -52,12 +52,13 @@ namespace Assets.Scripts.Controls
 
         private void SpawnLine()
         {
+            Debug.Log(o_mouse.selectedObjet.name);
 
             if ((o_mouse.a_que & ActionsQue.SpawnStart) == ActionsQue.SpawnStart)
             {
-                if (!spawner.CheckConnector(o_mouse.selectedObjet))
+                if (!spawner.CheckConnector(o_mouse.selectedObjet)) // cant spawn connector
                 {
-                    startPos = spawner.MovePoint(spawner.MakeGO(o_mouse.selectedObjet), this.transform, o_mouse.clickCoords_s);
+                    startPos = spawner.MovePoint(spawner.MakeGO(o_mouse.selectedObjet, o_mouse.CheckForObject()), this.transform, o_mouse.clickCoords_s);
                 }
 
                 o_mouse.ActionAddressed(ActionsQue.SpawnStart);
@@ -66,9 +67,9 @@ namespace Assets.Scripts.Controls
             {
                 if (!spawner.CheckConnector(o_mouse.selectedObjet) && !o_mouse.CheckForObject())
                 {
-                    finishPos = spawner.MovePoint(spawner.MakeGO(o_mouse.selectedObjet), this.transform, o_mouse.clickCoords_f);
+                    finishPos = spawner.MovePoint(spawner.MakeGO(o_mouse.selectedObjet, false), this.transform, o_mouse.clickCoords_f);
 
-                    spawner.MoveConnection(spawner.MakeGO(o_mouse.selectedObjet), startPos, finishPos);
+                    spawner.MoveConnection(spawner.MakeGO(o_mouse.selectedObjet, false), startPos, finishPos);
                 }
 
                 o_mouse.ActionAddressed(ActionsQue.SpawnFinish);

@@ -105,7 +105,7 @@ namespace Assets.Scripts.Controls
             
         }
 
-        internal bool CheckForObject()
+        internal bool  CheckForObject()
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); ;
             RaycastHit hit;
