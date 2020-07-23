@@ -23,15 +23,17 @@ public class SpawnerManager : MonoBehaviour
         objectTypes = new Dictionary<GameObject, StructureType>();
     }
 
+
     internal GameObject MakeGO (GameObject obModel)
     {
 
-        if (objectTypes.ContainsKey(obModel)) // need fixes
+        if (objectTypes.ContainsKey(obModel)) // need fixes // enables to connect to  clicked block
         {
             if (enableSpawning > 0)
             {
                 enableSpawning++ ;
                 if (enableSpawning == 3) enableSpawning = 0;
+
 
                 return linesManager.MakeGO(this.transform, obModel, objectTypes); // new line
             }

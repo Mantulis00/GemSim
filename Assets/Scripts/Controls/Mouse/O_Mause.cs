@@ -105,7 +105,16 @@ namespace Assets.Scripts.Controls
             
         }
 
+        internal bool CheckForObject()
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); ;
+            RaycastHit hit;
 
+            if (Physics.Raycast(ray, out hit))
+                return true;
+            
+            return false;
+        }
         private void SelectObject()
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); ;
