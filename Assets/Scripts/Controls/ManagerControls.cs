@@ -44,6 +44,7 @@ namespace Assets.Scripts.Controls
             {
                 if (o_keyboard.action == KeyboardActions.Spawn)
                     SpawnLine();
+                    
                 else if (o_keyboard.action == KeyboardActions.Move)
                     MoveLine();
             }
@@ -51,8 +52,10 @@ namespace Assets.Scripts.Controls
 
         private void SpawnLine()
         {
+
             if ((o_mouse.a_que & ActionsQue.SpawnStart) == ActionsQue.SpawnStart)
             {
+                Debug.Log(o_mouse.selectedObjet.name);
                 startPos = spawner.MovePoint(spawner.MakeGO(o_mouse.selectedObjet), this.transform, o_mouse.clickCoords_s);
 
 

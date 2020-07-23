@@ -115,10 +115,6 @@ namespace Assets.Scripts.Controls
             {
                  selectedObjet = hit.transform.gameObject;
             }
-            else
-            {
-                selectedObjet = null;
-            }
         }
 
 

@@ -16,7 +16,7 @@ public class SpawnerManager : MonoBehaviour
 
     private int enableSpawning;
 
-    void Start()
+    public SpawnerManager()
     {
         enableSpawning = 0;
         linesManager = new LinesManager();
@@ -25,26 +25,27 @@ public class SpawnerManager : MonoBehaviour
 
     internal GameObject MakeGO (GameObject obModel)
     {
+
         if (objectTypes.ContainsKey(obModel)) // need fixes
         {
             if (enableSpawning > 0)
             {
-                Debug.Log("imahere");
                 enableSpawning++ ;
                 if (enableSpawning == 3) enableSpawning = 0;
 
-                return linesManager.MakeGO2(this.transform, obModel, objectTypes);
+                return linesManager.MakeGO(this.transform, obModel, objectTypes); // new line
             }
 
             else
             {
-                enableSpawning = 1 ;
-                
+                enableSpawning = 1 ; 
                 return obModel;
             }
         }
 
-        return linesManager.MakeGO(this.transform, obModel, objectTypes);
+
+
+        return linesManager.MakeGO(this.transform, obModel, objectTypes); // line from obj
     }
     internal void DeleteGo(GameObject go)
     {
