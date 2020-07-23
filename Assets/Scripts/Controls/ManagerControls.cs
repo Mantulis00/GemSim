@@ -55,18 +55,21 @@ namespace Assets.Scripts.Controls
 
             if ((o_mouse.a_que & ActionsQue.SpawnStart) == ActionsQue.SpawnStart)
             {
-                Debug.Log(o_mouse.selectedObjet.name);
-                startPos = spawner.MovePoint(spawner.MakeGO(o_mouse.selectedObjet), this.transform, o_mouse.clickCoords_s);
-
+                if (!spawner.CheckConnector(o_mouse.selectedObjet))
+                {
+                    startPos = spawner.MovePoint(spawner.MakeGO(o_mouse.selectedObjet), this.transform, o_mouse.clickCoords_s);
+                }
 
                 o_mouse.ActionAddressed(ActionsQue.SpawnStart);
             }
             if ((o_mouse.a_que & ActionsQue.SpawnFinish) == ActionsQue.SpawnFinish)
             {
-                finishPos = spawner.MovePoint(spawner.MakeGO(o_mouse.selectedObjet), this.transform, o_mouse.clickCoords_f);
+                if (!spawner.CheckConnector(o_mouse.selectedObjet))
+                {
+                    finishPos = spawner.MovePoint(spawner.MakeGO(o_mouse.selectedObjet), this.transform, o_mouse.clickCoords_f);
 
-                spawner.MoveConnection(spawner.MakeGO(o_mouse.selectedObjet), startPos, finishPos);
-
+                    spawner.MoveConnection(spawner.MakeGO(o_mouse.selectedObjet), startPos, finishPos);
+                }
 
                 o_mouse.ActionAddressed(ActionsQue.SpawnFinish);
             }
@@ -76,13 +79,15 @@ namespace Assets.Scripts.Controls
         {
             if ((o_mouse.a_que & ActionsQue.Move) == ActionsQue.Move)
             {
-                spawner.MovePoint(o_mouse.selectedObjet, this.transform, o_mouse.clickCoords_s);
+                if (!spawner.CheckConnector(o_mouse.selectedObjet))
+                {
+                    spawner.MovePoint(o_mouse.selectedObjet, this.transform, o_mouse.clickCoords_s);
 
-                spawner.MoveConnection(
-                    spawner.FindConnector(o_mouse.selectedObjet), 
-                    spawner.FindSecondPointLocation(o_mouse.selectedObjet).position, 
-                    o_mouse.selectedObjet.transform.position);
-
+                    spawner.MoveConnection(
+                        spawner.FindConnector(o_mouse.selectedObjet),
+                        spawner.FindSecondPointLocation(o_mouse.selectedObjet).position,
+                        o_mouse.selectedObjet.transform.position);
+                }
 
                 o_mouse.ActionAddressed(ActionsQue.Move);
             }

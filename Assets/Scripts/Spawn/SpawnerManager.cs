@@ -57,7 +57,12 @@ public class SpawnerManager : MonoBehaviour
         return linesManager.FindConnector(go);
     }
 
-    internal Transform FindSecondPointLocation(GameObject go)
+    internal bool CheckConnector(GameObject go)
+    {
+        return linesManager.CheckConnector(go);
+    }
+
+        internal Transform FindSecondPointLocation(GameObject go)
     {
        return linesManager.FindSecondPointLocation(go);
     }

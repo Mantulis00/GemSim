@@ -100,6 +100,19 @@ namespace Assets.Scripts.Spawn
             return null;
         }
 
+        internal bool CheckConnector(GameObject go)
+        {
+            foreach (Line line in LineList)
+            {
+                if (line.connect == go)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+
         internal Transform FindSecondPointLocation(GameObject go)
         {
             foreach (Line line in LineList)
