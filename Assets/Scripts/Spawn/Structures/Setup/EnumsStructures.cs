@@ -14,4 +14,11 @@ enum ObjectType
     Line,
 }
 
+enum SpawnOptions
+{
+    Start,
+    Finish,
+    Connection,
+}
+
 

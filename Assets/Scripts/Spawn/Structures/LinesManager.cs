@@ -104,7 +104,7 @@ namespace Assets.Scripts.Spawn
         {
             foreach (Line line in LineList)
             {
-                if (line.start == go || line.finish == go)
+                if  (line.start == go || line.finish == go)
                 {
                     return line.connect;
                 }

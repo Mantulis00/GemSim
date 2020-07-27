@@ -85,7 +85,7 @@ namespace Assets.Scripts.Controls
             {
                 if (noHoldLastFrame) // after 1st frame doesnt enter
                 {
-                    SelectionOptions(); // to check if try to spawn on same object
+                    //SelectionOptions(); // to check if try to spawn on same object
 
 
                     clickCoords_s = MouseControls.GetMouseLocation();
@@ -105,15 +105,15 @@ namespace Assets.Scripts.Controls
             
         }
 
-        internal bool  CheckForObject()
+        internal GameObject  CheckForObject()
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); ;
             RaycastHit hit;
 
             if (Physics.Raycast(ray, out hit))
-                return true;
+                return hit.transform.gameObject;
             
-            return false;
+            return null;
         }
         private void SelectObject()
         {

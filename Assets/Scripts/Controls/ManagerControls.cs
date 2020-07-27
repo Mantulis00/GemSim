@@ -52,24 +52,30 @@ namespace Assets.Scripts.Controls
 
         private void SpawnLine()
         {
-            Debug.Log(o_mouse.selectedObjet.name);
 
             if ((o_mouse.a_que & ActionsQue.SpawnStart) == ActionsQue.SpawnStart)
             {
                 if (!spawner.CheckConnector(o_mouse.selectedObjet)) // cant spawn connector
                 {
-                    startPos = spawner.MovePoint(spawner.MakeGO(o_mouse.selectedObjet, o_mouse.CheckForObject()), this.transform, o_mouse.clickCoords_s);
+                    startPos = spawner.MovePoint(
+                        spawner.MakeGO(o_mouse.selectedObjet, o_mouse.CheckForObject(), SpawnOptions.Start), 
+                        this.transform, o_mouse.clickCoords_s);
                 }
 
                 o_mouse.ActionAddressed(ActionsQue.SpawnStart);
             }
             if ((o_mouse.a_que & ActionsQue.SpawnFinish) == ActionsQue.SpawnFinish)
             {
-                if (!spawner.CheckConnector(o_mouse.selectedObjet) && !o_mouse.CheckForObject())
+                if (!spawner.CheckConnector(o_mouse.selectedObjet) && o_mouse.CheckForObject() == null)
                 {
-                    finishPos = spawner.MovePoint(spawner.MakeGO(o_mouse.selectedObjet, false), this.transform, o_mouse.clickCoords_f);
+                    finishPos = spawner.MovePoint(
+                        spawner.MakeGO(o_mouse.selectedObjet, o_mouse.CheckForObject(), 
+                        SpawnOptions.Finish), this.transform, o_mouse.clickCoords_f);
 
-                    spawner.MoveConnection(spawner.MakeGO(o_mouse.selectedObjet, false), startPos, finishPos);
+
+                    spawner.MoveConnection(
+                        spawner.MakeGO(o_mouse.selectedObjet, o_mouse.CheckForObject(), SpawnOptions.Connection), 
+                        startPos, finishPos);
                 }
 
                 o_mouse.ActionAddressed(ActionsQue.SpawnFinish);

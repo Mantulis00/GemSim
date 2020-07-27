@@ -1,44 +1,95 @@
 ﻿using Assets.Map2Math;
 using Assets.Scripts.Spawn;
+using Assets.Scripts.Spawn.Structures.Setup;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using UnityEditorInternal;
 using UnityEngine;
 
 
 public class SpawnerManager : MonoBehaviour
 {
-    Dictionary<GameObject, StructureType> objectTypes;
+    //Dictionary<GameObject, StructureType> objectTypes;
+    Dictionary<GameObject, Structure> structures;
 
-    private float spawnDistance = 10;
+    GameObject extension;
+
+    public float spawnDistance = 10;
     private LinesManager linesManager;
+    private StructureManager structureManager;
 
-    private int enableSpawning;
 
     public SpawnerManager()
     {
-        enableSpawning = 0;
         linesManager = new LinesManager();
-        objectTypes = new Dictionary<GameObject, StructureType>();
+        structureManager = new StructureManager();
+      //  objectTypes = new Dictionary<GameObject, StructureType>();
+
+        structures = new Dictionary<GameObject, Structure>();
     }
 
 
-    internal GameObject MakeGO (GameObject obModel, bool extension)
+    internal GameObject MakeGO (GameObject obModel, GameObject extension, SpawnOptions option) // make go from object ( if null not extension, what object)
     {
-
-        if (objectTypes.ContainsKey(obModel)) // need fixes // enables to connect to  clicked block
+        if (option == SpawnOptions.Start)
         {
+            if (extension != null)
+            {
+                this.extension = extension; // to check if start != finish
+                return null;
+            }
+                
+            else // create new structure
+            {
+                Debug.Log("created");
+                GameObject go = structureManager.MakeGO(this.transform, obModel, extension, SpawnOptions.Start);
+                Structure str = new Structure(go);
+                structures.Add(go, str);
 
-
-                return linesManager.MakeGO(this.transform, obModel, extension, objectTypes); // new line
-          
+                this.extension = go;
+                return go;
+            }
         }
 
+        else if (option == SpawnOptions.Finish)
+        {
+            if (extension != null)
+            {
 
+                this.extension = null; // to cancel spawning connection
+                return extension;// connect structures
+            }
+            else
+            {
+                Debug.Log(this.extension);
+                //Structure str = structures[this.extension];
+                GameObject go = structureManager.MakeGO(this.transform, obModel, extension, SpawnOptions.Start);
 
-        return linesManager.MakeGO(this.transform, obModel,extension, objectTypes); // line from obj
+               // str.AddElement(go, this.extension);
+
+                return go;
+            }// find structure, add endpoint to root element
+        }
+        else 
+        {
+          //  Structure str = structures[this.extension];
+            GameObject go = structureManager.MakeGO(this.transform, obModel, extension, SpawnOptions.Start);
+
+           // str.AddElement(go, this.extension);
+
+            return go;
+        }
+
+   
     }
+
+
+
+
+
+
     internal void DeleteGo(GameObject go)
     {
         linesManager.DeleteGo(go);
@@ -46,6 +97,8 @@ public class SpawnerManager : MonoBehaviour
 
     internal GameObject FindConnector(GameObject go)
     {
+
+
         return linesManager.FindConnector(go);
     }
 
@@ -101,8 +154,8 @@ public class SpawnerManager : MonoBehaviour
 
         // set scale
         Vector3 scales = new Vector3();
-        scales.y = go.transform.localScale.y/10;
-        scales.z = go.transform.localScale.z/10;
+        scales.y = 0.1f;//go.transform.localScale.y/10;
+        scales.z = 0.1f;//go.transform.localScale.z/10;
         scales.x = Linear.Pythagoras3(lineDistance);
         go.transform.localScale = scales;
 
