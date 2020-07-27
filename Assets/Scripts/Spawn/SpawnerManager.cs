@@ -21,7 +21,7 @@ public class SpawnerManager : MonoBehaviour
     private StructureManager structureManager;
 
 
-    public SpawnerManager()
+    public void Start()
     {
         linesManager = new LinesManager();
         structureManager = new StructureManager();
@@ -29,6 +29,7 @@ public class SpawnerManager : MonoBehaviour
 
         structures = new Dictionary<GameObject, Structure>();
     }
+
 
 
     internal GameObject MakeGO (GameObject obModel, GameObject extension, SpawnOptions option) // make go from object ( if null not extension, what object)
@@ -57,27 +58,32 @@ public class SpawnerManager : MonoBehaviour
         {
             if (extension != null)
             {
-
                 this.extension = null; // to cancel spawning connection
                 return extension;// connect structures
             }
             else
             {
-                Debug.Log(this.extension);
-                //Structure str = structures[this.extension];
                 GameObject go = structureManager.MakeGO(this.transform, obModel, extension, SpawnOptions.Start);
 
-               // str.AddElement(go, this.extension);
+                if (structures.ContainsKey(this.extension))// extra safety
+                {
+                    var str = structures[this.extension];
+                    str.AddElement(go, this.extension);
+                }
+
 
                 return go;
             }// find structure, add endpoint to root element
         }
         else 
         {
-          //  Structure str = structures[this.extension];
             GameObject go = structureManager.MakeGO(this.transform, obModel, extension, SpawnOptions.Start);
 
-           // str.AddElement(go, this.extension);
+            if (structures.ContainsKey(this.extension)) // extra safety
+            {
+                var str = structures[this.extension];
+                str.AddElement(go, this.extension);
+            }
 
             return go;
         }
@@ -86,7 +92,13 @@ public class SpawnerManager : MonoBehaviour
     }
 
 
-
+    internal List<Structure.connection> GetConnections(GameObject go)
+    {
+        if (structures.ContainsKey(go))
+            return structureManager.GetConnections(go, structures[go]);
+        else
+            return null;
+    }
 
 
 
@@ -95,11 +107,11 @@ public class SpawnerManager : MonoBehaviour
         linesManager.DeleteGo(go);
     }
 
-    internal GameObject FindConnector(GameObject go)
+    internal GameObject FindConnector(GameObject goFrom, GameObject goTo)
     {
 
 
-        return linesManager.FindConnector(go);
+        return null;// linesManager.FindConnector(goFrom, goTo);
     }
 
     internal bool CheckConnector(GameObject go)

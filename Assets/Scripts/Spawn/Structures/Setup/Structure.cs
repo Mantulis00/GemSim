@@ -1,23 +1,23 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using UnityEngine;
 
 namespace Assets.Scripts.Spawn.Structures.Setup
 {
-    class Structure // List of points, each point can have connections
+    public class Structure // List of points, each point can have connections
     {
-        private List<root> structure;
-        public  List<GameObject> structureObjects {  get; private set; }
+        public List<root> structure;
 
         connection floatingConnection;
 
-        private class root
+        public class root
         {
             public GameObject point; // main point
             public List<connection> connections; // this points extensions
         }
 
-       private  struct connection
+       public  struct connection
         {
            public GameObject endPoint;
            public GameObject connector;
@@ -71,7 +71,7 @@ namespace Assets.Scripts.Spawn.Structures.Setup
 
         public void AddElement(GameObject go, GameObject extensionRoot) // object to add, object to extend
         {
-            foreach(root r in structure)
+            foreach(root r in structure.ToList())
             {
                 if (r.point == extensionRoot)
                 {

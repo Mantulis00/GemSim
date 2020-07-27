@@ -1,4 +1,7 @@
 ﻿using Assets.Scripts.Controls.Keyboard;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEditor.MemoryProfiler;
 using UnityEngine;
 
 namespace Assets.Scripts.Controls
@@ -90,14 +93,23 @@ namespace Assets.Scripts.Controls
                 {
                     spawner.MovePoint(o_mouse.selectedObjet, this.transform, o_mouse.clickCoords_s);
 
-                    spawner.MoveConnection(
-                        spawner.FindConnector(o_mouse.selectedObjet),
-                        spawner.FindSecondPointLocation(o_mouse.selectedObjet).position,
-                        o_mouse.selectedObjet.transform.position);
+                    MoveLines(spawner.GetConnections(o_mouse.selectedObjet));
                 }
 
                 o_mouse.ActionAddressed(ActionsQue.Move);
             }
+        }
+
+        private void MoveLines(List<Spawn.Structures.Setup.Structure.connection> connections)
+        {
+            foreach(Spawn.Structures.Setup.Structure.connection c in connections.ToList())
+            {
+                spawner.MoveConnection( // do this for every connector object has
+                      c.connector,
+                      c.endPoint.transform.position,
+                      o_mouse.selectedObjet.transform.position);
+            }
+            
         }
 
 
