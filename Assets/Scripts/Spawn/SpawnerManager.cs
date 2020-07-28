@@ -31,21 +31,22 @@ public class SpawnerManager : MonoBehaviour
     }
 
 
-
-    internal GameObject MakeGO (GameObject obModel, GameObject extension, SpawnOptions option) // make go from object ( if null not extension, what object)
+    bool onlyConnection; // to know if only connect two points
+    internal GameObject MakeGO (GameObject obModel, GameObject extension, SpawnOptions option) // make go from object ( if  extension not null , to what object)
     {
         if (option == SpawnOptions.Start)
         {
             if (extension != null)
             {
+                onlyConnection = true;
                 this.extension = extension; // to check if start != finish
                 return null;
             }
                 
             else // create new structure
             {
-                Debug.Log("created");
-                GameObject go = structureManager.MakeGO(this.transform, obModel, extension, SpawnOptions.Start);
+                onlyConnection = false;
+                GameObject go = structureManager.MakeGO(this.transform, obModel, SpawnOptions.Start);
                 Structure str = new Structure(go);
                 structures.Add(go, str);
 
@@ -58,12 +59,13 @@ public class SpawnerManager : MonoBehaviour
         {
             if (extension != null)
             {
-                this.extension = null; // to cancel spawning connection
-                return extension;// connect structures
+             //   this.extension = null; // to cancel spawning connection
+                return null;// connect structures
             }
             else
             {
-                GameObject go = structureManager.MakeGO(this.transform, obModel, extension, SpawnOptions.Start);
+                onlyConnection = false;
+                GameObject go = structureManager.MakeGO(this.transform, obModel, SpawnOptions.Finish);
 
                 if (structures.ContainsKey(this.extension))// extra safety
                 {
@@ -78,14 +80,21 @@ public class SpawnerManager : MonoBehaviour
         }
         else 
         {
-            GameObject go = structureManager.MakeGO(this.transform, obModel, extension, SpawnOptions.Start);
+            GameObject go = structureManager.MakeGO(this.transform, obModel, SpawnOptions.Connection);
 
-            if (structures.ContainsKey(this.extension)) // extra safety
+             if (onlyConnection)
+            {
+                var str = structures[extension];
+                str.AddConnection(go, this.extension, extension);
+            }
+
+            else if (structures.ContainsKey(this.extension)) // extra safety
             {
                 var str = structures[this.extension];
                 str.AddElement(go, this.extension, SpawnOptions.Connection);
                 structures.Add(go, str);
             }
+           
 
             return go;
         }
@@ -106,25 +115,18 @@ public class SpawnerManager : MonoBehaviour
 
     internal void DeleteGo(GameObject go)
     {
-        linesManager.DeleteGo(go);
+        //linesManager.DeleteGo(go);
     }
 
-    internal GameObject FindConnector(GameObject goFrom, GameObject goTo)
-    {
-
-
-        return null;// linesManager.FindConnector(goFrom, goTo);
-    }
 
     internal bool CheckConnector(GameObject go)
     {
-        return linesManager.CheckConnector(go);
+        if (structures.ContainsKey(go))
+            return structureManager.CheckConnector(go, structures[go]);
+        else
+            return false;
     }
 
-        internal Transform FindSecondPointLocation(GameObject go)
-    {
-       return linesManager.FindSecondPointLocation(go);
-    }
 
 
 

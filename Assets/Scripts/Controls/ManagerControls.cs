@@ -69,7 +69,7 @@ namespace Assets.Scripts.Controls
             }
             if ((o_mouse.a_que & ActionsQue.SpawnFinish) == ActionsQue.SpawnFinish)
             {
-                if (!spawner.CheckConnector(o_mouse.selectedObjet) && o_mouse.CheckForObject() == null)
+                if (!spawner.CheckConnector(o_mouse.selectedObjet) )
                 {
                     finishPos = spawner.MovePoint(
                         spawner.MakeGO(o_mouse.selectedObjet, o_mouse.CheckForObject(), 

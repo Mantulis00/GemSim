@@ -10,6 +10,9 @@ namespace Assets.Scripts.Spawn.Structures.Setup
     {
         public List<root> structure; // structure is made out of root elements
         private root lastRoot;
+        private List<GameObject> connectors;
+
+
 
         public class root // every root element has main object (root) and connections (point to which connection is led to)
         {
@@ -26,6 +29,7 @@ namespace Assets.Scripts.Spawn.Structures.Setup
         public Structure(GameObject go)
         {
             structure = new List<root>();
+            connectors = new List<GameObject>();
             NewRoot(go);
 
 
@@ -59,20 +63,8 @@ namespace Assets.Scripts.Spawn.Structures.Setup
             }
         }
 
-        private root FindRoot(GameObject go)
-        {
-            foreach(root rt in structure)
-            {
-                if (rt.point == go)
-                {
-                    return rt;
-                }
-            }
 
-            return null;
-        }
-
-        public void AddElement(GameObject go, GameObject extensionRoot, SpawnOptions option) // object to add, object to extend
+        public void AddElement(GameObject go, GameObject extensionRoot, SpawnOptions option) // object to add, object to extend, option
         {
             foreach(root r in structure.ToList())
             {
@@ -82,11 +74,15 @@ namespace Assets.Scripts.Spawn.Structures.Setup
 
                     if (option == SpawnOptions.Finish)
                     {
-                        rt = NewRoot(go); // empty root for new object
+                        rt = NewRoot(go); // prefilled root for new object 
                         structure.Add(rt);
                     }
-                    else
+                    else // else for connectors
+                    {
                         rt = lastRoot;
+                        connectors.Add(go);
+                    }
+  
 
                   
 
@@ -106,6 +102,43 @@ namespace Assets.Scripts.Spawn.Structures.Setup
             }
         }
 
+        public void AddConnection(GameObject go, GameObject from, GameObject to)
+        {
+            if (from == to) return;
+
+            bool fromDone = false, toDone = false;
+            foreach (root r in structure.ToList())
+            {
+                if (r.point == from && !fromDone)
+                {
+                    FillConnections(r, to, SpawnOptions.Finish);
+                    FillConnections(r, go, SpawnOptions.Connection);
+                    break;
+                    fromDone = true ;
+                }
+                if (r.point == to && !toDone)
+                {
+                    FillConnections(r, from, SpawnOptions.Finish);
+                    FillConnections(r, go, SpawnOptions.Connection);
+                    toDone = true;
+                }
+                if (fromDone && toDone) break;
+            }
+        }
+
+
+        internal bool CheckConnector(GameObject go)
+        {
+            foreach (GameObject g in connectors.ToList())
+            {
+                if (g == go)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
 
 
     }

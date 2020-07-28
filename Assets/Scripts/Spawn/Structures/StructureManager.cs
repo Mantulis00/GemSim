@@ -8,16 +8,16 @@ namespace Assets.Scripts.Spawn
 {
     class StructureManager : MonoBehaviour
     {
-        public GameObject MakeGO(Transform spawner, GameObject obModel, GameObject extension, SpawnOptions option)
+        public GameObject MakeGO(Transform spawner, GameObject obModel,  SpawnOptions option)
         {
             GameObject go;
             go = Instantiate(obModel) as GameObject;
             go.transform.SetParent(spawner);
 
-            return go;
+             go.name = option.ToString();
 
-            // go.name = LineList.Count.ToString();
-            // go.name += (n - 1).ToString();
+
+            return go;
         }
 
         internal GameObject FindConnector(Structure structure, GameObject goFrom, GameObject goTo)
@@ -35,7 +35,6 @@ namespace Assets.Scripts.Spawn
                     }
                 }
             }
-
             return null;
         }
 
@@ -50,32 +49,17 @@ namespace Assets.Scripts.Spawn
                 {
                     connectionsList = r.connections.ToList();
 
-                        //Debug.Log(connectionsList.Count);
                     return connectionsList;
                 }
             }
-
-
-
-
-
         return null;
         }
 
 
-        internal bool CheckConnector(GameObject go)
+        internal bool CheckConnector(GameObject go, Structure structure)
         {
-            return false;
+            return structure.CheckConnector(go);
         }
-
-        internal Transform FindSecondPointLocation(GameObject go)
-        {
-            return null;
-        }
-
-
-
-
 
     }
 }
