@@ -10,7 +10,7 @@ namespace Assets.Scripts.Spawn.Structures.Setup
     {
         public List<root> structure; // structure is made out of root elements
         private root lastRoot;
-        private List<GameObject> connectors;
+        public List<GameObject> connectors;
 
 
 
@@ -83,9 +83,6 @@ namespace Assets.Scripts.Spawn.Structures.Setup
                         connectors.Add(go);
                     }
   
-
-                  
-
                     if (option == SpawnOptions.Finish)
                          FillConnections(rt, extensionRoot, option); // modify roots of newly added element
                     else
@@ -106,15 +103,16 @@ namespace Assets.Scripts.Spawn.Structures.Setup
         {
             if (from == to) return;
 
-            bool fromDone = false, toDone = false;
             foreach (root r in structure.ToList())
             {
-                if (r.point == from && !fromDone)
+                bool toDone = false, fromDone = false;
+
+
+                if (r.point == from  && !fromDone)
                 {
                     FillConnections(r, to, SpawnOptions.Finish);
                     FillConnections(r, go, SpawnOptions.Connection);
-                    break;
-                    fromDone = true ;
+                    fromDone = true;
                 }
                 if (r.point == to && !toDone)
                 {
@@ -122,7 +120,7 @@ namespace Assets.Scripts.Spawn.Structures.Setup
                     FillConnections(r, go, SpawnOptions.Connection);
                     toDone = true;
                 }
-                if (fromDone && toDone) break;
+                if (toDone && fromDone) break;
             }
         }
 
@@ -139,6 +137,9 @@ namespace Assets.Scripts.Spawn.Structures.Setup
 
             return false;
         }
+
+
+
 
 
     }

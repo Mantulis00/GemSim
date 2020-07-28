@@ -21,4 +21,10 @@ public enum SpawnOptions
     Connection,
 }
 
-
+public enum SpawnStates
+{
+    Error,
+    Ordinary,
+    Connect,
+    Merge,
+}

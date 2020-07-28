@@ -29,23 +29,32 @@ public class SpawnerManager : MonoBehaviour
 
         structures = new Dictionary<GameObject, Structure>();
     }
+    // only connections
+    // merge 2 structures
+    // merge point to structure
+
+    SpawnStates state; // to know if only connect two points
 
 
-    bool onlyConnection; // to know if only connect two points
+
+
+
+
+
     internal GameObject MakeGO (GameObject obModel, GameObject extension, SpawnOptions option) // make go from object ( if  extension not null , to what object)
     {
         if (option == SpawnOptions.Start)
         {
             if (extension != null)
             {
-                onlyConnection = true;
+                state = SpawnStates.Connect;
                 this.extension = extension; // to check if start != finish
                 return null;
             }
-                
+
             else // create new structure
             {
-                onlyConnection = false;
+                state = SpawnStates.Ordinary;
                 GameObject go = structureManager.MakeGO(this.transform, obModel, SpawnOptions.Start);
                 Structure str = new Structure(go);
                 structures.Add(go, str);
@@ -59,12 +68,36 @@ public class SpawnerManager : MonoBehaviour
         {
             if (extension != null)
             {
-             //   this.extension = null; // to cancel spawning connection
+                if (structures.ContainsKey(extension) && structures.ContainsKey(this.extension))
+                {
+                    if (structures[extension] == structures[this.extension])
+                        state = SpawnStates.Connect;
+                    else
+                    {
+                        Debug.Log(structures[this.extension].structure.Count);
+
+                        structureManager.MergeStructures(structures[extension], structures[this.extension]);
+
+                        Debug.Log("bf " + structures[this.extension].structure.Count);
+
+                        structures[extension] = structures[this.extension];
+                        state = SpawnStates.Merge;
+                    }
+                       
+                }
+                else
+                    state = SpawnStates.Connect;
+
+
+                if (extension == this.extension)
+                    state = SpawnStates.Error;
+                //   this.extension = null; // to cancel spawning connection
                 return null;// connect structures
             }
             else
             {
-                onlyConnection = false;
+                state = SpawnStates.Ordinary;
+
                 GameObject go = structureManager.MakeGO(this.transform, obModel, SpawnOptions.Finish);
 
                 if (structures.ContainsKey(this.extension))// extra safety
@@ -75,28 +108,36 @@ public class SpawnerManager : MonoBehaviour
                 }
 
 
+               
+
+                    state = SpawnStates.Ordinary;
+
                 return go;
             }// find structure, add endpoint to root element
         }
-        else 
+        else
         {
-            GameObject go = structureManager.MakeGO(this.transform, obModel, SpawnOptions.Connection);
-
-             if (onlyConnection)
+            if (state != SpawnStates.Error)
             {
-                var str = structures[extension];
-                str.AddConnection(go, this.extension, extension);
-            }
+                GameObject go = structureManager.MakeGO(this.transform, obModel, SpawnOptions.Connection);
 
-            else if (structures.ContainsKey(this.extension)) // extra safety
-            {
-                var str = structures[this.extension];
-                str.AddElement(go, this.extension, SpawnOptions.Connection);
-                structures.Add(go, str);
-            }
-           
+                if (state == SpawnStates.Connect || state == SpawnStates.Merge)
+                {
+                    var str = structures[this.extension];
+                    str.AddConnection(go, this.extension, extension);
+                }
 
-            return go;
+                else if (structures.ContainsKey(this.extension)) // extra safety
+                {
+                    var str = structures[this.extension];
+                    str.AddElement(go, this.extension, SpawnOptions.Connection);
+                    structures.Add(go, str);
+                }
+
+
+                return go;
+            }
+            return null;
         }
 
    

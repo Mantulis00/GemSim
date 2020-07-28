@@ -61,5 +61,19 @@ namespace Assets.Scripts.Spawn
             return structure.CheckConnector(go);
         }
 
+        internal void MergeStructures(Structure from, Structure to)
+        {
+            foreach(root r in from.structure)
+            {
+                to.structure.Add(r);
+            }
+            foreach(GameObject c in from.connectors)
+            {
+                to.connectors.Add(c);
+            }
+            from.structure.Clear();
+            from.connectors.Clear();
+        }
+
     }
 }
