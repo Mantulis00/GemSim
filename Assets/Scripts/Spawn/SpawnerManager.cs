@@ -47,14 +47,12 @@ public class SpawnerManager : MonoBehaviour
         {
             if (extension != null)
             {
-                state = SpawnStates.Connect;
                 this.extension = extension; // to check if start != finish
                 return null;
             }
 
             else // create new structure
             {
-                state = SpawnStates.Ordinary;
                 GameObject go = structureManager.MakeGO(this.transform, obModel, SpawnOptions.Start);
                 Structure str = new Structure(go);
                 structures.Add(go, str);
@@ -74,12 +72,7 @@ public class SpawnerManager : MonoBehaviour
                         state = SpawnStates.Connect;
                     else
                     {
-                        Debug.Log(structures[this.extension].structure.Count);
-
                         structureManager.MergeStructures(structures[extension], structures[this.extension]);
-
-                        Debug.Log("bf " + structures[this.extension].structure.Count);
-
                         structures[extension] = structures[this.extension];
                         state = SpawnStates.Merge;
                     }
@@ -91,13 +84,11 @@ public class SpawnerManager : MonoBehaviour
 
                 if (extension == this.extension)
                     state = SpawnStates.Error;
-                //   this.extension = null; // to cancel spawning connection
+
                 return null;// connect structures
             }
             else
             {
-                state = SpawnStates.Ordinary;
-
                 GameObject go = structureManager.MakeGO(this.transform, obModel, SpawnOptions.Finish);
 
                 if (structures.ContainsKey(this.extension))// extra safety
@@ -106,9 +97,6 @@ public class SpawnerManager : MonoBehaviour
                     str.AddElement(go, this.extension, SpawnOptions.Finish);
                     structures.Add(go, str);
                 }
-
-
-               
 
                     state = SpawnStates.Ordinary;
 
