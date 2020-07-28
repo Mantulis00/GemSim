@@ -45,15 +45,18 @@ namespace Assets.Scripts.Spawn
 
             foreach(root r in structure.structure.ToList())
             {
+               
                 if (r.point == go)
                 {
                     connectionsList = r.connections.ToList();
+                    Debug.Log(connectionsList.Count);
+                    return connectionsList;
                 }
             }
 
 
 
-            return connectionsList;
+            return null;
         }
 
 

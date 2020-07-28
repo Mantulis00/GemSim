@@ -69,6 +69,7 @@ public class SpawnerManager : MonoBehaviour
                 {
                     var str = structures[this.extension];
                     str.AddElement(go, this.extension);
+                    structures.Add(go, str);
                 }
 
 
@@ -83,6 +84,7 @@ public class SpawnerManager : MonoBehaviour
             {
                 var str = structures[this.extension];
                 str.AddElement(go, this.extension);
+                structures.Add(go, str);
             }
 
             return go;

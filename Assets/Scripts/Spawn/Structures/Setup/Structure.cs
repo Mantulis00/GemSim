@@ -9,7 +9,6 @@ namespace Assets.Scripts.Spawn.Structures.Setup
     {
         public List<root> structure;
 
-        connection floatingConnection;
 
         public class root
         {
@@ -17,7 +16,7 @@ namespace Assets.Scripts.Spawn.Structures.Setup
             public List<connection> connections; // this points extensions
         }
 
-       public  struct connection
+       public  class connection
         {
            public GameObject endPoint;
            public GameObject connector;
@@ -27,6 +26,7 @@ namespace Assets.Scripts.Spawn.Structures.Setup
         {
             structure = new List<root>();
             NewRoot(go);
+
 
         }
 
@@ -42,17 +42,18 @@ namespace Assets.Scripts.Spawn.Structures.Setup
 
         private void FillConnections(root rt, GameObject go)
         {
+            Debug.Log("he" + rt);
             if (rt == null) return;
 
-            if (rt.connections.Count == 0 || rt.connections[rt.connections.Count-1].endPoint == null) // 
+            if  (rt.connections.Count == 0 || rt.connections[rt.connections.Count-1].connector != null) // 
             {
-                floatingConnection = new connection();
+                connection floatingConnection = new connection();
                 floatingConnection.endPoint = go;
+                rt.connections.Add(floatingConnection);
             }
             else
             {
-                floatingConnection.connector = go;
-                rt.connections.Add(floatingConnection);
+                rt.connections[rt.connections.Count - 1].connector = go;
             }
         }
 
@@ -75,9 +76,11 @@ namespace Assets.Scripts.Spawn.Structures.Setup
             {
                 if (r.point == extensionRoot)
                 {
-                    root rt = NewRoot(go);
-                    FillConnections(r, go);
+                    root rt = NewRoot(go); // empty root for new object
                     structure.Add(rt);
+                    FillConnections(r, go); // modify roots connections
+                    Debug.Log(r.connections.Count);
+                    break;
                 }
             }
         }
