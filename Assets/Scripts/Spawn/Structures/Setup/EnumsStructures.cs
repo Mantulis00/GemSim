@@ -14,7 +14,7 @@ enum ObjectType
     Line,
 }
 
-enum SpawnOptions
+public enum SpawnOptions
 {
     Start,
     Finish,

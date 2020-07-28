@@ -49,14 +49,17 @@ namespace Assets.Scripts.Spawn
                 if (r.point == go)
                 {
                     connectionsList = r.connections.ToList();
-                    Debug.Log(connectionsList.Count);
+
+                        //Debug.Log(connectionsList.Count);
                     return connectionsList;
                 }
             }
 
 
 
-            return null;
+
+
+        return null;
         }
 
 

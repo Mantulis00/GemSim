@@ -68,7 +68,7 @@ public class SpawnerManager : MonoBehaviour
                 if (structures.ContainsKey(this.extension))// extra safety
                 {
                     var str = structures[this.extension];
-                    str.AddElement(go, this.extension);
+                    str.AddElement(go, this.extension, SpawnOptions.Finish);
                     structures.Add(go, str);
                 }
 
@@ -83,7 +83,7 @@ public class SpawnerManager : MonoBehaviour
             if (structures.ContainsKey(this.extension)) // extra safety
             {
                 var str = structures[this.extension];
-                str.AddElement(go, this.extension);
+                str.AddElement(go, this.extension, SpawnOptions.Connection);
                 structures.Add(go, str);
             }
 
