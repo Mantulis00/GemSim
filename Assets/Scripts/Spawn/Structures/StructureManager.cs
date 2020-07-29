@@ -14,7 +14,7 @@ namespace Assets.Scripts.Spawn
             go = Instantiate(obModel) as GameObject;
             go.transform.SetParent(spawner);
 
-             go.name = option.ToString();
+            go.name = spawner.childCount + " " +option.ToString(); // temp
 
 
             return go;
@@ -71,8 +71,8 @@ namespace Assets.Scripts.Spawn
             {
                 to.connectors.Add(c);
             }
-            from.structure.Clear();
-            from.connectors.Clear();
+           // from.structure.Clear();
+         //   from.connectors.Clear();
         }
 
     }

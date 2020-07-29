@@ -6,9 +6,10 @@ namespace Assets.Scripts.Spawn
 {
     public interface IStructure
     {
-          GameObject MakeGO(Transform spawner, GameObject obModel, bool extension, Dictionary<GameObject, StructureType> objectTypes);
-          void DeleteGo(GameObject go);
-        
+         void AddElement(GameObject go, GameObject extensionRoot, SpawnOptions option);
+         void AddConnection(GameObject go, GameObject from, GameObject to);
+
+
 
         }
 }

@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Spawn
 {
-    public  class LinesManager : MonoBehaviour, IStructure
+    public  class LinesManager : MonoBehaviour
     {
         private List<Line> LineList;
         private Line currentLine;

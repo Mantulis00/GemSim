@@ -3,9 +3,6 @@ using Assets.Scripts.Spawn;
 using Assets.Scripts.Spawn.Structures.Setup;
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using UnityEditorInternal;
 using UnityEngine;
 
 
@@ -17,16 +14,12 @@ public class SpawnerManager : MonoBehaviour
     GameObject extension;
 
     public float spawnDistance = 10;
-    private LinesManager linesManager;
     private StructureManager structureManager;
 
 
     public void Start()
     {
-        linesManager = new LinesManager();
         structureManager = new StructureManager();
-      //  objectTypes = new Dictionary<GameObject, StructureType>();
-
         structures = new Dictionary<GameObject, Structure>();
     }
     // only connections
@@ -34,11 +27,6 @@ public class SpawnerManager : MonoBehaviour
     // merge point to structure
 
     SpawnStates state; // to know if only connect two points
-
-
-
-
-
 
 
     internal GameObject MakeGO (GameObject obModel, GameObject extension, SpawnOptions option) // make go from object ( if  extension not null , to what object)
@@ -72,8 +60,8 @@ public class SpawnerManager : MonoBehaviour
                         state = SpawnStates.Connect;
                     else
                     {
-                        structureManager.MergeStructures(structures[extension], structures[this.extension]);
-                        structures[extension] = structures[this.extension];
+                        structureManager.MergeStructures(structures[this.extension], structures[extension]);
+                        structures[this.extension] = structures[extension];
                         state = SpawnStates.Merge;
                     }
                        
@@ -181,6 +169,7 @@ public class SpawnerManager : MonoBehaviour
 
     public void MoveConnection(GameObject go, Vector3 start, Vector3 finish)
     {
+        if (go == null) return;
         // set location
         Vector3 lineDistance = new Vector3();
 

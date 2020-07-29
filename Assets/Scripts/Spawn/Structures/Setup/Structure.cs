@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Spawn.Structures.Setup
 {
-    public class Structure // List of points, each point can have connections
+    public class Structure : IStructure // List of points, each point can have connections
     {
         public List<root> structure; // structure is made out of root elements
         private root lastRoot;

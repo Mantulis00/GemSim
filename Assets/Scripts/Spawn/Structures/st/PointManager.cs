@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Spawn
 {
-    class PointManager : MonoBehaviour, IStructure
+    class PointManager : MonoBehaviour
     {
         private List<GameObject> PointList;
 
