@@ -4,15 +4,15 @@ namespace Assets.Scripts.Controls
 {
     static class MouseControls 
     {
-        public static  MouseActions DetectClick(bool hold)
+        public static  MouseAction DetectClick(bool hold)
         {
             if (hold)
             {
-                if (Input.GetMouseButton(0)) return MouseActions.Select;
+                if (Input.GetMouseButton(0)) return MouseAction.Select;
             }
 
-            if (Input.GetMouseButtonDown(0)) return MouseActions.Select;
-            else if (Input.GetMouseButtonDown(1)) return MouseActions.Unselect;
+            if (Input.GetMouseButtonDown(0)) return MouseAction.Select;
+            else if (Input.GetMouseButtonDown(1)) return MouseAction.Unselect;
 
 
             return 0;

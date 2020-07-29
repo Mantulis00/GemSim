@@ -7,9 +7,9 @@ using UnityEngine;
 
 namespace Assets.Scripts.Geometry.Types
 {
-    class BallPivot : IGeometry // ball joint - connectors have to stay same lenght
+    internal static class BallPivot  // ball joint - connectors have to stay same lenght
     {
-        public Vector3 AdjustMovement(GameObject go, List<GameObject> connections, Vector3 wishPosition)
+        internal static Vector3 AdjustMovement(GameObject go, List<GameObject> connections, Vector3 wishPosition)
         {
             throw new NotImplementedException();
         }

@@ -32,14 +32,14 @@ namespace Assets.Scripts.Controls
         }
 
 
-        public void Update(KeyboardActions action)
+        public void Update(KeyboardAction action)
         {
 
-            if (action == KeyboardActions.Spawn && selectedObjet != null)
+            if (action == KeyboardAction.Spawn && selectedObjet != null)
             {
                 SpawnOptions();
             }
-            else if (action == KeyboardActions.Move && selectedObjet != null)
+            else if (action == KeyboardAction.Move && selectedObjet != null)
             {
                 MoveOptions();
             }
@@ -54,13 +54,13 @@ namespace Assets.Scripts.Controls
         // Mouse
         private void SelectionOptions()
         {
-            MouseActions action = MouseControls.DetectClick(false); // to be done if holdind press or hit press
+            MouseAction action = MouseControls.DetectClick(false); // to be done if holdind press or hit press
 
-            if (action == MouseActions.Select)
+            if (action == MouseAction.Select)
             {
                 SelectObject();
             }
-            else if (action == MouseActions.Unselect)
+            else if (action == MouseAction.Unselect)
             {
                 selectedObjet = null;
             }
@@ -68,7 +68,7 @@ namespace Assets.Scripts.Controls
 
         private void MoveOptions()
         {
-            if (MouseControls.DetectClick(true) == MouseActions.Select) // til holding click
+            if (MouseControls.DetectClick(true) == MouseAction.Select) // til holding click
             {
                 if ((a_que & ActionsQue.Move) != ActionsQue.Move)
                 {
@@ -81,7 +81,7 @@ namespace Assets.Scripts.Controls
 
         private void SpawnOptions()
         {
-            if (MouseControls.DetectClick(true) == MouseActions.Select) // til holding click
+            if (MouseControls.DetectClick(true) == MouseAction.Select) // til holding click
             {
                 if (noHoldLastFrame) // after 1st frame doesnt enter
                 {

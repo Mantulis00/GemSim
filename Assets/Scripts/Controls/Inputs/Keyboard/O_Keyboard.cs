@@ -6,31 +6,31 @@ namespace Assets.Scripts.Controls.Keyboard
     class O_Keyboard
     {
         private float rotationSensitivity = 50f;
-        public KeyboardActions action { get; private set; }
+        public KeyboardAction action { get; private set; }
 
 
         internal O_Keyboard()
         {
-            action = KeyboardActions.Reset;
+            action = KeyboardAction.Reset;
         }
 
         public void Update(GameObject selectedObject)
         {
             GetKeyboardAction();
 
-            if (action == KeyboardActions.Rotate)
+            if (action == KeyboardAction.Rotate)
                 RotateObject(selectedObject);
             
         }
 
         private void GetKeyboardAction()
         {
-            KeyboardActions action = KeyboardControls.GetKeyboardAction();
+            KeyboardAction action = KeyboardControls.GetKeyboardAction();
 
             // if nothing pressed dont do anything  
             //can change action state only if action state is on reset
-            if (action == KeyboardActions.Hold || 
-                !(this.action == KeyboardActions.Reset || action == KeyboardActions.Reset)) return;
+            if (action == KeyboardAction.Hold || 
+                !(this.action == KeyboardAction.Reset || action == KeyboardAction.Reset)) return;
 
 
             this.action = action;

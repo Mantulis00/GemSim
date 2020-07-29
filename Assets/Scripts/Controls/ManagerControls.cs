@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Controls.Keyboard;
+using Assets.Scripts.Controls.Modes;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor.MemoryProfiler;
@@ -9,11 +10,14 @@ namespace Assets.Scripts.Controls
     class ManagerControls : MonoBehaviour
     {
         public SpawnerManager spawner;
+        internal Mode CurrentMode;
 
-        O_Camera o_camera;
-        O_Mause o_mouse;
-        O_Keyboard o_keyboard;
-        EditMode editMode;
+        private  O_Camera o_camera;
+       private O_Mause o_mouse;
+       private O_Keyboard o_keyboard;
+       private EditMode editMode;
+       private SimulationMode simulationMode;
+
 
 
         private void Start()
@@ -23,6 +27,7 @@ namespace Assets.Scripts.Controls
             o_keyboard = new O_Keyboard();
 
             editMode = new EditMode(o_mouse, this.transform, spawner);
+            CurrentMode = Mode.Edit;
         }
         private void Update()
         {
@@ -45,14 +50,23 @@ namespace Assets.Scripts.Controls
 
         private void PerformActions()
         {
-            if (o_mouse.selectedObjet != null)
+           if (CurrentMode == Mode.Edit)
             {
-                if (o_keyboard.action == KeyboardActions.Spawn)
-                    editMode.Spawn();
-                    
-                else if (o_keyboard.action == KeyboardActions.Move)
-                    editMode.Move();
+                if (o_mouse.selectedObjet != null)
+                {
+                    if (o_keyboard.action == KeyboardAction.Spawn)
+                        editMode.Spawn();
+
+                    else if (o_keyboard.action == KeyboardAction.Move)
+                        editMode.Move();
+                }
             }
+           else if (CurrentMode == Mode.Simulate)
+            {
+                if (o_keyboard.action == KeyboardAction.Move)
+                    simulationMode.Move();
+            }
+            
         }
 
 

@@ -2,7 +2,7 @@
 using System;
 
 [Flags]
-enum KeyboardRotations
+enum KeyboardRotations // only for rotating
 {
     Hold = 0,
     RotateLeft = 1,
@@ -10,9 +10,19 @@ enum KeyboardRotations
     RotateUp = 4,
     RotateDown = 8,
 }
+enum KeyboardAction
+{
+    Hold,
+    Reset,
+    Rotate,
+    Spawn,
+    Move,
+    Delete,
+}
+
 
 [Flags]
-enum ActionsQue
+enum ActionsQue 
 {
     Hold = 0,
     //Spawn
@@ -25,18 +35,7 @@ enum ActionsQue
 }
 
 
-enum KeyboardActions
-{
-   Hold,
-   Reset,
-   Rotate,
-   Spawn,
-   Move,
-   Delete,
-}
-
-
-enum MouseActions
+enum MouseAction
 {
     Hold = 0,
     Select = 1,
@@ -44,5 +43,10 @@ enum MouseActions
     Delete = 4,
 }
 
-
+enum Mode
+{
+    Hold,
+    Edit,
+    Simulate,
+}
 

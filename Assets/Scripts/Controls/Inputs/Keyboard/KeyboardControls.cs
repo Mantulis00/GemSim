@@ -9,15 +9,15 @@ namespace Assets.Scripts.Controls
 {
     static class KeyboardControls
     {
-        public static KeyboardActions GetKeyboardAction()
+        public static KeyboardAction GetKeyboardAction()
         {
-            KeyboardActions action = KeyboardActions.Hold;
+            KeyboardAction action = KeyboardAction.Hold;
 
-            if (Input.GetKeyDown(KeyCode.Space)) action = KeyboardActions.Reset;
-            else if (Input.GetKeyDown(KeyCode.R)) action = KeyboardActions.Rotate;
-            else if (Input.GetKeyDown(KeyCode.S)) action = KeyboardActions.Spawn;
-            else if (Input.GetKeyDown(KeyCode.M)) action = KeyboardActions.Move;
-            else if (Input.GetKeyDown(KeyCode.D)) action = KeyboardActions.Delete;
+            if (Input.GetKeyDown(KeyCode.Space)) action = KeyboardAction.Reset;
+            else if (Input.GetKeyDown(KeyCode.R)) action = KeyboardAction.Rotate;
+            else if (Input.GetKeyDown(KeyCode.S)) action = KeyboardAction.Spawn;
+            else if (Input.GetKeyDown(KeyCode.M)) action = KeyboardAction.Move;
+            else if (Input.GetKeyDown(KeyCode.D)) action = KeyboardAction.Delete;
 
 
             return action;

@@ -3,6 +3,8 @@ using Assets.Scripts.Spawn;
 using Assets.Scripts.Spawn.Structures.Setup;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using UnityEditor.MemoryProfiler;
 using UnityEngine;
 
 
@@ -126,6 +128,17 @@ public class SpawnerManager : MonoBehaviour
             return structureManager.GetConnections(go, structures[go]);
         else
             return null;
+    }
+
+    internal List<GameObject> GetConnectionsPoints(GameObject go)
+    {
+        List<GameObject> goList = new List<GameObject>();
+
+        foreach(Structure.connection sc in GetConnections(go).ToList())
+        {
+            goList.Add(sc.endPoint);
+        }
+        return goList;
     }
 
 
