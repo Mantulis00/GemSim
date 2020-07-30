@@ -82,7 +82,6 @@ namespace Assets.Scripts.Controls
             {
                 if (o_keyboard.action == KeyboardAction.Move)
                 {
-                    Debug.Log("de");
                     simulationMode.Move();
                 }
 
