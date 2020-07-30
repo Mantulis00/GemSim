@@ -1,4 +1,5 @@
 ﻿
+using Assets.Scripts.Geometry.Objects.VerticeTypes;
 using Assets.Scripts.Geometry.Types;
 using Assets.Scripts.Spawn;
 using System;
@@ -9,11 +10,11 @@ namespace Assets.Scripts.Geometry
 {
     public  class GeometryManager
     {
-         Dictionary<GameObject, GeometryType> geometryTypes;
+         Dictionary<GameObject, IGeometry> geometryTypes;
 
         public GeometryManager()
         {
-            geometryTypes = new Dictionary<GameObject, GeometryType>();
+            geometryTypes = new Dictionary<GameObject, IGeometry>();
 
             /*GameObject go = null;
             BallPivot b = new BallPivot() ;
@@ -28,14 +29,18 @@ namespace Assets.Scripts.Geometry
             }
 
             if (type == GeometryType.SingleAxis)
-                geometryTypes.Add(go, type);
+            {
+                OneAxisPivot geo = new OneAxisPivot();
+                geometryTypes.Add(go, geo);
+            }
+                
         }
 
         internal void AdjustMovement(GameObject go, List<GameObject> connections, Vector3 wishPosition)
         {
-            if (geometryTypes[go] == GeometryType.BallAxis)
+            if (geometryTypes[go] is  OneAxisPivot)
             {
-                go.transform.position = OneAxisPivot.AdjustMovement(go, connections, wishPosition);
+                go.transform.position = geometryTypes[go].AdjustMovement(go, connections, wishPosition);
             }
         }
 

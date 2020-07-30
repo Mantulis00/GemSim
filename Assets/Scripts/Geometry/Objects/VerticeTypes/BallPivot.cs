@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Scripts.Geometry.Objects.VerticeTypes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,9 +8,16 @@ using UnityEngine;
 
 namespace Assets.Scripts.Geometry.Types
 {
-    internal static class BallPivot  // ball joint - connectors have to stay same lenght
+    internal  class BallPivot : IGeometry  // ball joint - connectors have to stay same lenght
     {
-        internal static Vector3 AdjustMovement(GameObject go, List<GameObject> connections, Vector3 wishPosition)
+        public Vector3 GetSolidLocation(GameObject go)
+        {
+            throw new NotImplementedException();
+        }
+
+
+
+        public Vector3 IGeometry.AdjustMovement(GameObject go, List<GameObject> connections, Vector3 wishPosition)
         {
             throw new NotImplementedException();
         }

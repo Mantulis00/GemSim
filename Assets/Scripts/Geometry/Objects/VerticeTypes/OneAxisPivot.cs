@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Scripts.Geometry.Objects.VerticeTypes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,12 +8,12 @@ using UnityEngine;
 
 namespace Assets.Scripts.Geometry.Types
 {
-    internal static class OneAxisPivot 
+    internal  class OneAxisPivot : IGeometry
     {
         /// <summary>
         /// can work only if all connections are on the same axis and have same rotation
         /// <returns></returns>
-        internal static Vector3 AdjustMovement(GameObject go, List<GameObject> connections, Vector3 wishPosition)
+        public Vector3 AdjustMovement(GameObject go, List<GameObject> connections, Vector3 wishPosition)
         {
             Vector3 solidAxis = new Vector3();
             
@@ -61,6 +62,10 @@ namespace Assets.Scripts.Geometry.Types
         }
 
 
+        public Vector3 GetSolidLocation(GameObject go)
+        {
+            throw new NotImplementedException();
+        }
 
     }
 }
