@@ -40,10 +40,20 @@ namespace Assets.Scripts.Geometry
 
         internal void AdjustMovement(GameObject go, List<GameObject> connections, Vector3 wishPosition)
         {
-            if (geometryTypes[go] is  OneAxisPivot)
+            if (!geometryTypes.ContainsKey(go))
             {
-                go.transform.position = geometryTypes[go].AdjustMovement(go, connections, wishPosition);
+                GiveType(go, GeometryType.SingleAxis); // temp
             }
+
+           // Debug.Log(geometryTypes[go]);
+
+         //   if (geometryTypes[go] is  OneAxisPivot)
+         //   {
+            //    Debug.Log("de");
+
+               // go.transform.position =
+            geometryTypes[go].AdjustMovement(go, connections, wishPosition);
+          //  }
         }
 
 

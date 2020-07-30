@@ -12,6 +12,7 @@ namespace Assets.Scripts.Controls.Keyboard
         internal O_Keyboard()
         {
             action = KeyboardAction.Reset;
+            kSwitch = KeyboardSwitch.Hold;
         }
 
         public void Update(GameObject selectedObject)

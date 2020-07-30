@@ -19,8 +19,8 @@ namespace Assets.Scripts.Geometry.Types
         public Vector3 AdjustMovement(GameObject go, List<GameObject> connections, Vector3 wishPosition)
         {
             Vector3 solidAxis = new Vector3();
-            
 
+            
 
             if (connections.Count > 0) // check if has connections at all
             {
@@ -32,15 +32,20 @@ namespace Assets.Scripts.Geometry.Types
                 return wishPosition;
             }
 
+            
+
             foreach (GameObject cg in connections) // check if connections are in one axis
             {
-                if (cg.transform.position.y/cg.transform.position.x != solidAxis.y/solidAxis.x ||
-                    cg.transform.position.z / cg.transform.position.x != solidAxis.z / solidAxis.x )
+                Vector3 cgT = new Vector3();
+                cgT = cg.transform.position - go.transform.position;
+
+                if (cgT.y/cgT.x != solidAxis.y/solidAxis.x ||
+                    cgT.z / cgT.x != solidAxis.z / solidAxis.x )
                 {
                     return go.transform.position; // cannot move if 
                 }
             }
-
+           
 
             Vector3 rotation = go.transform.rotation.eulerAngles;
             Vector3 wishAngle = GetWishAngle(solidAxis);
@@ -50,11 +55,13 @@ namespace Assets.Scripts.Geometry.Types
             Vector3 newPos = new Vector3();
 
 
-            newPos.z = (float)(solidAxis.magnitude / Math.Tan(wishAngle.y) / 180 * Math.PI);
+            newPos.z = (float)(solidAxis.magnitude * Math.Tan(wishAngle.y) / 180 * Math.PI);
             newPos.y = (float)(newPos.z * Math.Tan(wishAngle.x) / 180 * Math.PI);
-            newPos.x = (float)(newPos.y / Math.Tan(wishAngle.z) / 180 * Math.PI);
+            newPos.x = (float)(newPos.y * Math.Tan(wishAngle.z) / 180 * Math.PI);
 
             go.transform.position = connections[0].transform.position + newPos;
+
+            Debug.Log(connections[0].transform.position + newPos);
 
             return go.transform.position;
         }

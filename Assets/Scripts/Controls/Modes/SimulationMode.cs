@@ -29,12 +29,15 @@ namespace Assets.Scripts.Controls.Modes
 
         public void Move()
         {
-            geometryManager.GiveType(o_mouse.selectedObjet, GeometryType.SingleAxis); // temp
+            if ((o_mouse.a_que & ActionsQue.Move) == ActionsQue.Move)
+             {
+                geometryManager.AdjustMovement(
+                    o_mouse.selectedObjet,
+                    spawner.GetConnectionsPoints(o_mouse.selectedObjet),
+                    spawner.MovePoint(null, cameraTransform, o_mouse.clickCoords_s));
 
-            geometryManager.AdjustMovement(
-                o_mouse.selectedObjet,
-                spawner.GetConnectionsPoints(o_mouse.selectedObjet), 
-                spawner.MovePoint(null, cameraTransform, o_mouse.clickCoords_s));
+                o_mouse.ActionAddressed(ActionsQue.Move);
+            }
         }
     }
 }

@@ -27,7 +27,7 @@ namespace Assets.Scripts.Controls
             o_keyboard = new O_Keyboard();
 
             editMode = new EditMode(o_mouse, o_camera.cam.transform, spawner);
-            SimulationMode simulationMode = new SimulationMode(o_mouse, o_camera.cam.transform, spawner);
+            simulationMode = new SimulationMode(o_mouse, o_camera.cam.transform, spawner);
 
             CurrentMode = Mode.Edit; // temp
         }
@@ -82,6 +82,7 @@ namespace Assets.Scripts.Controls
             {
                 if (o_keyboard.action == KeyboardAction.Move)
                 {
+                    Debug.Log("de");
                     simulationMode.Move();
                 }
 
