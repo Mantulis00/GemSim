@@ -8,13 +8,18 @@ namespace Assets.Scripts.Controls.Modes
     {
         GeometryManager geometryManager;
         O_Mause o_mouse;
+        Transform cameraTransform;
         SpawnerManager spawner;
-        public SimulationMode(O_Mause o_mouse, SpawnerManager spawner)
+        public SimulationMode(O_Mause o_mouse, Transform cameraTransform, SpawnerManager spawner)
         {
             geometryManager = new GeometryManager();
             this.o_mouse = o_mouse;
+            this.cameraTransform = cameraTransform;
             this.spawner = spawner;
         }
+
+
+
 
         public void GiveType(GameObject go, GeometryType type)
         {
@@ -22,12 +27,14 @@ namespace Assets.Scripts.Controls.Modes
         }
 
 
-        public void Move(GameObject go, List<GameObject> connections, Transform cameraPos)
+        public void Move()
         {
+            geometryManager.GiveType(o_mouse.selectedObjet, GeometryType.SingleAxis); // temp
+
             geometryManager.AdjustMovement(
-                go, 
-                connections, 
-                spawner.MovePoint(null, cameraPos, o_mouse.clickCoords_s));
+                o_mouse.selectedObjet,
+                spawner.GetConnectionsPoints(o_mouse.selectedObjet), 
+                spawner.MovePoint(null, cameraTransform, o_mouse.clickCoords_s));
         }
     }
 }

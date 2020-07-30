@@ -16,10 +16,10 @@ namespace Assets.Scripts.Geometry
         {
             geometryTypes = new Dictionary<GameObject, IGeometry>();
 
-            /*GameObject go = null;
-            BallPivot b = new BallPivot() ;
-            geometryType.Add(go, b);*/
         }
+
+        //temp test
+
 
         internal void GiveType(GameObject go, GeometryType type)
         {
@@ -35,6 +35,8 @@ namespace Assets.Scripts.Geometry
             }
                 
         }
+
+
 
         internal void AdjustMovement(GameObject go, List<GameObject> connections, Vector3 wishPosition)
         {

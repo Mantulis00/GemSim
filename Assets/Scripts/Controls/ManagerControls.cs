@@ -26,12 +26,14 @@ namespace Assets.Scripts.Controls
             o_mouse = new O_Mause();
             o_keyboard = new O_Keyboard();
 
-            editMode = new EditMode(o_mouse, this.transform, spawner);
-            SimulationMode simulationMode = new SimulationMode(o_mouse, spawner);
-            CurrentMode = Mode.Edit;
+            editMode = new EditMode(o_mouse, o_camera.cam.transform, spawner);
+            SimulationMode simulationMode = new SimulationMode(o_mouse, o_camera.cam.transform, spawner);
+
+            CurrentMode = Mode.Edit; // temp
         }
         private void Update()
         {
+            CheckMode();
             UpdateOStatus();
 
             if (o_mouse.a_que != 0)
@@ -47,6 +49,20 @@ namespace Assets.Scripts.Controls
             o_mouse.Update(o_keyboard.action);
 
             return actionsExist;
+        }
+
+        private void CheckMode()
+        {
+            if (o_keyboard.kSwitch != KeyboardSwitch.Hold)
+            {
+                if (o_keyboard.kSwitch == KeyboardSwitch.ChangeMode)
+                {
+                    o_keyboard.AddressSwitch();
+
+                    if (CurrentMode == Mode.Edit) CurrentMode = Mode.Simulate;
+                    else if (CurrentMode == Mode.Simulate) CurrentMode = Mode.Edit;
+                }
+            }
         }
 
         private void PerformActions()
@@ -65,7 +81,10 @@ namespace Assets.Scripts.Controls
            else if (CurrentMode == Mode.Simulate)
             {
                 if (o_keyboard.action == KeyboardAction.Move)
+                {
                     simulationMode.Move();
+                }
+
             }
             
         }

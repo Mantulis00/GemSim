@@ -8,13 +8,13 @@ namespace Assets.Scripts.Controls
     {
         Vector3 startPos, finishPos;
         O_Mause o_mouse;
-        Transform managerTransform;
+        Transform cameraTransform;
         SpawnerManager spawner;
 
         public EditMode(O_Mause o_mouse, Transform managerTransform, SpawnerManager spawner)
         {
             this.o_mouse = o_mouse;
-            this.managerTransform = managerTransform;
+            this.cameraTransform = managerTransform;
             this.spawner = spawner;
         }
 
@@ -28,7 +28,7 @@ namespace Assets.Scripts.Controls
                 {
                     startPos = spawner.MovePoint(
                         spawner.MakeGO(o_mouse.selectedObjet, o_mouse.CheckForObject(), SpawnOptions.Start),
-                        managerTransform, o_mouse.clickCoords_s);
+                        cameraTransform, o_mouse.clickCoords_s);
                 }
 
                 o_mouse.ActionAddressed(ActionsQue.SpawnStart);
@@ -39,7 +39,9 @@ namespace Assets.Scripts.Controls
                 {
                     finishPos = spawner.MovePoint(
                         spawner.MakeGO(o_mouse.selectedObjet, o_mouse.CheckForObject(),
-                        SpawnOptions.Finish), managerTransform, o_mouse.clickCoords_f);
+                        SpawnOptions.Finish), 
+                        cameraTransform, 
+                        o_mouse.clickCoords_f);
 
 
                     spawner.MoveConnection(
@@ -57,7 +59,7 @@ namespace Assets.Scripts.Controls
             {
                 if (!spawner.CheckConnector(o_mouse.selectedObjet))
                 {
-                    spawner.MovePoint(o_mouse.selectedObjet, managerTransform, o_mouse.clickCoords_s);
+                    spawner.MovePoint(o_mouse.selectedObjet, cameraTransform, o_mouse.clickCoords_s);
 
                     MoveAdjustConnections(spawner.GetConnections(o_mouse.selectedObjet));
                 }
