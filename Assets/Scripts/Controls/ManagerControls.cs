@@ -27,6 +27,7 @@ namespace Assets.Scripts.Controls
             o_keyboard = new O_Keyboard();
 
             editMode = new EditMode(o_mouse, this.transform, spawner);
+            SimulationMode simulationMode = new SimulationMode(o_mouse, spawner);
             CurrentMode = Mode.Edit;
         }
         private void Update()

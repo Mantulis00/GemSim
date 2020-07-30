@@ -167,15 +167,17 @@ public class SpawnerManager : MonoBehaviour
         // position
         Vector3 goPosition = TangentProjection.SetupSpawnDistance(cameraPos, mouseLocation, spawnDistance); // location + mqpw
 
-        if (go!=null)
-             go.transform.position = goPosition;
-
-        // rotation
-        Vector3 goRotation = cameraPos.transform.rotation.eulerAngles;
-        goRotation.x = 0;
-
         if (go != null)
+        {
+            go.transform.position = goPosition;
+
+            // rotation
+            Vector3 goRotation = cameraPos.transform.rotation.eulerAngles;
+            goRotation.x = 0;
+
+
             go.transform.rotation = Quaternion.Euler(goRotation);
+        }
 
         return goPosition;
     }
