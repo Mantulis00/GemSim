@@ -18,7 +18,7 @@ namespace Assets.Scripts.Spawn
             Vector3 tangentProjectionOffsets = ProjectToScreen(camPos.gameObject.GetComponent<Camera>(), mousePos, tangentDistance);
 
 
-            if (Math.Abs(camPos.rotation.y + ProjectedAngle(camPos.gameObject.GetComponent<Camera>(), mousePos.x, true)) >= 90) // temp. need 2b cleaned
+            if (Math.Abs(camPos.rotation.y + ProjectedAngle(camPos.gameObject.GetComponent<Camera>(), mousePos.x, true)) >= 90) // temp. need 2b cleaned (for adjusting to unity angles)
             {
                 spawnLocation.x = camPos.position.x - tangentProjectionOffsets.x;
                 spawnLocation.z = camPos.position.z - tangentProjectionOffsets.z;
@@ -33,6 +33,10 @@ namespace Assets.Scripts.Spawn
 
             return spawnLocation;
         }
+
+
+
+
 
 
         private static  Vector3 ProjectToScreen(Camera cam, Vector2 mousePos, float tangentDistance)
@@ -86,7 +90,7 @@ namespace Assets.Scripts.Spawn
             float angle;
 
             if (horizontal)
-                angle = (float)Math.Atan((2 * pos / cam.scaledPixelWidth - 1) * axisFOV); // (IMG) FOV_1 attached
+                angle = (float)Math.Atan((2 * pos / cam.scaledPixelWidth - 1) * axisFOV); // (IMG) FOV_1 attached formula to get +- (center around middle)
             else
             {
                 angle = 2 * (float)Math.Atan((2 * pos / cam.scaledPixelHeight - 1) * axisFOV); // (IMG) FOV_1 attached
@@ -94,7 +98,30 @@ namespace Assets.Scripts.Spawn
 
 
 
-            return angle;
+            return angle; // angle projected from screen \ | /
+                                                       // \|/
+        }
+
+        public static Vector2 ProjectedAngle(Camera cam, Vector3 pos)
+        {
+            float axisFOV_H, axisFOV_V;
+
+
+                axisFOV_H = (float)Math.Tan(cam.fieldOfView / 360 * Math.PI) * cam.aspect; // tan of horizontal fov
+
+                axisFOV_V = (float)Math.Tan(cam.fieldOfView / 360 * Math.PI) / cam.aspect; // tan of horizontal fov
+
+
+            Vector2 angle = new Vector2();
+
+
+                angle.x = (float)Math.Atan((2 * pos.x / cam.scaledPixelWidth - 1) * axisFOV_H); // (IMG) FOV_1 attached formula to get +- (center around middle)
+                angle.y = 2 * (float)Math.Atan((2 * pos.y / cam.scaledPixelHeight - 1) * axisFOV_V); // (IMG) FOV_1 attached
+            
+
+
+
+            return angle; 
         }
 
     }

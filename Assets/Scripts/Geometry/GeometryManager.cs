@@ -51,7 +51,7 @@ namespace Assets.Scripts.Geometry
          //   {
             //    Debug.Log("de");
 
-               // go.transform.position =
+
             geometryTypes[go].AdjustMovement(go, connections, wishPosition);
           //  }
         }

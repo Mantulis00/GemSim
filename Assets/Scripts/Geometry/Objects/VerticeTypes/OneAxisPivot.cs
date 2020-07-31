@@ -34,7 +34,7 @@ namespace Assets.Scripts.Geometry.Types
 
             
 
-            foreach (GameObject cg in connections) // check if connections are in one axis
+           /* foreach (GameObject cg in connections) // check if connections are in one axis
             {
                 Vector3 cgT = new Vector3();
                 cgT = cg.transform.position - go.transform.position;
@@ -44,14 +44,14 @@ namespace Assets.Scripts.Geometry.Types
                 {
                     return go.transform.position; // cannot move if 
                 }
-            }
+            }*/
            
 
            // Vector3 rotation = go.transform.rotation.eulerAngles;
 
              Vector3 wishAngle = new Vector3();
             // wishAngle = connections[0].transform.position - wishPosition;
-             wishAngle = GetWishAngle(connections[0].transform.position - wishPosition);
+             wishAngle = GetWishAngle( wishPosition - connections[0].transform.position );
             
            //  wishAngle.y = connections[0].transform.rotation.eulerAngles.y;
             //  wishAngle.z = connections[0].transform.rotation.eulerAngles.z;
@@ -63,15 +63,35 @@ namespace Assets.Scripts.Geometry.Types
              newPos.y = (float)(newPos.x * Math.Tan(wishAngle.y / 180 * Math.PI) * Math.Tan(wishAngle.x / 180 * Math.PI));
              newPos.z = newPos.x * (float)Math.Tan(wishAngle.y / 180 * Math.PI);*/
 
-            newPos.x = solidAxis.magnitude * (float)Math.Cos(wishAngle.x/180*Math.PI);
-            newPos.y = solidAxis.magnitude * (float)Math.Sin(wishAngle.x / 180 * Math.PI);
+
+
+
+           
+           /* if ((wishPosition - connections[0].transform.position).y < 0 && (wishPosition - connections[0].transform.position).x < 0) // temp. need 2b cleaned (for adjusting to unity angles)
+            {
+                newPos.x = -solidAxis.magnitude * (float)Math.Cos(wishAngle.x / 180 * Math.PI) * (float)Math.Sin(wishAngle.y / 180 * Math.PI);
+                newPos.z = solidAxis.magnitude * (float)Math.Cos(wishAngle.x / 180 * Math.PI) * (float)Math.Cos(wishAngle.y / 180 * Math.PI);
+                newPos.y = solidAxis.magnitude * (float)Math.Sin(wishAngle.x / 180 * Math.PI);
+            }
+            else
+            {
+                newPos.y = solidAxis.magnitude * (float)Math.Sin(wishAngle.x / 180 * Math.PI);
+                newPos.x = solidAxis.magnitude * (float)Math.Cos(wishAngle.x / 180 * Math.PI) * (float)Math.Sin(wishAngle.y / 180 * Math.PI);
+                newPos.z = solidAxis.magnitude * (float)Math.Cos(wishAngle.x / 180 * Math.PI) * (float)Math.Cos(wishAngle.y / 180 * Math.PI);
+           }*/
+
+
+
+           // newPos.y = solidAxis.magnitude * (float)Math.Sin(wishAngle.x / 180 * Math.PI);
+            //newPos.x *= (float)Math.Sin(wishAngle.x / 180 * Math.PI);
 
             // Debug.Log(wishAngle);
             //newPos.y = (float)(newPos.z * Math.Tan(wishAngle.x / 180 * Math.PI) );
             //newPos.x = (float)(newPos.y / Math.Tan(wishAngle.z / 180 * Math.PI) );
 
             go.transform.position = connections[0].transform.position + newPos;
-            Debug.Log(wishAngle);
+            // Debug.Log(wishAngle);
+            
 
             
 
@@ -80,18 +100,54 @@ namespace Assets.Scripts.Geometry.Types
         }
 
 
+        public static Vector3 Short(Vector3 fromC, Vector3 toC, Vector3 vec)
+        {
+            Vector3 coor = new Vector3();
+            float lambda =
+                vec.x * (toC.x - fromC.x) +
+                vec.y * (toC.y - fromC.y) +
+                vec.z * (toC.z - fromC.z);
+
+            lambda /=
+                vec.x * vec.x +
+                vec.y * vec.y +
+                vec.z * vec.z;
+
+            coor.x = fromC.x + lambda * vec.x;
+            coor.y = fromC.y + lambda * vec.y;
+            coor.z = fromC.z + lambda * vec.z;
+
+            Debug.Log(coor);
+
+            return coor;
+        }
+
+
         private static Vector3 GetWishAngle(Vector3 axis)
         {
+            Debug.Log(axis);
+            Vector3 vec = new Vector3(axis.x, axis.y, axis.z);
 
-            //axis.x = (float)Math.Atan(axis.y / axis.z ) * 180 / (float)Math.PI;
-            //axis.y = (float)Math.Atan(axis.x / axis.z) * 180/(float)Math.PI ;
-            axis.x = (float)Math.Atan(axis.y / axis.x) * 180 / (float)Math.PI;
-            axis.y = 0;
-            axis.z = 0;
+            //vec.x = (float)Math.Atan(axis.y / axis.z ) * 180 / (float)Math.PI;
+             vec.y = Math.Abs((float)Math.Atan(axis.x / axis.z) * 180/(float)Math.PI) ;
+            vec.x = Math.Abs((float)Math.Atan(axis.y / axis.x) * 180 / (float)Math.PI);
+        //    vec.y = 0;
+            vec.z = 0;
             // wishAngle.z = (float)Math.Atan(axis.y / axis.x);
 
 
-            return axis;
+            if (axis.y < 0) vec.x *= -1;
+            else if (axis.x < 0) vec.y *= -1;
+
+
+
+
+
+
+
+
+
+            return vec;
         }
 
 
