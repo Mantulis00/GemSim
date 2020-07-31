@@ -126,10 +126,13 @@ namespace Assets.Scripts.Spawn
             return angle;
         }
 
-        public static Vector3 Short(Vector3 fromC, Vector3 toC, Vector3 vec)
+        public static Vector3 Short(Vector3 fromC, Vector3 toC, Vector3 vecC)
         {
-            // Vector3 vec = new Vector3(vecC);
-            Debug.Log(vec);
+             Vector3 vec = new Vector3(
+                 (float)Math.Cos(vecC.x / 180 * Math.PI)* (float)Math.Sin(vecC.y / 180 * Math.PI),
+                 (float)Math.Sin(vecC.x / 180 * Math.PI),
+                 (float)Math.Cos(vecC.x / 180 * Math.PI) * (float)Math.Cos(vecC.y / 180 * Math.PI));
+            
 
             Vector3 coor = new Vector3();
             float lambda =
@@ -146,8 +149,9 @@ namespace Assets.Scripts.Spawn
             coor.y = fromC.y + lambda * vec.y;
             coor.z = fromC.z + lambda * vec.z;
 
-            //   Debug.Log(vec);
-            //   Debug.Log(" xd  " + toC);
+            Debug.Log(coor);
+
+
 
             return coor;
         }

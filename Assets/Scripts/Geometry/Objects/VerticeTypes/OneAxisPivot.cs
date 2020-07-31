@@ -84,14 +84,11 @@ namespace Assets.Scripts.Geometry.Types
            // newPos.y = solidAxis.magnitude * (float)Math.Sin(wishAngle.x / 180 * Math.PI);
             //newPos.x *= (float)Math.Sin(wishAngle.x / 180 * Math.PI);
 
-            // Debug.Log(wishAngle);
             //newPos.y = (float)(newPos.z * Math.Tan(wishAngle.x / 180 * Math.PI) );
             //newPos.x = (float)(newPos.y / Math.Tan(wishAngle.z / 180 * Math.PI) );
 
             go.transform.position = connections[0].transform.position + newPos;
-            // Debug.Log(wishAngle);
-            
-
+   
             
 
 

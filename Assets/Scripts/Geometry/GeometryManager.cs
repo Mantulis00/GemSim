@@ -49,7 +49,6 @@ namespace Assets.Scripts.Geometry
 
          //   if (geometryTypes[go] is  OneAxisPivot)
          //   {
-            //    Debug.Log("de");
 
 
             geometryTypes[go].AdjustMovement(go, connections, TangentProjection.Short(cam.transform.position, go.transform.position, angleProjection));
