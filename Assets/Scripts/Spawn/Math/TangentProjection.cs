@@ -102,7 +102,7 @@ namespace Assets.Scripts.Spawn
                                                        // \|/
         }
 
-        public static Vector2 ProjectedAngle(Camera cam, Vector3 pos)
+        public static Vector3 ProjectedAngle(Camera cam, Vector2 pos)
         {
             float axisFOV_H, axisFOV_V;
 
@@ -112,17 +112,46 @@ namespace Assets.Scripts.Spawn
                 axisFOV_V = (float)Math.Tan(cam.fieldOfView / 360 * Math.PI) / cam.aspect; // tan of horizontal fov
 
 
-            Vector2 angle = new Vector2();
+            Vector3 angle = new Vector3();
 
 
-                angle.x = (float)Math.Atan((2 * pos.x / cam.scaledPixelWidth - 1) * axisFOV_H); // (IMG) FOV_1 attached formula to get +- (center around middle)
-                angle.y = 2 * (float)Math.Atan((2 * pos.y / cam.scaledPixelHeight - 1) * axisFOV_V); // (IMG) FOV_1 attached
-            
+                angle.y = (float)Math.Atan((2 * pos.x / cam.scaledPixelWidth - 1) * axisFOV_H); // (IMG) FOV_1 attached formula to get +- (center around middle)
+                angle.x = 2 * (float)Math.Atan((2 * pos.y / cam.scaledPixelHeight - 1) * axisFOV_V); // (IMG) FOV_1 attached
+
+
+            angle *= 180 / (float)Math.PI;
 
 
 
-            return angle; 
+            return angle;
         }
+
+        public static Vector3 Short(Vector3 fromC, Vector3 toC, Vector3 vec)
+        {
+            // Vector3 vec = new Vector3(vecC);
+            Debug.Log(vec);
+
+            Vector3 coor = new Vector3();
+            float lambda =
+                vec.x * (toC.x - fromC.x) +
+                vec.y * (toC.y - fromC.y) +
+                vec.z * (toC.z - fromC.z);
+
+            lambda /=
+                vec.x * vec.x +
+                vec.y * vec.y +
+                vec.z * vec.z;
+
+            coor.x = fromC.x + lambda * vec.x;
+            coor.y = fromC.y + lambda * vec.y;
+            coor.z = fromC.z + lambda * vec.z;
+
+            //   Debug.Log(vec);
+            //   Debug.Log(" xd  " + toC);
+
+            return coor;
+        }
+
 
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Geometry;
+using Assets.Scripts.Spawn;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -33,8 +34,10 @@ namespace Assets.Scripts.Controls.Modes
              {
                 geometryManager.AdjustMovement(
                     o_mouse.selectedObjet,
+                    cameraTransform.gameObject.GetComponent<Camera>().transform,
                     spawner.GetConnectionsPoints(o_mouse.selectedObjet),
-                    spawner.MovePoint(null, cameraTransform, o_mouse.clickCoords_s));
+                    cameraTransform.rotation.eulerAngles + 
+                    TangentProjection.ProjectedAngle(cameraTransform.gameObject.GetComponent<Camera>(), o_mouse.clickCoords_s));
 
                 o_mouse.ActionAddressed(ActionsQue.Move);
             }

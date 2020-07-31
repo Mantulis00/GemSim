@@ -17,7 +17,7 @@ namespace Assets.Scripts.Geometry.Types
         /// 
 
 
-        public Vector3 AdjustMovement(GameObject go, List<GameObject> connections, Vector3 wishPosition)
+        public void AdjustMovement(GameObject go, List<GameObject> connections, Vector3 wishPosition)
         {
             Vector3 solidAxis = new Vector3();
            
@@ -28,11 +28,10 @@ namespace Assets.Scripts.Geometry.Types
             }
             else
             {
-                go.transform.position = wishPosition;
-                return wishPosition;
+               // go.transform.position = wishPosition;
+                return ;
             }
 
-            
 
            /* foreach (GameObject cg in connections) // check if connections are in one axis
             {
@@ -59,15 +58,15 @@ namespace Assets.Scripts.Geometry.Types
             Vector3 newPos = new Vector3();
 
 
-            /* newPos.x = (float)(solidAxis.magnitude / Math.Sqrt(1+ Math.Abs(Math.Pow(Math.Tan(wishAngle.y / 180 * Math.PI), 2)) + Math.Abs(Math.Pow(Math.Tan(wishAngle.y / 180 * Math.PI), 2)) * Math.Abs(Math.Pow(Math.Tan(wishAngle.x / 180 * Math.PI), 2))) );
+             newPos.x = (float)(solidAxis.magnitude / Math.Sqrt(1+ Math.Abs(Math.Pow(Math.Tan(wishAngle.y / 180 * Math.PI), 2)) + Math.Abs(Math.Pow(Math.Tan(wishAngle.y / 180 * Math.PI), 2)) * Math.Abs(Math.Pow(Math.Tan(wishAngle.x / 180 * Math.PI), 2))) );
              newPos.y = (float)(newPos.x * Math.Tan(wishAngle.y / 180 * Math.PI) * Math.Tan(wishAngle.x / 180 * Math.PI));
-             newPos.z = newPos.x * (float)Math.Tan(wishAngle.y / 180 * Math.PI);*/
+             newPos.z = newPos.x * (float)Math.Tan(wishAngle.y / 180 * Math.PI);
 
 
 
 
            
-           /* if ((wishPosition - connections[0].transform.position).y < 0 && (wishPosition - connections[0].transform.position).x < 0) // temp. need 2b cleaned (for adjusting to unity angles)
+          /*  if ((wishPosition - connections[0].transform.position).y < 0 && (wishPosition - connections[0].transform.position).x < 0) // temp. need 2b cleaned (for adjusting to unity angles)
             {
                 newPos.x = -solidAxis.magnitude * (float)Math.Cos(wishAngle.x / 180 * Math.PI) * (float)Math.Sin(wishAngle.y / 180 * Math.PI);
                 newPos.z = solidAxis.magnitude * (float)Math.Cos(wishAngle.x / 180 * Math.PI) * (float)Math.Cos(wishAngle.y / 180 * Math.PI);
@@ -96,36 +95,15 @@ namespace Assets.Scripts.Geometry.Types
             
 
 
-            return go.transform.position;
+            //return go.transform.position;
         }
 
 
-        public static Vector3 Short(Vector3 fromC, Vector3 toC, Vector3 vec)
-        {
-            Vector3 coor = new Vector3();
-            float lambda =
-                vec.x * (toC.x - fromC.x) +
-                vec.y * (toC.y - fromC.y) +
-                vec.z * (toC.z - fromC.z);
 
-            lambda /=
-                vec.x * vec.x +
-                vec.y * vec.y +
-                vec.z * vec.z;
-
-            coor.x = fromC.x + lambda * vec.x;
-            coor.y = fromC.y + lambda * vec.y;
-            coor.z = fromC.z + lambda * vec.z;
-
-            Debug.Log(coor);
-
-            return coor;
-        }
 
 
         private static Vector3 GetWishAngle(Vector3 axis)
         {
-            Debug.Log(axis);
             Vector3 vec = new Vector3(axis.x, axis.y, axis.z);
 
             //vec.x = (float)Math.Atan(axis.y / axis.z ) * 180 / (float)Math.PI;

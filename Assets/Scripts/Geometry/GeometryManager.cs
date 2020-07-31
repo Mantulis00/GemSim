@@ -38,7 +38,7 @@ namespace Assets.Scripts.Geometry
 
 
 
-        internal void AdjustMovement(GameObject go, List<GameObject> connections, Vector3 wishPosition)
+        internal void AdjustMovement(GameObject go, Transform cam, List<GameObject> connections, Vector3 angleProjection)
         {
             if (!geometryTypes.ContainsKey(go))
             {
@@ -52,7 +52,7 @@ namespace Assets.Scripts.Geometry
             //    Debug.Log("de");
 
 
-            geometryTypes[go].AdjustMovement(go, connections, wishPosition);
+            geometryTypes[go].AdjustMovement(go, connections, TangentProjection.Short(cam.transform.position, go.transform.position, angleProjection));
           //  }
         }
 

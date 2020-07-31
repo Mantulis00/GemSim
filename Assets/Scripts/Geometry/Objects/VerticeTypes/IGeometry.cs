@@ -5,7 +5,9 @@ namespace Assets.Scripts.Geometry.Objects.VerticeTypes
 {
     public interface IGeometry
     {
-         Vector3 AdjustMovement(GameObject go, List<GameObject> connections, Vector3 wishPosition);
+         void AdjustMovement(GameObject go, List<GameObject> connections, Vector3 wishPosition);
          Vector3 GetSolidLocation(GameObject go);
+
+
     }
 }
