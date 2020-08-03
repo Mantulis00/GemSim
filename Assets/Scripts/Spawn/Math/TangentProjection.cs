@@ -8,7 +8,7 @@ using UnityEngine;
 
 
 
-namespace Assets.Scripts.Spawn
+namespace Assets.Scripts.Spawn.TangentProjection
 {
     public static class TangentProjection
     {
@@ -149,7 +149,7 @@ namespace Assets.Scripts.Spawn
             coor.y = fromC.y + lambda * vec.y;
             coor.z = fromC.z + lambda * vec.z;
 
-            Debug.Log(coor);
+            Debug.Log(vec);
 
 
 

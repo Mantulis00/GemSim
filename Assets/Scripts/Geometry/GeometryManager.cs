@@ -2,6 +2,8 @@
 using Assets.Scripts.Geometry.Objects.VerticeTypes;
 using Assets.Scripts.Geometry.Types;
 using Assets.Scripts.Spawn;
+using Assets.Scripts.Spawn.TangentProjection;
+using Assets.Test;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,7 +13,6 @@ namespace Assets.Scripts.Geometry
     public  class GeometryManager
     {
          Dictionary<GameObject, IGeometry> geometryTypes;
-
         public GeometryManager()
         {
             geometryTypes = new Dictionary<GameObject, IGeometry>();

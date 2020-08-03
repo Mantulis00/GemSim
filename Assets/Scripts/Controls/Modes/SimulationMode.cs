@@ -1,5 +1,5 @@
 ﻿using Assets.Scripts.Geometry;
-using Assets.Scripts.Spawn;
+using Assets.Scripts.Spawn.TangentProjection;
 using System.Collections.Generic;
 using UnityEngine;
 

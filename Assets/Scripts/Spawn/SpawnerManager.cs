@@ -1,10 +1,10 @@
 ﻿using Assets.Map2Math;
 using Assets.Scripts.Spawn;
+using Assets.Scripts.Spawn.TangentProjection;
 using Assets.Scripts.Spawn.Structures.Setup;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.MemoryProfiler;
 using UnityEngine;
 
 
@@ -205,7 +205,7 @@ public class SpawnerManager : MonoBehaviour
         Vector3 scales = new Vector3();
         scales.y = 0.1f;//go.transform.localScale.y/10;
         scales.z = 0.1f;//go.transform.localScale.z/10;
-        scales.x = Linear.Pythagoras3(lineDistance);
+        scales.x = lineDistance.magnitude;
         go.transform.localScale = scales;
 
     }
