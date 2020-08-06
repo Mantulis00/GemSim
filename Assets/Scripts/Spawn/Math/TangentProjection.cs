@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Animations;
 
 /// <summary>
 ///  Purpose: takes object to be cloned, mouse position on the screen, distance to tangent plane
@@ -64,11 +65,14 @@ namespace Assets.Scripts.Spawn.TangentProjection
             // then adjust horizontally
             // img_P2
 
+            
+            
             float horizontalAngle = ProjectedAngle(cam, mousePos.x, true);
             float distanceByHorizontal = tangentDistance * (float)(Math.Tan(horizontalAngle));
 
             distances.x += distanceByHorizontal * (float)Math.Cos(cam.transform.rotation.eulerAngles.y * Math.PI / 180);
             distances.z -= distanceByHorizontal * (float)Math.Sin(cam.transform.rotation.eulerAngles.y * Math.PI / 180);
+            
 
             return distances;
         }
@@ -77,14 +81,16 @@ namespace Assets.Scripts.Spawn.TangentProjection
         private static float ProjectedAngle(Camera cam, float pos, bool horizontal)
         {
             float axisFOV;
+            
 
-            if (horizontal)
+            if (horizontal) // from aspect ratio = tan(h2)/tan(v/2)
             {
                 axisFOV = (float)Math.Tan(cam.fieldOfView / 360 * Math.PI) * cam.aspect; // tan of horizontal fov
             }
             else
             {
-                axisFOV = (float)Math.Tan(cam.fieldOfView / 360 * Math.PI) / cam.aspect; // tan of horizontal fov
+
+                axisFOV = (float)Math.Tan(cam.fieldOfView / 360 * Math.PI);// / cam.aspect; // tan of horizontal fov
             }
 
             float angle;
@@ -93,14 +99,17 @@ namespace Assets.Scripts.Spawn.TangentProjection
                 angle = (float)Math.Atan((2 * pos / cam.scaledPixelWidth - 1) * axisFOV); // (IMG) FOV_1 attached formula to get +- (center around middle)
             else
             {
-                angle = 2 * (float)Math.Atan((2 * pos / cam.scaledPixelHeight - 1) * axisFOV); // (IMG) FOV_1 attached
+                angle =  (float)Math.Atan((2 * pos / cam.scaledPixelHeight - 1) * axisFOV); // (IMG) FOV_1 attached
             }
 
-
+           
 
             return angle; // angle projected from screen \ | /
                                                        // \|/
         }
+
+
+
 
         public static Vector3 ProjectedAngle(Camera cam, Vector2 pos)
         {

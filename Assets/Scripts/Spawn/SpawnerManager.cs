@@ -176,7 +176,7 @@ public class SpawnerManager : MonoBehaviour
             goRotation.x = 0;
 
 
-            go.transform.rotation = Quaternion.Euler(goRotation);
+             go.transform.rotation = Quaternion.Euler(goRotation);
         }
 
         return goPosition;
@@ -205,7 +205,7 @@ public class SpawnerManager : MonoBehaviour
         Vector3 scales = new Vector3();
         scales.y = 0.1f;//go.transform.localScale.y/10;
         scales.z = 0.1f;//go.transform.localScale.z/10;
-        scales.x = lineDistance.magnitude;
+        scales.x = Linear.Pythagoras3(lineDistance);//lineDistance.magnitude;
         go.transform.localScale = scales;
 
     }

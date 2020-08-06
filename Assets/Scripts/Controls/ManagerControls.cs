@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Controls.Keyboard;
 using Assets.Scripts.Controls.Modes;
+using Assets.Scripts.Spawn.Matricies;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor.MemoryProfiler;
@@ -18,7 +19,7 @@ namespace Assets.Scripts.Controls
        private EditMode editMode;
        private SimulationMode simulationMode;
 
-
+        //public GameObject goi; // test
 
         private void Start()
         {
@@ -82,7 +83,12 @@ namespace Assets.Scripts.Controls
             {
                 if (o_keyboard.action == KeyboardAction.Move)
                 {
-                    simulationMode.Move();
+                    GameObject ge;
+                   // ge =  Instantiate(goi) as GameObject; // test
+
+                  //  Matricies.Testerino(o_mouse.selectedObjet.transform.rotation.eulerAngles, o_mouse.selectedObjet.transform.position, ge);
+
+                    //simulationMode.Move();
                 }
 
             }
