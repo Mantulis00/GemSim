@@ -19,7 +19,7 @@ namespace Assets.Scripts.Controls
        private EditMode editMode;
        private SimulationMode simulationMode;
 
-        //public GameObject goi; // test
+        public GameObject goi; // test
 
         private void Start()
         {
@@ -84,9 +84,9 @@ namespace Assets.Scripts.Controls
                 if (o_keyboard.action == KeyboardAction.Move)
                 {
                     GameObject ge;
-                   // ge =  Instantiate(goi) as GameObject; // test
+                    ge =  Instantiate(goi) as GameObject; // test
 
-                  //  Matricies.Testerino(o_mouse.selectedObjet.transform.rotation.eulerAngles, o_mouse.selectedObjet.transform.position, ge);
+                    Matricies.Testerino(o_mouse.selectedObjet.transform.rotation.eulerAngles, o_mouse.selectedObjet.transform.position, ge);
 
                     //simulationMode.Move();
                 }
