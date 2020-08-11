@@ -87,7 +87,9 @@ namespace Assets.Scripts.Controls
             {
                 if (o_keyboard.action == KeyboardAction.Move)
                 {
-                    simulationMode.Move(MoveAdjustConnections(spawner.GetConnections(o_mouse.selectedObjet)), 10f);
+                    /// pass GO around which it will move, 
+                    ///pass connection lenght between objects
+                    simulationMode.Move(MoveAdjustConnections(spawner.GetConnections(o_mouse.selectedObjet)), 10f); 
 
                    // MoveAdjustConnections(spawner.GetConnections(o_mouse.selectedObjet));
 

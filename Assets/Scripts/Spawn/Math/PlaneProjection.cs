@@ -47,7 +47,7 @@ namespace Assets.Scripts.Spawn.Matricies
 
         public static void MoveToRayedPlanePossition(GameObject go, GameObject goAround, float magnitude)
         {
-            Plane plane = GetPlane(go.transform.rotation.eulerAngles, go.transform.position); // rotation = go.transform.rotation.euler
+            Plane plane = GetPlane(goAround.transform.rotation.eulerAngles, goAround.transform.position); // ?TBC generate plane when rotation changes, give plane as structure root feature
 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
@@ -57,11 +57,9 @@ namespace Assets.Scripts.Spawn.Matricies
             {
                 Vector3 hitPoint = ray.GetPoint(enter);
 
-
-
                 hitPoint = hitPoint - goAround.transform.position ;
 
-                go.transform.position = goAround.transform.position + hitPoint/hitPoint.magnitude*magnitude;
+                go.transform.position = goAround.transform.position + hitPoint * ((go.transform.position - goAround.transform.position).magnitude/ hitPoint.magnitude);
             }
 
         }
