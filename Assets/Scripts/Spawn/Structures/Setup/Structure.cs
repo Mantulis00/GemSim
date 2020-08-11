@@ -24,7 +24,15 @@ namespace Assets.Scripts.Spawn.Structures.Setup
         {
            public GameObject endPoint;
            public GameObject connector;
+           public connectionData data;
         }
+
+        public class connectionData // elastic, solid // lenght, streach etc. ?TBA
+        {
+
+        }
+
+
 
         public Structure(GameObject go)
         {

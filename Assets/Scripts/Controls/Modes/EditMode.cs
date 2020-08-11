@@ -61,23 +61,12 @@ namespace Assets.Scripts.Controls
                 {
                     spawner.MovePoint(o_mouse.selectedObjet, cameraTransform, o_mouse.clickCoords_s);
 
-                    MoveAdjustConnections(spawner.GetConnections(o_mouse.selectedObjet));
                 }
 
                 o_mouse.ActionAddressed(ActionsQue.Move);
             }
         }
 
-        private void MoveAdjustConnections(List<Spawn.Structures.Setup.Structure.connection> connections)
-        {
-            foreach (Spawn.Structures.Setup.Structure.connection c in connections.ToList())
-            {
-                spawner.MoveConnection( // do this for every connector object has
-                      c.connector,
-                      c.endPoint.transform.position,
-                      o_mouse.selectedObjet.transform.position);
-            }
 
-        }
     }
 }

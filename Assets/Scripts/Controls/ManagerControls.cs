@@ -76,26 +76,39 @@ namespace Assets.Scripts.Controls
                         editMode.Spawn();
 
                     else if (o_keyboard.action == KeyboardAction.Move)
+                    {
                         editMode.Move();
+                        MoveAdjustConnections(spawner.GetConnections(o_mouse.selectedObjet));
+                    }
+                        
                 }
             }
            else if (CurrentMode == Mode.Simulate)
             {
                 if (o_keyboard.action == KeyboardAction.Move)
                 {
-                    GameObject ge;
-                    ge =  Instantiate(goi) as GameObject; // test
+                    simulationMode.Move(MoveAdjustConnections(spawner.GetConnections(o_mouse.selectedObjet)), 10f);
 
-                    Matricies.Testerino(o_mouse.selectedObjet.transform.rotation.eulerAngles, o_mouse.selectedObjet.transform.position, ge);
+                   // MoveAdjustConnections(spawner.GetConnections(o_mouse.selectedObjet));
 
-                    //simulationMode.Move();
                 }
 
             }
             
         }
 
+        private GameObject MoveAdjustConnections(List<Spawn.Structures.Setup.Structure.connection> connections)
+        {
+            foreach (Spawn.Structures.Setup.Structure.connection c in connections.ToList())
+            {
+                spawner.MoveConnection( // do this for every connector object has
+                      c.connector,
+                      c.endPoint.transform.position,
+                      o_mouse.selectedObjet.transform.position);
 
+            }
+            return connections[0].endPoint;
+        }
 
     }
 }

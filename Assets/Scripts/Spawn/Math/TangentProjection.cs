@@ -158,7 +158,6 @@ namespace Assets.Scripts.Spawn.TangentProjection
             coor.y = fromC.y + lambda * vec.y;
             coor.z = fromC.z + lambda * vec.z;
 
-            Debug.Log(vec);
 
 
 

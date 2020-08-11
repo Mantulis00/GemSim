@@ -28,16 +28,11 @@ namespace Assets.Scripts.Controls.Modes
         }
 
 
-        public void Move()
+        public void Move(GameObject go2, float magnitude)
         {
             if ((o_mouse.a_que & ActionsQue.Move) == ActionsQue.Move)
              {
-                geometryManager.AdjustMovement(
-                    o_mouse.selectedObjet,
-                    cameraTransform.gameObject.GetComponent<Camera>().transform,
-                    spawner.GetConnectionsPoints(o_mouse.selectedObjet),
-                    cameraTransform.rotation.eulerAngles + 
-                    TangentProjection.ProjectedAngle(cameraTransform.gameObject.GetComponent<Camera>(), o_mouse.clickCoords_s));
+                geometryManager.AdjustMovement(o_mouse.selectedObjet, go2, magnitude);
 
                 o_mouse.ActionAddressed(ActionsQue.Move);
             }
