@@ -39,7 +39,7 @@ namespace Assets.Scripts.Geometry
 
 
 
-        internal void AdjustMovement(GameObject go, GameObject go2, float magnitude)
+        internal void AdjustMovement(GameObject go, GameObject goAround)
         {
             if (!geometryTypes.ContainsKey(go))
             {
@@ -52,7 +52,7 @@ namespace Assets.Scripts.Geometry
          //   {
 
 
-            geometryTypes[go].AdjustMovement(go, go2, magnitude);
+            geometryTypes[go].AdjustMovement(go, goAround);
           //  }
         }
 

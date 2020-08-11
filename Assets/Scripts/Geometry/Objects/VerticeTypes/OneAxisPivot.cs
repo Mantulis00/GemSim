@@ -18,9 +18,9 @@ namespace Assets.Scripts.Geometry.Types
         /// 
 
 
-        public void AdjustMovement(GameObject go, GameObject go2, float magnitude)
+        public void AdjustMovement(GameObject go, GameObject goAround)
         {
-            Matricies.MoveToRayedPlanePossition(go, go2,magnitude);
+            Matricies.MoveToRayedPlanePossition(go, goAround);
         }
 
 

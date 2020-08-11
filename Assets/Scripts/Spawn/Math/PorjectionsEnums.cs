@@ -1,0 +1,5 @@
+﻿enum PlaneTypes
+{
+    Ordinary,
+    Perpendicular,
+}

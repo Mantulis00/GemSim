@@ -28,11 +28,11 @@ namespace Assets.Scripts.Controls.Modes
         }
 
 
-        public void Move(GameObject go2, float magnitude)
+        public void Move(GameObject goAround)
         {
             if ((o_mouse.a_que & ActionsQue.Move) == ActionsQue.Move)
              {
-                geometryManager.AdjustMovement(o_mouse.selectedObjet, go2, magnitude);
+                geometryManager.AdjustMovement(o_mouse.selectedObjet, goAround);
 
                 o_mouse.ActionAddressed(ActionsQue.Move);
             }

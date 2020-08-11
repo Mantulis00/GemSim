@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Geometry.Types
 {
-    internal  class BallPivot //: IGeometry  // ball joint - connectors have to stay same lenght
+    internal  class BallPivot : IGeometry  // ball joint - connectors have to stay same lenght
     {
         public Vector3 GetSolidLocation(GameObject go)
         {
@@ -17,7 +17,7 @@ namespace Assets.Scripts.Geometry.Types
 
 
 
-        public void AdjustMovement(GameObject go, float magnitude)
+        public void AdjustMovement(GameObject go, GameObject goAround)
         {
             throw new NotImplementedException();
         }

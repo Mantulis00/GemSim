@@ -89,7 +89,7 @@ namespace Assets.Scripts.Controls
                 {
                     /// pass GO around which it will move, 
                     ///pass connection lenght between objects
-                    simulationMode.Move(MoveAdjustConnections(spawner.GetConnections(o_mouse.selectedObjet)), 10f); 
+                    simulationMode.Move(MoveAdjustConnections(spawner.GetConnections(o_mouse.selectedObjet))); // to be changed to select goAround
 
                    // MoveAdjustConnections(spawner.GetConnections(o_mouse.selectedObjet));
 
