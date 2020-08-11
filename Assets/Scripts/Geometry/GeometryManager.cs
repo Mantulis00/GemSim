@@ -2,6 +2,8 @@
 using Assets.Scripts.Geometry.Objects.VerticeTypes;
 using Assets.Scripts.Geometry.Types;
 using Assets.Scripts.Spawn;
+using Assets.Scripts.Spawn.TangentProjection;
+using Assets.Test;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,15 +13,14 @@ namespace Assets.Scripts.Geometry
     public  class GeometryManager
     {
          Dictionary<GameObject, IGeometry> geometryTypes;
-
         public GeometryManager()
         {
             geometryTypes = new Dictionary<GameObject, IGeometry>();
 
-            /*GameObject go = null;
-            BallPivot b = new BallPivot() ;
-            geometryType.Add(go, b);*/
         }
+
+        //temp test
+
 
         internal void GiveType(GameObject go, GeometryType type)
         {
@@ -36,12 +37,23 @@ namespace Assets.Scripts.Geometry
                 
         }
 
-        internal void AdjustMovement(GameObject go, List<GameObject> connections, Vector3 wishPosition)
+
+
+        internal void AdjustMovement(GameObject go, GameObject goAround)
         {
-            if (geometryTypes[go] is  OneAxisPivot)
+            if (!geometryTypes.ContainsKey(go))
             {
-                go.transform.position = geometryTypes[go].AdjustMovement(go, connections, wishPosition);
+                GiveType(go, GeometryType.SingleAxis); // temp
             }
+
+           // Debug.Log(geometryTypes[go]);
+
+         //   if (geometryTypes[go] is  OneAxisPivot)
+         //   {
+
+
+            geometryTypes[go].AdjustMovement(go, goAround);
+          //  }
         }
 
 

@@ -7,16 +7,18 @@ namespace Assets.Scripts.Controls.Keyboard
     {
         private float rotationSensitivity = 50f;
         public KeyboardAction action { get; private set; }
-
+        public KeyboardSwitch kSwitch { get; private set; }
 
         internal O_Keyboard()
         {
             action = KeyboardAction.Reset;
+            kSwitch = KeyboardSwitch.Hold;
         }
 
         public void Update(GameObject selectedObject)
         {
             GetKeyboardAction();
+            GetKeyboardSwitch();
 
             if (action == KeyboardAction.Rotate)
                 RotateObject(selectedObject);
@@ -34,6 +36,21 @@ namespace Assets.Scripts.Controls.Keyboard
 
 
             this.action = action;
+        }
+
+
+        private void GetKeyboardSwitch()
+        {
+            KeyboardSwitch kSwitch = KeyboardControls.GetKeyboardSwitch();
+
+            if (kSwitch == KeyboardSwitch.Hold) return;
+
+            this.kSwitch = kSwitch;
+        }
+
+        public void AddressSwitch()
+        {
+            kSwitch = KeyboardSwitch.Hold;
         }
 
 

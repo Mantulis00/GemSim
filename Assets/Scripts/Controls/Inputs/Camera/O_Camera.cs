@@ -5,7 +5,7 @@ namespace Assets.Scripts.Controls
 {
      class O_Camera
     {
-        private Camera cam;
+        public Camera cam { get; private set; }
         private CameraControls controls;
 
         private Vector3 camRotation, rotation;

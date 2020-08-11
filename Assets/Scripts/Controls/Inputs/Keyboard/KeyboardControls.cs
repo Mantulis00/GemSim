@@ -23,6 +23,15 @@ namespace Assets.Scripts.Controls
             return action;
         }
 
+        public static KeyboardSwitch GetKeyboardSwitch()
+        {
+            KeyboardSwitch action = KeyboardSwitch.Hold;
+
+            if (Input.GetKeyDown(KeyCode.Tab)) action = KeyboardSwitch.ChangeMode;
+         
+            return action;
+        }
+
 
          public static KeyboardRotations GetRotationInput()
         {

@@ -20,6 +20,12 @@ enum KeyboardAction
     Delete,
 }
 
+enum KeyboardSwitch
+{
+    Hold,
+    ChangeMode,
+}
+
 
 [Flags]
 enum ActionsQue 

@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Controls.Keyboard;
 using Assets.Scripts.Controls.Modes;
+using Assets.Scripts.Spawn.Matricies;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor.MemoryProfiler;
@@ -18,7 +19,7 @@ namespace Assets.Scripts.Controls
        private EditMode editMode;
        private SimulationMode simulationMode;
 
-
+        public GameObject goi; // test
 
         private void Start()
         {
@@ -26,11 +27,14 @@ namespace Assets.Scripts.Controls
             o_mouse = new O_Mause();
             o_keyboard = new O_Keyboard();
 
-            editMode = new EditMode(o_mouse, this.transform, spawner);
-            CurrentMode = Mode.Edit;
+            editMode = new EditMode(o_mouse, o_camera.cam.transform, spawner);
+            simulationMode = new SimulationMode(o_mouse, o_camera.cam.transform, spawner);
+
+            CurrentMode = Mode.Edit; // temp
         }
         private void Update()
         {
+            CheckMode();
             UpdateOStatus();
 
             if (o_mouse.a_que != 0)
@@ -48,6 +52,20 @@ namespace Assets.Scripts.Controls
             return actionsExist;
         }
 
+        private void CheckMode()
+        {
+            if (o_keyboard.kSwitch != KeyboardSwitch.Hold)
+            {
+                if (o_keyboard.kSwitch == KeyboardSwitch.ChangeMode)
+                {
+                    o_keyboard.AddressSwitch();
+
+                    if (CurrentMode == Mode.Edit) CurrentMode = Mode.Simulate;
+                    else if (CurrentMode == Mode.Simulate) CurrentMode = Mode.Edit;
+                }
+            }
+        }
+
         private void PerformActions()
         {
            if (CurrentMode == Mode.Edit)
@@ -58,18 +76,41 @@ namespace Assets.Scripts.Controls
                         editMode.Spawn();
 
                     else if (o_keyboard.action == KeyboardAction.Move)
+                    {
                         editMode.Move();
+                        MoveAdjustConnections(spawner.GetConnections(o_mouse.selectedObjet));
+                    }
+                        
                 }
             }
            else if (CurrentMode == Mode.Simulate)
             {
                 if (o_keyboard.action == KeyboardAction.Move)
-                    simulationMode.Move();
+                {
+                    /// pass GO around which it will move, 
+                    ///pass connection lenght between objects
+                    simulationMode.Move(MoveAdjustConnections(spawner.GetConnections(o_mouse.selectedObjet))); // to be changed to select goAround
+
+                   // MoveAdjustConnections(spawner.GetConnections(o_mouse.selectedObjet));
+
+                }
+
             }
             
         }
 
+        private GameObject MoveAdjustConnections(List<Spawn.Structures.Setup.Structure.connection> connections)
+        {
+            foreach (Spawn.Structures.Setup.Structure.connection c in connections.ToList())
+            {
+                spawner.MoveConnection( // do this for every connector object has
+                      c.connector,
+                      c.endPoint.transform.position,
+                      o_mouse.selectedObjet.transform.position);
 
+            }
+            return connections[0].endPoint;
+        }
 
     }
 }

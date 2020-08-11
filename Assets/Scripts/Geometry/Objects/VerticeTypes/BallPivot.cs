@@ -17,7 +17,7 @@ namespace Assets.Scripts.Geometry.Types
 
 
 
-        public Vector3 IGeometry.AdjustMovement(GameObject go, List<GameObject> connections, Vector3 wishPosition)
+        public void AdjustMovement(GameObject go, GameObject goAround)
         {
             throw new NotImplementedException();
         }
