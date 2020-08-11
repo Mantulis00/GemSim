@@ -2,6 +2,7 @@
 using Assets.Scripts.Geometry.Objects.VerticeTypes;
 using Assets.Scripts.Geometry.Types;
 using Assets.Scripts.Spawn;
+using Assets.Scripts.Spawn.Structures.Setup;
 using Assets.Scripts.Spawn.TangentProjection;
 using Assets.Test;
 using System;
@@ -39,7 +40,7 @@ namespace Assets.Scripts.Geometry
 
 
 
-        internal void AdjustMovement(GameObject go, GameObject goAround)
+        internal void AdjustMovement(GameObject go, GameObject goAround, List<Structure.connection> connections)
         {
             if (!geometryTypes.ContainsKey(go))
             {
@@ -52,7 +53,7 @@ namespace Assets.Scripts.Geometry
          //   {
 
 
-            geometryTypes[go].AdjustMovement(go, goAround);
+            geometryTypes[go].AdjustMovement(go, goAround, connections);
           //  }
         }
 

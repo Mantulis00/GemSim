@@ -28,11 +28,11 @@ namespace Assets.Scripts.Controls.Modes
         }
 
 
-        public void Move(GameObject goAround)
+        public void Move(GameObject goAround, List<Spawn.Structures.Setup.Structure.connection> connections)
         {
             if ((o_mouse.a_que & ActionsQue.Move) == ActionsQue.Move)
              {
-                geometryManager.AdjustMovement(o_mouse.selectedObjet, goAround);
+                geometryManager.AdjustMovement(o_mouse.selectedObjet, goAround, connections);
 
                 o_mouse.ActionAddressed(ActionsQue.Move);
             }
