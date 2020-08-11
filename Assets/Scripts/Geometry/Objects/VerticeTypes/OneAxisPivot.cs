@@ -20,7 +20,7 @@ namespace Assets.Scripts.Geometry.Types
 
         public void AdjustMovement(GameObject go, GameObject goAround)
         {
-            Matricies.MoveToRayedPlanePossition(go, goAround);
+           go.transform.position = goAround.transform.position + Matricies.MoveToRayedPlanePossition(go, goAround);
         }
 
 
