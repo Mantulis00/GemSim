@@ -155,7 +155,7 @@ namespace Assets.Scripts.Spawn.Structures.Setup
         }
 
 
-        internal void mo ( List<GameObject> inList, GameObject go)
+        internal void SearchWide ( List<GameObject> inList, GameObject go)
         {
 
             foreach(root r in structure.ToList())
@@ -167,7 +167,7 @@ namespace Assets.Scripts.Spawn.Structures.Setup
                         if (!inList.ToList().Contains(c.endPoint))
                         {
                             inList.Add(c.endPoint);
-                            mo(inList, c.endPoint);
+                            SearchWide(inList, c.endPoint);
                         }
                         
                     }
@@ -175,8 +175,6 @@ namespace Assets.Scripts.Spawn.Structures.Setup
                     return;
                 }
             }
-
-
 
         }
 
@@ -187,7 +185,7 @@ namespace Assets.Scripts.Spawn.Structures.Setup
             inList.Add(goAround);
             inList.Add(go);
 
-            mo(inList, go);
+            SearchWide(inList, go);
 
             inList.Remove(goAround);
             inList.Remove(go);
