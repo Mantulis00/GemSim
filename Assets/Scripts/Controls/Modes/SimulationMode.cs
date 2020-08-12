@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Geometry;
+using Assets.Scripts.Spawn.Structures.Setup;
 using Assets.Scripts.Spawn.TangentProjection;
 using System.Collections.Generic;
 using UnityEngine;
@@ -28,11 +29,11 @@ namespace Assets.Scripts.Controls.Modes
         }
 
 
-        public void Move(GameObject goAround)
+        public void Move(GameObject goAround, Structure structure)
         {
             if ((o_mouse.a_que & ActionsQue.Move) == ActionsQue.Move)
              {
-                geometryManager.AdjustMovement(o_mouse.selectedObjet, goAround);
+                geometryManager.AdjustMovement(o_mouse.selectedObjet, goAround, structure);
 
                 o_mouse.ActionAddressed(ActionsQue.Move);
             }

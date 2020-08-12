@@ -56,6 +56,7 @@ namespace Assets.Scripts.Spawn
         }
 
 
+
         internal bool CheckConnector(GameObject go, Structure structure)
         {
             return structure.CheckConnector(go);
@@ -71,8 +72,6 @@ namespace Assets.Scripts.Spawn
             {
                 to.connectors.Add(c);
             }
-           // from.structure.Clear();
-         //   from.connectors.Clear();
         }
 
     }

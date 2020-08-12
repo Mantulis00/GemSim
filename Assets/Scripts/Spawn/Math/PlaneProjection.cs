@@ -46,7 +46,7 @@ namespace Assets.Scripts.Spawn.Matricies
 
 
 
-        public static void MoveToRayedPlanePossition(GameObject go, GameObject goAround)
+        public static Vector3 MoveToRayedPlanePossition(GameObject go, GameObject goAround)
         {
             Plane plane = GetPlane(goAround.transform.rotation.eulerAngles, goAround.transform.position, PlaneTypes.Ordinary); // ?TBC generate plane when rotation changes, give plane as structure root feature
 
@@ -59,8 +59,10 @@ namespace Assets.Scripts.Spawn.Matricies
 
                 hitPoint = hitPoint - goAround.transform.position ;
 
-                go.transform.position = goAround.transform.position + hitPoint * ((go.transform.position - goAround.transform.position).magnitude/ hitPoint.magnitude);
+                return hitPoint * ((go.transform.position - goAround.transform.position).magnitude / hitPoint.magnitude);
+               // go.transform.position = goAround.transform.position + 
             }
+            return new Vector3();
 
         }
 

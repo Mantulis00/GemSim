@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Controls.Keyboard;
 using Assets.Scripts.Controls.Modes;
+using Assets.Scripts.GUI.Objects.TextureManager;
 using Assets.Scripts.Spawn.Matricies;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,8 @@ namespace Assets.Scripts.Controls
 
         public GameObject goi; // test
 
+        private TextureManager textureManager;
+
         private void Start()
         {
             o_camera = new O_Camera(Camera.main);
@@ -29,6 +32,9 @@ namespace Assets.Scripts.Controls
 
             editMode = new EditMode(o_mouse, o_camera.cam.transform, spawner);
             simulationMode = new SimulationMode(o_mouse, o_camera.cam.transform, spawner);
+
+            textureManager = new TextureManager();
+
 
             CurrentMode = Mode.Edit; // temp
         }
@@ -87,9 +93,12 @@ namespace Assets.Scripts.Controls
             {
                 if (o_keyboard.action == KeyboardAction.Move)
                 {
+
+                    textureManager.ChangeColor(o_mouse.selectedObjet, Color.green);
+
                     /// pass GO around which it will move, 
                     ///pass connection lenght between objects
-                    simulationMode.Move(MoveAdjustConnections(spawner.GetConnections(o_mouse.selectedObjet))); // to be changed to select goAround
+                    simulationMode.Move(MoveAdjustConnections(spawner.GetConnections(o_mouse.selectedObjet)), spawner.GetStructure(o_mouse.selectedObjet)); // to be changed to select goAround
 
                    // MoveAdjustConnections(spawner.GetConnections(o_mouse.selectedObjet));
 
@@ -103,13 +112,13 @@ namespace Assets.Scripts.Controls
         {
             foreach (Spawn.Structures.Setup.Structure.connection c in connections.ToList())
             {
-                spawner.MoveConnection( // do this for every connector object has
+                SpawnerManager.MoveConnection( // do this for every connector object has
                       c.connector,
                       c.endPoint.transform.position,
                       o_mouse.selectedObjet.transform.position);
 
             }
-            return connections[0].endPoint;
+            return connections[0].endPoint; // temp for sim mode move
         }
 
     }

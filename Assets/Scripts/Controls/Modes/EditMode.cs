@@ -44,7 +44,7 @@ namespace Assets.Scripts.Controls
                         o_mouse.clickCoords_f);
 
 
-                    spawner.MoveConnection(
+                    SpawnerManager.MoveConnection(
                         spawner.MakeGO(o_mouse.selectedObjet, o_mouse.CheckForObject(), SpawnOptions.Connection),
                         startPos, finishPos);
                 }
