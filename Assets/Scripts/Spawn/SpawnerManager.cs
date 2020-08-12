@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-
+using System.ComponentModel.Design.Serialization;
 
 public class SpawnerManager : MonoBehaviour
 {
@@ -130,15 +130,9 @@ public class SpawnerManager : MonoBehaviour
             return null;
     }
 
-    internal List<GameObject> GetConnectionsPoints(GameObject go)
+    internal Structure GetStructure (GameObject go)
     {
-        List<GameObject> goList = new List<GameObject>();
-
-        foreach(Structure.connection sc in GetConnections(go).ToList())
-        {
-            goList.Add(sc.endPoint);
-        }
-        return goList;
+        return structures[go];
     }
 
 
@@ -161,7 +155,7 @@ public class SpawnerManager : MonoBehaviour
 
 
 
-        public Vector3 MovePoint(GameObject go, Transform cameraPos, Vector2 mouseLocation)
+        public  Vector3 MovePoint(GameObject go, Transform cameraPos, Vector2 mouseLocation)
     {
 
         // position
@@ -182,7 +176,7 @@ public class SpawnerManager : MonoBehaviour
         return goPosition;
     }
 
-    public void MoveConnection(GameObject go, Vector3 start, Vector3 finish)
+    public static void MoveConnection(GameObject go, Vector3 start, Vector3 finish)
     {
         if (go == null) return;
         // set location
@@ -202,11 +196,27 @@ public class SpawnerManager : MonoBehaviour
 
 
         // set scale
-        Vector3 scales = new Vector3();
+        Vector3 scales = new Vector3(); // ?TBC constants -- > xd
         scales.y = 0.1f;//go.transform.localScale.y/10;
         scales.z = 0.1f;//go.transform.localScale.z/10;
         scales.x = Linear.Pythagoras3(lineDistance);//lineDistance.magnitude;
         go.transform.localScale = scales;
+
+    }
+
+    public static void MoveConnection(List<GameObject> points, Structure structure)
+    {
+        if (points.Count == 0) return;
+
+        List<Structure.root> roots = structure.GetRoots(points); // setup could be done once
+
+        foreach(Structure.root r in roots)
+        {
+            foreach(Structure.connection c in r.connections)
+            {
+                MoveConnection(c.connector, r.point.transform.position, c.endPoint.transform.position);
+            }
+        }
 
     }
 

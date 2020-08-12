@@ -3,6 +3,7 @@ using System.ComponentModel.Design;
 using System.Linq;
 using System.Net;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Assets.Scripts.Spawn.Structures.Setup
 {
@@ -24,13 +25,20 @@ namespace Assets.Scripts.Spawn.Structures.Setup
         {
            public GameObject endPoint;
            public GameObject connector;
-           public connectionData data;
+           public connectionData cData;
+           public pointData pData;
         }
 
         public class connectionData // elastic, solid // lenght, streach etc. ?TBA
         {
 
         }
+
+        public class pointData // fixed / movable etc ?TBA
+        {
+            
+        }
+
 
 
 
@@ -144,6 +152,70 @@ namespace Assets.Scripts.Spawn.Structures.Setup
             }
 
             return false;
+        }
+
+
+        internal void mo ( List<GameObject> inList, GameObject go)
+        {
+
+            foreach(root r in structure.ToList())
+            {
+                if (r.point == go)
+                {
+                    foreach(connection c in r.connections.ToList())
+                    {
+                        if (!inList.ToList().Contains(c.endPoint))
+                        {
+                            inList.Add(c.endPoint);
+                            mo(inList, c.endPoint);
+                        }
+                        
+                    }
+
+                    return;
+                }
+            }
+
+
+
+        }
+
+
+        internal List<GameObject> GetConnectedPoints(GameObject go, GameObject goAround)
+        {
+            List<GameObject> inList = new List<GameObject>();
+            inList.Add(goAround);
+            inList.Add(go);
+
+            mo(inList, go);
+
+            inList.Remove(goAround);
+            inList.Remove(go);
+
+
+
+            Debug.Log(inList.Count);
+
+            return inList;
+        }
+
+        internal List<root> GetRoots(List<GameObject> points)
+        {
+            List<root>  roots = new List<root>();
+
+            foreach(root r in structure)
+            {
+                foreach(GameObject g in points)
+                {
+                    if (g == r.point)
+                    {
+                        roots.Add(r);
+                        break;
+                    }
+                }
+            }
+
+            return roots;
         }
 
 

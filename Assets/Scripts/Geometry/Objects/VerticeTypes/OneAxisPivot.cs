@@ -4,11 +4,8 @@ using Assets.Scripts.Spawn.Structures.Setup;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.Animations;
-using UnityEngine.Networking;
+
 
 namespace Assets.Scripts.Geometry.Types
 {
@@ -21,20 +18,33 @@ namespace Assets.Scripts.Geometry.Types
         /// 
 
 
-        public void AdjustMovement(GameObject go, GameObject goAround, List<Structure.connection> connections)
+        public void AdjustMovement(GameObject go, GameObject goAround, Structure structure)
         {
             Vector3 shiftVector = Matricies.MoveToRayedPlanePossition(go, goAround);
 
-           
-            foreach (Structure.connection c in connections) // if connection is solit on moved object part
+
+            /*   foreach (Structure.root c in structure.structure.ToList()) // if connection is solit on moved object part
+               {
+                   if (c.endPoint != goAround)
+                   {
+                       Vector3 connectionsShift = new Vector3();
+                       connectionsShift = c.endPoint.transform.position - go.transform.position;
+                       c.endPoint.transform.position = goAround.transform.position + shiftVector + connectionsShift;
+                   }
+               }*/
+
+            List<GameObject> points = structure.GetConnectedPoints(go, goAround).ToList();
+
+            foreach (GameObject g in points) // getconnectedpoints could be done once per go until changes ?
             {
-                if (c.endPoint != goAround)
-                {
-                    Vector3 connectionsShift = new Vector3();
-                    connectionsShift = c.endPoint.transform.position - go.transform.position;
-                    c.endPoint.transform.position = goAround.transform.position + shiftVector + connectionsShift;
-                }
+                Vector3 connectionsShift = new Vector3();
+                connectionsShift = g.transform.position - go.transform.position;
+                g.transform.position = goAround.transform.position + shiftVector + connectionsShift;
             }
+
+            SpawnerManager.MoveConnection(points, structure);
+         //   structure.GetConnectedPoints(go, goAround);
+
 
             go.transform.position = goAround.transform.position + shiftVector;
 
