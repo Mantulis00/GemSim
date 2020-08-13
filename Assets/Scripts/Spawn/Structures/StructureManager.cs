@@ -57,11 +57,6 @@ namespace Assets.Scripts.Spawn
 
 
 
-        internal bool CheckConnector(GameObject go, Structure structure)
-        {
-            return structure.CheckConnector(go);
-        }
-
         internal void MergeStructures(Structure from, Structure to)
         {
             foreach(root r in from.structure)

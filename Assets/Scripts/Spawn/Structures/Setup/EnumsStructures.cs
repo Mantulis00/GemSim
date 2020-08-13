@@ -28,3 +28,10 @@ public enum SpawnStates
     Connect,
     Merge,
 }
+
+
+public enum StructurePointType
+{
+    Loose,
+    Fixed,
+}

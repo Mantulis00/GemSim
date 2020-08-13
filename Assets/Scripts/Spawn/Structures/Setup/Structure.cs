@@ -9,15 +9,16 @@ namespace Assets.Scripts.Spawn.Structures.Setup
 {
     public class Structure : IStructure // List of points, each point can have connections
     {
-        public List<root> structure; // structure is made out of root elements
-        private root lastRoot;
-        public List<GameObject> connectors;
+        public List<root> structure { get; private set; }// structure is made out of root elements
+    private root lastRoot;
+        public List<GameObject> connectors { get; private set; }
 
 
 
         public class root // every root element has main object (root) and connections (point to which connection is led to)
         {
             public GameObject point; // main point
+            public pointData dataPoint;
             public List<connection> connections; // this points extensions
         }
 
@@ -25,18 +26,26 @@ namespace Assets.Scripts.Spawn.Structures.Setup
         {
            public GameObject endPoint;
            public GameObject connector;
-           public connectionData cData;
-           public pointData pData;
+           public connectionData dataConnection;
         }
 
         public class connectionData // elastic, solid // lenght, streach etc. ?TBA
         {
-
+            float originalLenght;
+            float stretchedLenght;
+            float stretchCoefficient;
         }
 
         public class pointData // fixed / movable etc ?TBA
         {
-            
+            StructurePointType type;
+            Vector3 originalPossition;
+
+            public pointData(Vector3 location, StructurePointType type)
+            {
+                this.type = type;
+                originalPossition = location;
+            }
         }
 
 
@@ -47,15 +56,19 @@ namespace Assets.Scripts.Spawn.Structures.Setup
             structure = new List<root>();
             connectors = new List<GameObject>();
             NewRoot(go);
-
-
         }
+
+
 
         private root NewRoot(GameObject go)
         {
             root initRoot = new root();
             initRoot.point = go;
             initRoot.connections = new List<connection>();
+
+            initRoot.dataPoint = new pointData(
+                initRoot.point.transform.position, 
+                StructurePointType.Loose); // !CALH - constants are left here
 
 
             structure.Add(initRoot);
@@ -71,6 +84,9 @@ namespace Assets.Scripts.Spawn.Structures.Setup
                 connection floatingConnection = new connection();
                 floatingConnection.endPoint = go;
                 rt.connections.Add(floatingConnection);
+
+                // fill connection data
+
 
             }
             else
@@ -90,24 +106,26 @@ namespace Assets.Scripts.Spawn.Structures.Setup
 
                     if (option == SpawnOptions.Finish)
                     {
-                        rt = NewRoot(go); // prefilled root for new object 
+                        rt = NewRoot(go); // prefilled root for structure
                         structure.Add(rt);
+
+                        FillConnections(rt, extensionRoot, option); // extension root is structures point from which we expand
                     }
                     else // else for connectors
                     {
-                        rt = lastRoot;
-                        connectors.Add(go);
+                        rt = lastRoot; // last frame created root saved it as last root
+                        connectors.Add(go); // go is my new connector connecting last root and now selected root
+
+                        FillConnections(rt, go, option); // gives connection to last time filled rt
                     }
   
-                    if (option == SpawnOptions.Finish)
-                         FillConnections(rt, extensionRoot, option); // modify roots of newly added element
-                    else
-                        FillConnections(rt, go, option);
+                   
+
                     // create new element and add it to structure and add partially filled connection to it
                     // add connector to element from which element expended
 
 
-                    FillConnections(r, go, option);// modify roots connections of expended element
+                    FillConnections(r, go, option);// give point from which we expended connection to point which we expended or give connector to now selected point
 
                     lastRoot = rt;
                     break;
@@ -119,18 +137,18 @@ namespace Assets.Scripts.Spawn.Structures.Setup
         {
             if (from == to) return;
 
-            foreach (root r in structure.ToList())
+            foreach (root r in structure.ToList()) // goes through all structure
             {
                 bool toDone = false, fromDone = false;
 
 
-                if (r.point == from  && !fromDone)
+                if (r.point == from  && !fromDone) // when finds point given point
                 {
-                    FillConnections(r, to, SpawnOptions.Finish);
-                    FillConnections(r, go, SpawnOptions.Connection);
+                    FillConnections(r, to, SpawnOptions.Finish); // gives him connection to other given object
+                    FillConnections(r, go, SpawnOptions.Connection); // gives connector (just object) to connection
                     fromDone = true;
                 }
-                if (r.point == to && !toDone)
+                if (r.point == to && !toDone) // same with other object (if a has connection to b -> b has to a)
                 {
                     FillConnections(r, from, SpawnOptions.Finish);
                     FillConnections(r, go, SpawnOptions.Connection);
@@ -191,8 +209,6 @@ namespace Assets.Scripts.Spawn.Structures.Setup
             inList.Remove(go);
 
 
-
-            Debug.Log(inList.Count);
 
             return inList;
         }

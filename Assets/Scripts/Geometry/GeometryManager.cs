@@ -1,7 +1,6 @@
 ﻿using Assets.Scripts.Geometry.Objects.VerticeTypes;
 using Assets.Scripts.Geometry.Types;
-using Assets.Scripts.GUI.Objects.ManyTexture;
-using Assets.Scripts.GUI.Objects.SingleTexture;
+using Assets.Scripts.GUI.Objects.PointTexturer;
 using Assets.Scripts.Spawn.Structures.Setup;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,13 +12,13 @@ namespace Assets.Scripts.Geometry
     {
          Dictionary<GameObject, IGeometry> geometryTypes;
 
-        private ManyTexture manyTexture;
+        private PointTexturer manyTexture;
 
 
         public GeometryManager()
         {
             geometryTypes = new Dictionary<GameObject, IGeometry>();
-            manyTexture = new ManyTexture();
+            manyTexture = new PointTexturer();
 
         }
 

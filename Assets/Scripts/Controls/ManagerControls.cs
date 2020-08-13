@@ -104,7 +104,7 @@ namespace Assets.Scripts.Controls
             
         }
 
-        private GameObject MoveAdjustConnections(List<Spawn.Structures.Setup.Structure.connection> connections)
+        private GameObject MoveAdjustConnections(List<Spawn.Structures.Setup.Structure.connection> connections) // change for edit and sim modes
         {
             foreach (Spawn.Structures.Setup.Structure.connection c in connections.ToList())
             {

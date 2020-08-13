@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets.Scripts.GUI.Objects.ManyTexture
+namespace Assets.Scripts.GUI.Objects.PointTexturer
 {
-    public  class ManyTexture
+    public  class PointTexturer
     {
        // private GameObject lastObject ;
       //  private Color lastColor;
@@ -27,7 +27,7 @@ namespace Assets.Scripts.GUI.Objects.ManyTexture
         private int singleSize = 2;
         private lastOptionsSingle[] lastOption;
 
-        public ManyTexture()
+        public PointTexturer()
         {
             lastOptionMany = new lastOptionsMany();
             lastOptionMany.lastObject = null;
