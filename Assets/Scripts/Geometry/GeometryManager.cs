@@ -61,7 +61,7 @@ namespace Assets.Scripts.Geometry
             geometryTypes[go].AdjustMovement(go, goAround, points);
 
 
-            SpawnerManager.MoveConnection(points, structure);
+            SpawnerManager.MoveConnectors(points, structure);
 
             manyTexture.ChangeColor(go, goAround, points, Color.green, Color.red, Color.blue);
            

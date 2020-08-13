@@ -204,7 +204,7 @@ public class SpawnerManager : MonoBehaviour
 
     }
 
-    public static void MoveConnection(List<GameObject> points, Structure structure)
+    public static void MoveConnectors(List<GameObject> points, Structure structure)
     {
         if (points.Count == 0) return;
 
@@ -214,7 +214,10 @@ public class SpawnerManager : MonoBehaviour
         {
             foreach(Structure.connection c in r.connections)
             {
-                MoveConnection(c.connector, r.point.transform.position, c.endPoint.transform.position);
+                MoveConnection(c.connector, r.point.transform.position, c.endPoint.transform.position); // ?TBC add check if can strech functionality 
+
+                c.dataConnection.realLenght = (c.endPoint.transform.position - r.point.transform.position).magnitude; // refreash real lenght
+
             }
         }
 

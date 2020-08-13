@@ -108,10 +108,16 @@ namespace Assets.Scripts.Controls
         {
             foreach (Spawn.Structures.Setup.Structure.connection c in connections.ToList())
             {
+               
+
+
                 SpawnerManager.MoveConnection( // do this for every connector object has
                       c.connector,
                       c.endPoint.transform.position,
                       o_mouse.selectedObjet.transform.position);
+
+
+
 
             }
             return connections[0].endPoint; // temp for sim mode move
