@@ -22,7 +22,6 @@ namespace Assets.Scripts.Controls
 
         public GameObject goi; // test
 
-        private TextureManager textureManager;
 
         private void Start()
         {
@@ -33,7 +32,7 @@ namespace Assets.Scripts.Controls
             editMode = new EditMode(o_mouse, o_camera.cam.transform, spawner);
             simulationMode = new SimulationMode(o_mouse, o_camera.cam.transform, spawner);
 
-            textureManager = new TextureManager();
+
 
 
             CurrentMode = Mode.Edit; // temp
@@ -94,7 +93,7 @@ namespace Assets.Scripts.Controls
                 if (o_keyboard.action == KeyboardAction.Move)
                 {
 
-                    textureManager.ChangeColor(o_mouse.selectedObjet, Color.green);
+                    
 
                     /// pass GO around which it will move, 
                     ///pass connection lenght between objects

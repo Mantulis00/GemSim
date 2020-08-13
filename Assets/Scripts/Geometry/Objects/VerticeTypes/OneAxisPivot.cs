@@ -18,7 +18,7 @@ namespace Assets.Scripts.Geometry.Types
         /// 
 
 
-        public void AdjustMovement(GameObject go, GameObject goAround, Structure structure)
+        public void AdjustMovement(GameObject go, GameObject goAround, List<GameObject> points )
         {
             Vector3 shiftVector = Matricies.MoveToRayedPlanePossition(go, goAround);
 
@@ -33,7 +33,7 @@ namespace Assets.Scripts.Geometry.Types
                    }
                }*/
 
-            List<GameObject> points = structure.GetConnectedPoints(go, goAround).ToList();
+            
 
             foreach (GameObject g in points) // getconnectedpoints could be done once per go until changes ?
             {
@@ -42,7 +42,7 @@ namespace Assets.Scripts.Geometry.Types
                 g.transform.position = goAround.transform.position + shiftVector + connectionsShift;
             }
 
-            SpawnerManager.MoveConnection(points, structure);
+            
          //   structure.GetConnectedPoints(go, goAround);
 
 
