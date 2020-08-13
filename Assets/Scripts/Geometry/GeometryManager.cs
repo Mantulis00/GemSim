@@ -14,7 +14,7 @@ namespace Assets.Scripts.Geometry
          Dictionary<GameObject, IGeometry> geometryTypes;
 
         private ManyTexture manyTexture;
-        private SingleTexture singleTexture;
+
 
         public GeometryManager()
         {
@@ -64,7 +64,7 @@ namespace Assets.Scripts.Geometry
 
             SpawnerManager.MoveConnection(points, structure);
 
-            manyTexture.ChangeColor(points, Color.green);
+            manyTexture.ChangeColor(go, goAround, points, Color.green, Color.red, Color.blue);
            
 
             //  }

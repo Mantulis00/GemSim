@@ -1,10 +1,7 @@
 ﻿using Assets.Scripts.Controls.Keyboard;
 using Assets.Scripts.Controls.Modes;
-using Assets.Scripts.GUI.Objects.TextureManager;
-using Assets.Scripts.Spawn.Matricies;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.MemoryProfiler;
 using UnityEngine;
 
 namespace Assets.Scripts.Controls
