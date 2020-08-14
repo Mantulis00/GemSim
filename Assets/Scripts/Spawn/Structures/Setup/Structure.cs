@@ -259,6 +259,27 @@ namespace Assets.Scripts.Spawn.Structures.Setup
             return roots;
         }
 
+        internal List<root> GetRootsFromPoints(List<GameObject> goList)
+        {
+            List<root> rootList = new List<root>();
+
+            foreach (GameObject go in goList)
+            {
+                foreach(root r in structure)
+                {
+                    if (r.point == go)
+                    {
+                        rootList.Add(r);
+                        break;
+                    }
+                }
+            }
+            return rootList;
+        }
+
+
+
+
         internal connection FindOtherSideOfConnection(GameObject from, GameObject to)
         {
             foreach(root r in structure.ToList())

@@ -34,7 +34,6 @@ namespace Assets.Scripts.Controls
 
         public void Update(KeyboardAction action)
         {
-
             if (action == KeyboardAction.Spawn && selectedObjet != null)
             {
                 SpawnOptions();
@@ -43,6 +42,11 @@ namespace Assets.Scripts.Controls
             {
                 MoveOptions();
             }
+            else if (action == KeyboardAction.ManageList)
+            {
+                ListOptions();
+            }
+
             else
             {
                 SelectionOptions(); // space to select object
@@ -70,7 +74,7 @@ namespace Assets.Scripts.Controls
         {
             if (MouseControls.DetectClick(true) == MouseAction.Select) // til holding click
             {
-                if ((a_que & ActionsQue.Move) != ActionsQue.Move)
+                if ((a_que & ActionsQue.Move) != ActionsQue.Move) // send coords only if last coords were adressed 
                 {
                     clickCoords_s = MouseControls.GetMouseLocation();
 
@@ -105,6 +109,26 @@ namespace Assets.Scripts.Controls
             
         }
 
+
+        private void ListOptions()
+        {
+            if ((a_que & (ActionsQue.ListAdd | ActionsQue.ListRemove)) != (ActionsQue.ListAdd | ActionsQue.ListRemove))
+            {
+                MouseAction action = MouseControls.DetectClick(false); // can change only if last action addressed
+                SelectObject();
+
+                if (action == MouseAction.Select)
+                {
+                    a_que |= ActionsQue.ListAdd;
+                }
+                else if (action == MouseAction.Unselect)
+                {
+                    a_que |= ActionsQue.ListRemove;
+                }
+            }
+        }
+
+
         internal GameObject  CheckForObject()
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); ;
@@ -117,7 +141,7 @@ namespace Assets.Scripts.Controls
         }
         private void SelectObject()
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); ;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); ; // camera.main optimisation issue
             RaycastHit hit;
 
             if (Physics.Raycast(ray, out hit))
@@ -125,6 +149,8 @@ namespace Assets.Scripts.Controls
                  selectedObjet = hit.transform.gameObject;
             }
         }
+
+
 
 
 

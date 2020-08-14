@@ -18,7 +18,7 @@ namespace Assets.Scripts.Geometry.Types
         /// 
 
 
-        public void AdjustMovement(GameObject go, GameObject goAround, List<GameObject> points )
+        public void AdjustMovement(GameObject go, GameObject goAround, List<Structure.root> roots )
         {
             Vector3 shiftVector = Matricies.MoveToRayedPlanePossition(go, goAround);
 
@@ -35,11 +35,11 @@ namespace Assets.Scripts.Geometry.Types
 
             
 
-            foreach (GameObject g in points) // getconnectedpoints could be done once per go until changes ?
+            foreach (Structure.root r in roots) // getconnectedpoints could be done once per go until changes ?
             {
                 Vector3 connectionsShift = new Vector3();
-                connectionsShift = g.transform.position - go.transform.position;
-                g.transform.position = goAround.transform.position + shiftVector + connectionsShift;
+                connectionsShift = r.point.transform.position- go.transform.position;
+                r.point.transform.position = goAround.transform.position + shiftVector + connectionsShift;
             }
 
             

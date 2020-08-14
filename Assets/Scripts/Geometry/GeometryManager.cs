@@ -58,12 +58,12 @@ namespace Assets.Scripts.Geometry
 
             List<GameObject> points = structure.GetConnectedPoints(go, goAround).ToList();
 
-            geometryTypes[go].AdjustMovement(go, goAround, points);
+            geometryTypes[go].AdjustMovement(go, goAround, structure.GetRootsFromPoints(points));
 
 
             SpawnerManager.MoveConnectors(points, structure);
 
-            manyTexture.ChangeColor(go, goAround, points, Color.green, Color.red, Color.blue);
+            manyTexture.ChangeColor(go, goAround, points, Color.green, Color.red, Color.blue); // constants lol 
            
 
             //  }

@@ -216,13 +216,15 @@ public class SpawnerManager : MonoBehaviour
             {
                 MoveConnection(c.connector, r.point.transform.position, c.endPoint.transform.position); // ?TBC add check if can strech functionality 
 
+                /// gtfo this somewhere else
+
                 c.dataConnection.realLenght = (double)Math.Round((c.endPoint.transform.position - r.point.transform.position).magnitude, 4);//Linear.Pythagoras3(c.endPoint.transform.position - r.point.transform.position); // refreash real lenght
 
                 if (c.dataConnection.realLenght > c.dataConnection.originalLenght) c.connector.GetComponent<Renderer>().material.color = Color.yellow;
                 else if (c.dataConnection.realLenght < c.dataConnection.originalLenght) c.connector.GetComponent<Renderer>().material.color = Color.cyan;
                 else c.connector.GetComponent<Renderer>().material.color = Color.white;
 
-                Debug.Log(r.point.name +" " +c.endPoint.name + "   " + c.dataConnection.realLenght + " " + c.dataConnection.originalLenght);
+                ///
 
             }
         }
