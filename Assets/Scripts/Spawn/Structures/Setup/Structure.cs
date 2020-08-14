@@ -13,6 +13,8 @@ namespace Assets.Scripts.Spawn.Structures.Setup
         private root lastRoot;
         public List<GameObject> connectors { get; private set; }
 
+        public Dictionary<GameObject, connection> EndPoinsOfConnection;
+
 
 
         public class root // every root element has main object (root) and connections (point to which connection is led to)
@@ -31,8 +33,8 @@ namespace Assets.Scripts.Spawn.Structures.Setup
 
         public class connectionData // elastic, solid // lenght, streach etc. ?TBA
         {
-            public float originalLenght;
-            public float realLenght;
+            public double originalLenght;
+            public double realLenght;
             public float stretchCoefficient;
 
             public connectionData()
@@ -60,6 +62,7 @@ namespace Assets.Scripts.Spawn.Structures.Setup
         {
             structure = new List<root>();
             connectors = new List<GameObject>();
+            EndPoinsOfConnection = new Dictionary<GameObject, connection>();
             NewRoot(go);
         }
 
@@ -103,7 +106,7 @@ namespace Assets.Scripts.Spawn.Structures.Setup
         private connectionData GetConnectionData(GameObject from, GameObject to)
         {
             connectionData cData = new connectionData();
-            float lenght = (from.transform.position - to.transform.position).magnitude;
+            double lenght = System.Math.Round((from.transform.position - to.transform.position).magnitude, 4); //from.transform.position - to.transform.position).magnitude
             cData.originalLenght = lenght;
             cData.realLenght = lenght;
 
@@ -122,7 +125,6 @@ namespace Assets.Scripts.Spawn.Structures.Setup
                     if (option == SpawnOptions.Finish) // spawned new point -> give point root
                     {
                         rt = NewRoot(go); // prefilled root for structure
-                        structure.Add(rt);
 
                         connectionData cData = new connectionData();
 
@@ -209,6 +211,17 @@ namespace Assets.Scripts.Spawn.Structures.Setup
             }
 
         }
+       
+        internal void RemoveDuplicates(List<GameObject> goList) // mayb e not needed
+        {
+            for (int x=0; x<goList.Count; x++)
+            {
+                for (int y=x+1; y<goList.Count; y++)
+                {
+                    if (goList[x] == goList[y]) goList.RemoveAt(y);
+                }
+            }
+        }
 
 
         internal List<GameObject> GetConnectedPoints(GameObject go, GameObject goAround)
@@ -223,14 +236,12 @@ namespace Assets.Scripts.Spawn.Structures.Setup
             inList.Remove(go);
 
 
-
             return inList;
         }
 
         internal List<root> GetRoots(List<GameObject> points)
         {
             List<root> roots = new List<root>();
-
             foreach (root r in structure)
             {
                 foreach (GameObject g in points)
@@ -243,7 +254,25 @@ namespace Assets.Scripts.Spawn.Structures.Setup
                 }
             }
 
+            
+
             return roots;
+        }
+
+        internal connection FindOtherSideOfConnection(GameObject from, GameObject to)
+        {
+            foreach(root r in structure.ToList())
+            {
+                if (r.point == to)
+                {
+                    foreach(connection c in r.connections.ToList())
+                    {
+                        if (c.endPoint == from)
+                            return c;
+                    }
+                }
+            }
+            return null;
         }
 
 

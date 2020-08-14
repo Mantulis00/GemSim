@@ -199,7 +199,7 @@ public class SpawnerManager : MonoBehaviour
         Vector3 scales = new Vector3(); // ?TBC constants -- > xd
         scales.y = 0.1f;//go.transform.localScale.y/10;
         scales.z = 0.1f;//go.transform.localScale.z/10;
-        scales.x = Linear.Pythagoras3(lineDistance);//lineDistance.magnitude;
+        scales.x = (float)Linear.Pythagoras3(lineDistance);//lineDistance.magnitude;
         go.transform.localScale = scales;
 
     }
@@ -210,13 +210,19 @@ public class SpawnerManager : MonoBehaviour
 
         List<Structure.root> roots = structure.GetRoots(points); // setup could be done once
 
-        foreach(Structure.root r in roots)
+        foreach(Structure.root r in roots.ToList())
         {
-            foreach(Structure.connection c in r.connections)
+            foreach (Structure.connection c in r.connections.ToList())
             {
                 MoveConnection(c.connector, r.point.transform.position, c.endPoint.transform.position); // ?TBC add check if can strech functionality 
 
-                c.dataConnection.realLenght = (c.endPoint.transform.position - r.point.transform.position).magnitude; // refreash real lenght
+                c.dataConnection.realLenght = (double)Math.Round((c.endPoint.transform.position - r.point.transform.position).magnitude, 4);//Linear.Pythagoras3(c.endPoint.transform.position - r.point.transform.position); // refreash real lenght
+
+                if (c.dataConnection.realLenght > c.dataConnection.originalLenght) c.connector.GetComponent<Renderer>().material.color = Color.yellow;
+                else if (c.dataConnection.realLenght < c.dataConnection.originalLenght) c.connector.GetComponent<Renderer>().material.color = Color.cyan;
+                else c.connector.GetComponent<Renderer>().material.color = Color.white;
+
+                Debug.Log(r.point.name +" " +c.endPoint.name + "   " + c.dataConnection.realLenght + " " + c.dataConnection.originalLenght);
 
             }
         }

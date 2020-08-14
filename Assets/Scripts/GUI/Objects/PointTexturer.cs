@@ -59,13 +59,6 @@ namespace Assets.Scripts.GUI.Objects.PointTexturer
         }
 
 
-      /*  private void ClearAllOlds()
-        {
-            if (lastOptionPoint.lastObject != null) ResetLastColor(lastOptionPoint);
-            if (lastOptionPivot.lastObject != null) ResetLastColor(lastOptionPivot);
-            if (lastOptionMany.lastObject != null) ResetLastColor(lastOptionMany);
-        }*/
-
         /// <summary>
         /// can paint one object, two objects, structure or object and structure or two objects and structure
         /// can be expended to more objects, with small reworks to many structures too

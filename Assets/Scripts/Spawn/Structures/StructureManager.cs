@@ -66,5 +66,11 @@ namespace Assets.Scripts.Spawn
             }
         }
 
+
+        // get all connections where go is endpoint
+        // have root point go and connection gocon, find where root point gocon and connection point go 
+
+
+
     }
 }

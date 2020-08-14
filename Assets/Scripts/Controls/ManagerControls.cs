@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Controls.Keyboard;
 using Assets.Scripts.Controls.Modes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -108,17 +109,26 @@ namespace Assets.Scripts.Controls
         {
             foreach (Spawn.Structures.Setup.Structure.connection c in connections.ToList())
             {
-               
+                double lenght = Math.Round((c.endPoint.transform.position - o_mouse.selectedObjet.transform.position).magnitude, 4);
+                Spawn.Structures.Setup.Structure.connection ce = spawner.GetStructure(c.endPoint).FindOtherSideOfConnection(o_mouse.selectedObjet, c.endPoint);
 
+                ce.dataConnection.originalLenght = lenght; // does nothing
+                ce.dataConnection.realLenght = lenght;
+
+                Spawn.Structures.Setup.Structure.connection co = spawner.GetStructure(c.endPoint).FindOtherSideOfConnection( c.endPoint, o_mouse.selectedObjet);
+                co.dataConnection.originalLenght = lenght;
+                co.dataConnection.realLenght = lenght;
 
                 SpawnerManager.MoveConnection( // do this for every connector object has
                       c.connector,
                       c.endPoint.transform.position,
                       o_mouse.selectedObjet.transform.position);
 
+                
+                co.connector.GetComponent<Renderer>().material.color = Color.white;
 
-
-
+                //Debug.Log(co.endPoint.name + "   " + c.dataConnection.realLenght + " " + c.dataConnection.originalLenght);
+                //Debug.Log(c.endPoint.name);
             }
             return connections[0].endPoint; // temp for sim mode move
         }
