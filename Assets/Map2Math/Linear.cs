@@ -14,9 +14,9 @@ namespace Assets.Map2Math
         {
             return (float)Math.Sqrt(x * x + y * y + z * z);
         }
-        public static float Pythagoras3(Vector3 location)
+        public static double Pythagoras3(Vector3 location)
         {
-            return (float)Math.Sqrt(
+            return Math.Sqrt(
                 location.x * location.x +
                 location.y * location.y +
                 location.z * location.z);

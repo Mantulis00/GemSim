@@ -1,12 +1,9 @@
-﻿
-using Assets.Scripts.Geometry.Objects.VerticeTypes;
+﻿using Assets.Scripts.Geometry.Objects.VerticeTypes;
 using Assets.Scripts.Geometry.Types;
-using Assets.Scripts.Spawn;
+using Assets.Scripts.GUI.Objects.PointTexturer;
 using Assets.Scripts.Spawn.Structures.Setup;
-using Assets.Scripts.Spawn.TangentProjection;
-using Assets.Test;
-using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Assets.Scripts.Geometry
@@ -14,9 +11,14 @@ namespace Assets.Scripts.Geometry
     public  class GeometryManager
     {
          Dictionary<GameObject, IGeometry> geometryTypes;
+
+        private PointTexturer manyTexture;
+
+
         public GeometryManager()
         {
             geometryTypes = new Dictionary<GameObject, IGeometry>();
+            manyTexture = new PointTexturer();
 
         }
 
@@ -47,14 +49,24 @@ namespace Assets.Scripts.Geometry
                 GiveType(go, GeometryType.SingleAxis); // temp
             }
 
-           // Debug.Log(geometryTypes[go]);
-
-         //   if (geometryTypes[go] is  OneAxisPivot)
-         //   {
 
 
-            geometryTypes[go].AdjustMovement(go, goAround, structure);
-          //  }
+            // Debug.Log(geometryTypes[go]);
+
+            //   if (geometryTypes[go] is  OneAxisPivot)
+            //   {
+
+            List<GameObject> points = structure.GetConnectedPoints(go, goAround).ToList();
+
+            geometryTypes[go].AdjustMovement(go, goAround, structure.GetRootsFromPoints(points));
+
+
+            SpawnerManager.MoveConnectors(points, structure);
+
+            manyTexture.ChangeColor(go, goAround, points, Color.green, Color.red, Color.blue); // constants lol 
+           
+
+            //  }
         }
 
 

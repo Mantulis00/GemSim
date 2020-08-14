@@ -1,15 +1,13 @@
 ﻿using Assets.Scripts.Controls.Keyboard;
 using Assets.Scripts.Controls.Modes;
-using Assets.Scripts.GUI.Objects.TextureManager;
-using Assets.Scripts.Spawn.Matricies;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.MemoryProfiler;
 using UnityEngine;
 
 namespace Assets.Scripts.Controls
 {
-    class ManagerControls : MonoBehaviour
+    class ControlsManager : MonoBehaviour
     {
         public SpawnerManager spawner;
         internal Mode CurrentMode;
@@ -22,7 +20,6 @@ namespace Assets.Scripts.Controls
 
         public GameObject goi; // test
 
-        private TextureManager textureManager;
 
         private void Start()
         {
@@ -33,7 +30,7 @@ namespace Assets.Scripts.Controls
             editMode = new EditMode(o_mouse, o_camera.cam.transform, spawner);
             simulationMode = new SimulationMode(o_mouse, o_camera.cam.transform, spawner);
 
-            textureManager = new TextureManager();
+
 
 
             CurrentMode = Mode.Edit; // temp
@@ -78,40 +75,60 @@ namespace Assets.Scripts.Controls
             {
                 if (o_mouse.selectedObjet != null)
                 {
-                    if (o_keyboard.action == KeyboardAction.Spawn)
+                   // if (o_keyboard.action == KeyboardAction.Spawn)
                         editMode.Spawn();
 
-                    else if (o_keyboard.action == KeyboardAction.Move)
+                     if (o_keyboard.action == KeyboardAction.Move) // completely unnecessary 
                     {
                         editMode.Move();
-                        MoveAdjustConnections(spawner.GetConnections(o_mouse.selectedObjet));
+                        MoveAdjustConnections(spawner.GetConnections(o_mouse.selectedObjet)); // should be just b4 action addressed x
                     }
                         
                 }
             }
            else if (CurrentMode == Mode.Simulate)
             {
-                if (o_keyboard.action == KeyboardAction.Move)
-                {
+               // if (o_keyboard.action == KeyboardAction.Move)
+               // {
 
-                    textureManager.ChangeColor(o_mouse.selectedObjet, Color.green);
+                    
 
                     /// pass GO around which it will move, 
                     ///pass connection lenght between objects
                     simulationMode.Move(MoveAdjustConnections(spawner.GetConnections(o_mouse.selectedObjet)), spawner.GetStructure(o_mouse.selectedObjet)); // to be changed to select goAround
 
+                    simulationMode.Enlist(o_mouse.selectedObjet);
                    // MoveAdjustConnections(spawner.GetConnections(o_mouse.selectedObjet));
 
-                }
+                //}
+
+                
+
+
 
             }
             
         }
 
-        private GameObject MoveAdjustConnections(List<Spawn.Structures.Setup.Structure.connection> connections)
+        private GameObject MoveAdjustConnections(List<Spawn.Structures.Setup.Structure.connection> connections) // change for edit and sim modes
         {
             foreach (Spawn.Structures.Setup.Structure.connection c in connections.ToList())
             {
+
+                /// gtfo this somewhere else
+                double lenght = Math.Round((c.endPoint.transform.position - o_mouse.selectedObjet.transform.position).magnitude, 4);
+                Spawn.Structures.Setup.Structure.connection ce = spawner.GetStructure(c.endPoint).FindOtherSideOfConnection(o_mouse.selectedObjet, c.endPoint);
+
+                ce.dataConnection.originalLenght = lenght; // does nothing
+                ce.dataConnection.realLenght = lenght;
+
+                Spawn.Structures.Setup.Structure.connection co = spawner.GetStructure(c.endPoint).FindOtherSideOfConnection( c.endPoint, o_mouse.selectedObjet);
+                co.dataConnection.originalLenght = lenght;
+                co.dataConnection.realLenght = lenght;
+
+                //co.connector.GetComponent<Renderer>().material.color = Color.white;
+                ////
+
                 SpawnerManager.MoveConnection( // do this for every connector object has
                       c.connector,
                       c.endPoint.transform.position,

@@ -40,27 +40,19 @@ namespace Assets.Scripts.Spawn
 
         internal List<connection> GetConnections(GameObject go, Structure structure)
         {
-            List<connection> connectionsList = new List<connection>();
+          //  List<connection> connectionsList = new List<connection>();
 
             foreach(root r in structure.structure.ToList())
             {
-               
                 if (r.point == go)
                 {
-                    connectionsList = r.connections.ToList();
-
-                    return connectionsList;
+                    return r.connections.ToList();
                 }
             }
         return null;
         }
 
 
-
-        internal bool CheckConnector(GameObject go, Structure structure)
-        {
-            return structure.CheckConnector(go);
-        }
 
         internal void MergeStructures(Structure from, Structure to)
         {
@@ -73,6 +65,12 @@ namespace Assets.Scripts.Spawn
                 to.connectors.Add(c);
             }
         }
+
+
+        // get all connections where go is endpoint
+        // have root point go and connection gocon, find where root point gocon and connection point go 
+
+
 
     }
 }

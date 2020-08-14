@@ -18,6 +18,7 @@ enum KeyboardAction
     Spawn,
     Move,
     Delete,
+    ManageList,
 }
 
 enum KeyboardSwitch
@@ -38,6 +39,10 @@ enum ActionsQue
     Move = 4,
     // Delete
     Delete = 8,
+    //Add to List
+    ListAdd = 16,
+    // Remove from list
+    ListRemove = 32,
 }
 
 

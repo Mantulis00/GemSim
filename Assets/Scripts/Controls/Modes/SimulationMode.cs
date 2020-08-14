@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Geometry;
+using Assets.Scripts.Geometry.Objects;
 using Assets.Scripts.Spawn.Structures.Setup;
 using Assets.Scripts.Spawn.TangentProjection;
 using System.Collections.Generic;
@@ -8,12 +9,16 @@ namespace Assets.Scripts.Controls.Modes
 {
     class SimulationMode
     {
+        ObjectGroup group;
+
         GeometryManager geometryManager;
         O_Mause o_mouse;
         Transform cameraTransform;
         SpawnerManager spawner;
         public SimulationMode(O_Mause o_mouse, Transform cameraTransform, SpawnerManager spawner)
         {
+            group = new ObjectGroup();
+
             geometryManager = new GeometryManager();
             this.o_mouse = o_mouse;
             this.cameraTransform = cameraTransform;
@@ -36,6 +41,20 @@ namespace Assets.Scripts.Controls.Modes
                 geometryManager.AdjustMovement(o_mouse.selectedObjet, goAround, structure);
 
                 o_mouse.ActionAddressed(ActionsQue.Move);
+            }
+        }
+
+        public void Enlist(GameObject go)
+        {
+            if ((o_mouse.a_que & ActionsQue.ListAdd) == ActionsQue.ListAdd)
+            {
+                group.Add(go, spawner.GetStructure(go));
+                o_mouse.ActionAddressed(ActionsQue.ListAdd);
+            }
+            else if ((o_mouse.a_que & ActionsQue.ListRemove) == ActionsQue.ListRemove)
+            {
+                group.Remove(go, spawner.GetStructure(go));
+                o_mouse.ActionAddressed(ActionsQue.ListRemove);
             }
         }
     }

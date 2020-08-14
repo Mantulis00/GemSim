@@ -13,7 +13,7 @@ public class SpawnerManager : MonoBehaviour
     //Dictionary<GameObject, StructureType> objectTypes;
     Dictionary<GameObject, Structure> structures;
 
-    GameObject extension;
+    GameObject extension; // object that was selected last call (extension in methods -> object selected this frame)
 
     public float spawnDistance = 10;
     private StructureManager structureManager;
@@ -28,7 +28,7 @@ public class SpawnerManager : MonoBehaviour
     // merge 2 structures
     // merge point to structure
 
-    SpawnStates state; // to know if only connect two points
+    SpawnStates lastState; // to know if only connect two points
 
 
     internal GameObject MakeGO (GameObject obModel, GameObject extension, SpawnOptions option) // make go from object ( if  extension not null , to what object)
@@ -58,22 +58,22 @@ public class SpawnerManager : MonoBehaviour
             {
                 if (structures.ContainsKey(extension) && structures.ContainsKey(this.extension))
                 {
-                    if (structures[extension] == structures[this.extension])
-                        state = SpawnStates.Connect;
-                    else
-                    {
+                    if (structures[extension] == structures[this.extension]) // if last and this objects are at same structure just connect them
+                        lastState = SpawnStates.Connect;
+                    else // if they are in different structures, merge structures
+                    { 
                         structureManager.MergeStructures(structures[this.extension], structures[extension]);
                         structures[this.extension] = structures[extension];
-                        state = SpawnStates.Merge;
+                        lastState = SpawnStates.Merge;
                     }
                        
                 }
                 else
-                    state = SpawnStates.Connect;
+                    lastState = SpawnStates.Connect;
 
 
                 if (extension == this.extension)
-                    state = SpawnStates.Error;
+                    lastState = SpawnStates.Error;
 
                 return null;// connect structures
             }
@@ -88,20 +88,20 @@ public class SpawnerManager : MonoBehaviour
                     structures.Add(go, str);
                 }
 
-                    state = SpawnStates.Ordinary;
+                    lastState = SpawnStates.Ordinary;
 
                 return go;
             }// find structure, add endpoint to root element
         }
-        else
+        else // option  => connection
         {
-            if (state != SpawnStates.Error)
+            if (lastState != SpawnStates.Error)
             {
-                GameObject go = structureManager.MakeGO(this.transform, obModel, SpawnOptions.Connection);
+                GameObject go = structureManager.MakeGO(this.transform, obModel, SpawnOptions.Connection); // create connection
 
-                if (state == SpawnStates.Connect || state == SpawnStates.Merge)
+                if (lastState == SpawnStates.Connect || lastState == SpawnStates.Merge)
                 {
-                    var str = structures[this.extension];
+                    var str = structures[this.extension]; // add connection between this.extension and extension -> last selected and this selected objects
                     str.AddConnection(go, this.extension, extension);
                 }
 
@@ -146,7 +146,7 @@ public class SpawnerManager : MonoBehaviour
     internal bool CheckConnector(GameObject go)
     {
         if (structures.ContainsKey(go))
-            return structureManager.CheckConnector(go, structures[go]);
+            return structures[go].CheckConnector(go);
         else
             return false;
     }
@@ -176,7 +176,7 @@ public class SpawnerManager : MonoBehaviour
         return goPosition;
     }
 
-    public static void MoveConnection(GameObject go, Vector3 start, Vector3 finish)
+    public static void MoveConnection(GameObject go, Vector3 start, Vector3 finish) 
     {
         if (go == null) return;
         // set location
@@ -199,22 +199,36 @@ public class SpawnerManager : MonoBehaviour
         Vector3 scales = new Vector3(); // ?TBC constants -- > xd
         scales.y = 0.1f;//go.transform.localScale.y/10;
         scales.z = 0.1f;//go.transform.localScale.z/10;
-        scales.x = Linear.Pythagoras3(lineDistance);//lineDistance.magnitude;
+        scales.x = (float)Linear.Pythagoras3(lineDistance);//lineDistance.magnitude;
         go.transform.localScale = scales;
 
     }
 
-    public static void MoveConnection(List<GameObject> points, Structure structure)
+    public static void MoveConnectors(List<GameObject> points, Structure structure)
     {
         if (points.Count == 0) return;
 
-        List<Structure.root> roots = structure.GetRoots(points); // setup could be done once
+        //structure.RemoveDuplicates(points);
+        List<Structure.root> roots = structure.GetRootsFromPoints(points); // setup could be done once
 
-        foreach(Structure.root r in roots)
+
+
+        foreach(Structure.root r in roots.ToList())
         {
-            foreach(Structure.connection c in r.connections)
+            foreach (Structure.connection c in r.connections.ToList())
             {
-                MoveConnection(c.connector, r.point.transform.position, c.endPoint.transform.position);
+                MoveConnection(c.connector, r.point.transform.position, c.endPoint.transform.position); // ?TBC add check if can strech functionality 
+
+                /// gtfo this somewhere else
+
+                c.dataConnection.realLenght = (double)Math.Round((c.endPoint.transform.position - r.point.transform.position).magnitude, 4);//Linear.Pythagoras3(c.endPoint.transform.position - r.point.transform.position); // refreash real lenght
+
+                if (c.dataConnection.realLenght > c.dataConnection.originalLenght) c.connector.GetComponent<Renderer>().material.color = Color.yellow;
+                else if (c.dataConnection.realLenght < c.dataConnection.originalLenght) c.connector.GetComponent<Renderer>().material.color = Color.cyan;
+               // else c.connector.GetComponent<Renderer>().material.color = Color.white;
+
+                ///
+
             }
         }
 

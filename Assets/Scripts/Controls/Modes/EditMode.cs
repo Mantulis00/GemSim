@@ -27,7 +27,9 @@ namespace Assets.Scripts.Controls
                 if (!spawner.CheckConnector(o_mouse.selectedObjet)) // cant spawn connector
                 {
                     startPos = spawner.MovePoint(
-                        spawner.MakeGO(o_mouse.selectedObjet, o_mouse.CheckForObject(), SpawnOptions.Start),
+                        spawner.MakeGO(o_mouse.selectedObjet, 
+                        o_mouse.CheckForObject(), 
+                        SpawnOptions.Start),
                         cameraTransform, o_mouse.clickCoords_s);
                 }
 
@@ -38,13 +40,14 @@ namespace Assets.Scripts.Controls
                 if (!spawner.CheckConnector(o_mouse.selectedObjet))
                 {
                     finishPos = spawner.MovePoint(
-                        spawner.MakeGO(o_mouse.selectedObjet, o_mouse.CheckForObject(),
+                        spawner.MakeGO(
+                        o_mouse.selectedObjet, o_mouse.CheckForObject(),
                         SpawnOptions.Finish), 
                         cameraTransform, 
                         o_mouse.clickCoords_f);
 
 
-                    SpawnerManager.MoveConnection(
+                    SpawnerManager.MoveConnection( // this will come here
                         spawner.MakeGO(o_mouse.selectedObjet, o_mouse.CheckForObject(), SpawnOptions.Connection),
                         startPos, finishPos);
                 }
