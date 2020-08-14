@@ -37,9 +37,12 @@ namespace Assets.Scripts.Geometry.Types
 
             foreach (Structure.root r in roots) // getconnectedpoints could be done once per go until changes ?
             {
-                Vector3 connectionsShift = new Vector3();
-                connectionsShift = r.point.transform.position- go.transform.position;
-                r.point.transform.position = goAround.transform.position + shiftVector + connectionsShift;
+                if (r.dataPoint.type == StructurePointType.Loose)
+                {
+                    Vector3 connectionsShift = new Vector3();
+                    connectionsShift = r.point.transform.position - go.transform.position;
+                    r.point.transform.position = goAround.transform.position + shiftVector + connectionsShift;
+                }
             }
 
             

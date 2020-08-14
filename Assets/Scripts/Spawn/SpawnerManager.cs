@@ -208,7 +208,10 @@ public class SpawnerManager : MonoBehaviour
     {
         if (points.Count == 0) return;
 
-        List<Structure.root> roots = structure.GetRoots(points); // setup could be done once
+        //structure.RemoveDuplicates(points);
+        List<Structure.root> roots = structure.GetRootsFromPoints(points); // setup could be done once
+
+
 
         foreach(Structure.root r in roots.ToList())
         {
@@ -222,7 +225,7 @@ public class SpawnerManager : MonoBehaviour
 
                 if (c.dataConnection.realLenght > c.dataConnection.originalLenght) c.connector.GetComponent<Renderer>().material.color = Color.yellow;
                 else if (c.dataConnection.realLenght < c.dataConnection.originalLenght) c.connector.GetComponent<Renderer>().material.color = Color.cyan;
-                else c.connector.GetComponent<Renderer>().material.color = Color.white;
+               // else c.connector.GetComponent<Renderer>().material.color = Color.white;
 
                 ///
 

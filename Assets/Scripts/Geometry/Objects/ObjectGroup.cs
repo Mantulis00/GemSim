@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Assets.Scripts.Spawn;
+using Assets.Scripts.Spawn.Structures.Setup;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Scripts.Geometry.Objects
@@ -17,15 +19,20 @@ namespace Assets.Scripts.Geometry.Objects
             return goList;
         }
 
-        public void Add(GameObject go)
+        public void Add(GameObject go, Structure structure) // ?TBC not rly a place or is it ?
         {
+            structure.GetRootsFromPoints(go).dataPoint.type = StructurePointType.Fixed;
+
+
             go.GetComponent<Renderer>().material.color = Color.black; // for debugs
 
             if (!goList.Contains(go)) goList.Add(go);
         }
 
-        public void Remove(GameObject go)
+        public void Remove(GameObject go, Structure structure)
         {
+            structure.GetRootsFromPoints(go).dataPoint.type = StructurePointType.Loose;
+
             go.GetComponent<Renderer>().material.color = Color.white; // for debugs
 
             if (goList.Contains(go)) goList.Remove(go);

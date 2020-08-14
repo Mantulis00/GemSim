@@ -48,12 +48,12 @@ namespace Assets.Scripts.Controls.Modes
         {
             if ((o_mouse.a_que & ActionsQue.ListAdd) == ActionsQue.ListAdd)
             {
-                group.Add(go);
+                group.Add(go, spawner.GetStructure(go));
                 o_mouse.ActionAddressed(ActionsQue.ListAdd);
             }
             else if ((o_mouse.a_que & ActionsQue.ListRemove) == ActionsQue.ListRemove)
             {
-                group.Remove(go);
+                group.Remove(go, spawner.GetStructure(go));
                 o_mouse.ActionAddressed(ActionsQue.ListRemove);
             }
         }

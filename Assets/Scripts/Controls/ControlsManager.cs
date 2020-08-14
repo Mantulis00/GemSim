@@ -126,7 +126,7 @@ namespace Assets.Scripts.Controls
                 co.dataConnection.originalLenght = lenght;
                 co.dataConnection.realLenght = lenght;
 
-                co.connector.GetComponent<Renderer>().material.color = Color.white;
+                //co.connector.GetComponent<Renderer>().material.color = Color.white;
                 ////
 
                 SpawnerManager.MoveConnection( // do this for every connector object has

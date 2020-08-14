@@ -45,8 +45,8 @@ namespace Assets.Scripts.Spawn.Structures.Setup
 
         public class pointData // fixed / movable etc ?TBA
         {
-            StructurePointType type;
-            Vector3 originalPossition;
+           public StructurePointType type;
+           public Vector3 originalPossition;
 
             public pointData(Vector3 location, StructurePointType type)
             {
@@ -106,7 +106,7 @@ namespace Assets.Scripts.Spawn.Structures.Setup
         private connectionData GetConnectionData(GameObject from, GameObject to)
         {
             connectionData cData = new connectionData();
-            double lenght = System.Math.Round((from.transform.position - to.transform.position).magnitude, 4); //from.transform.position - to.transform.position).magnitude
+            double lenght = System.Math.Round((from.transform.position - to.transform.position).magnitude, 4); //constans lol
             cData.originalLenght = lenght;
             cData.realLenght = lenght;
 
@@ -175,7 +175,7 @@ namespace Assets.Scripts.Spawn.Structures.Setup
         }
 
 
-        internal bool CheckConnector(GameObject go)
+        internal bool CheckConnector(GameObject go) // check if object is connector type
         {
             foreach (GameObject g in connectors.ToList())
             {
@@ -189,7 +189,20 @@ namespace Assets.Scripts.Spawn.Structures.Setup
         }
 
 
-        internal void SearchWide(List<GameObject> inList, GameObject go)
+       
+       
+        internal void RemoveDuplicates(List<GameObject> goList) // mayb e not needed
+        {
+            for (int x=0; x<goList.Count; x++)
+            {
+                for (int y=x+1; y<goList.Count; y++)
+                {
+                    if (goList[x] == goList[y]) goList.RemoveAt(y);
+                }
+            }
+        }
+
+        internal void SearchWide(List<GameObject> inList, GameObject go) // simple search wide for structure connection endpoints
         {
 
             foreach (root r in structure.ToList())
@@ -211,20 +224,9 @@ namespace Assets.Scripts.Spawn.Structures.Setup
             }
 
         }
-       
-        internal void RemoveDuplicates(List<GameObject> goList) // mayb e not needed
-        {
-            for (int x=0; x<goList.Count; x++)
-            {
-                for (int y=x+1; y<goList.Count; y++)
-                {
-                    if (goList[x] == goList[y]) goList.RemoveAt(y);
-                }
-            }
-        }
 
 
-        internal List<GameObject> GetConnectedPoints(GameObject go, GameObject goAround)
+        internal List<GameObject> GetConnectedPoints(GameObject go, GameObject goAround) // get whole branch of connections
         {
             List<GameObject> inList = new List<GameObject>();
             inList.Add(goAround);
@@ -239,27 +241,9 @@ namespace Assets.Scripts.Spawn.Structures.Setup
             return inList;
         }
 
-        internal List<root> GetRoots(List<GameObject> points)
-        {
-            List<root> roots = new List<root>();
-            foreach (root r in structure)
-            {
-                foreach (GameObject g in points)
-                {
-                    if (g == r.point)
-                    {
-                        roots.Add(r);
-                        break;
-                    }
-                }
-            }
+      
 
-            
-
-            return roots;
-        }
-
-        internal List<root> GetRootsFromPoints(List<GameObject> goList)
+        internal List<root> GetRootsFromPoints(List<GameObject> goList) // if you have go, find root whichs point is your go
         {
             List<root> rootList = new List<root>();
 
@@ -277,10 +261,23 @@ namespace Assets.Scripts.Spawn.Structures.Setup
             return rootList;
         }
 
+        internal root GetRootsFromPoints(GameObject go) //overloaded version for 1 go not list
+        {
+                foreach (root r in structure)
+                {
+                    if (r.point == go)
+                    {
+                        return r;
+                    }
+                }
+            
+            return null;
+        }
 
 
 
-        internal connection FindOtherSideOfConnection(GameObject from, GameObject to)
+
+        internal connection FindOtherSideOfConnection(GameObject from, GameObject to) // if you have to object A -> B, find connection B -> A
         {
             foreach(root r in structure.ToList())
             {
