@@ -19,6 +19,7 @@ namespace Assets.Scripts.Controls
             else if (Input.GetKeyDown(KeyCode.M)) action = KeyboardAction.Move;
             else if (Input.GetKeyDown(KeyCode.D)) action = KeyboardAction.Delete;
             else if (Input.GetKeyDown(KeyCode.L)) action = KeyboardAction.ManageList;
+            //else if (Input.GetKeyDown(KeyCode.L)) action = KeyboardAction.SelectSecondary;
 
             return action;
         }

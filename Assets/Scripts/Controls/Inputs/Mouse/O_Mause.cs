@@ -13,11 +13,13 @@ namespace Assets.Scripts.Controls
     class O_Mause
     {
         public GameObject selectedObjet { get; private set; }
+        public GameObject selectedObject_Secondary { get; private set; }
+
         private bool noHoldLastFrame = true;
 
         public ActionsQue a_que { get; private set; }
-        public Vector2 clickCoords_s, clickCoords_f; // s - start clicking , f - finish clicking
-
+        public Vector2 clickCoords_s {get; private set; } // s - start clicking , f - finish clicking
+        public Vector2 clickCoords_f { get; private set; }
 
         public O_Mause()
         {

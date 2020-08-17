@@ -18,7 +18,6 @@ namespace Assets.Scripts.Controls
        private EditMode editMode;
        private SimulationMode simulationMode;
 
-        public GameObject goi; // test
 
 
         private void Start()
