@@ -4,10 +4,15 @@ using UnityEngine;
 
 interface IGroup
 {
-    public List<GameObject> GetList();
-    public void Add(GameObject go, Structure structure);// ?TBC not rly a place or is it ?
+     Structure structure { get; }
 
-    public void Remove(GameObject go, Structure structure);
+    void ChangeStructure(Structure structure);
+        List<GameObject> GetList();
+     void Add(GameObject go, Structure structure);// ?TBC not rly a place or is it ?
+
+     void Remove(GameObject go, Structure structure);
+
+    GameObject GetCheckObject();
 
 
 

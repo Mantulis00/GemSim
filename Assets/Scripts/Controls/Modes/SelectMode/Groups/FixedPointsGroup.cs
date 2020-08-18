@@ -10,11 +10,10 @@ namespace Assets.Scripts.Controls.Modes.Groups
         private List<GameObject> goList;
         public Structure structure { get; private set; }
 
-
         public FixedPointsGroup()
         {
             goList = new List<GameObject>();
-            this.structure = structure;
+            this.structure = null;
         }
 
         public List<GameObject> GetList() // ?TBC to be able to have many list once
@@ -25,7 +24,8 @@ namespace Assets.Scripts.Controls.Modes.Groups
         public void Add(GameObject go, Structure structure) // ?TBC not rly a place or is it ?
         {
             if (goList.Contains(go)) return;
-            if (CheckStructure(structure))
+            if (!CheckStructure(structure)) return;
+
 
 
 
@@ -48,21 +48,25 @@ namespace Assets.Scripts.Controls.Modes.Groups
             goList.Remove(go);
         }
 
-        private GameObject CheckStructure(Structure structure)
+        private bool CheckStructure(Structure structure) // check if group structure is the same as first objects structure, becouse structure of object could have changed
         {
             if (goList.Count != 0 && this.structure != structure) // check if group is of same structure as given object
             {
-                return goList[0];
+                return false;
             }
-            return null;
+            return true;
         }
 
-        private void ChangeStructure(Structure structure)
+        public void ChangeStructure(Structure structure) 
         {
             this.structure = structure;
         }
 
-
+        public GameObject GetCheckObject()
+        {
+            if (goList.Count != 0) return goList[0];
+            else return null;
+        }
 
 
 

@@ -7,15 +7,17 @@ namespace Assets.Scripts.Controls.Modes.SelectMode
 {
     class SelectMode
     {
-        O_Mause o_mouse;
-        SpawnerManager spawner;
+        private O_Mause o_mouse;
+        private SpawnerManager spawner;
 
-        SelectManager selectManager;
-
-        public SelectMode(O_Mause o_mouse)
+        private SelectManager selectManager;
+         
+        public SelectMode(O_Mause o_mouse, SpawnerManager spawner)
         {
             this.o_mouse = o_mouse;
-            selectManager = new SelectManager();
+            this.spawner = spawner;
+
+            selectManager = new SelectManager(spawner);
         }
 
         public void CreateList(ListType type, string listName)
@@ -23,9 +25,12 @@ namespace Assets.Scripts.Controls.Modes.SelectMode
 
         }
         
+
+ 
+
         public void AddToList(GameObject go, string listName)
         {
-            IGroup list = selectManager.GetList(listName);
+            IGroup list = selectManager.GetGroup(listName);
             if (list == null) return;
 
             if ((o_mouse.a_que & ActionsQue.ListAdd) == ActionsQue.ListAdd)

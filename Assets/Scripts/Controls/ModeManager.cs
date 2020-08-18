@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Controls.Keyboard;
 using Assets.Scripts.Controls.Modes;
+using Assets.Scripts.Controls.Modes.SelectMode;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Controls
 {
-    class ControlsManager : MonoBehaviour
+    class ModeManager : MonoBehaviour
     {
         public SpawnerManager spawner;
         internal Mode CurrentMode;
@@ -15,9 +16,10 @@ namespace Assets.Scripts.Controls
         private  O_Camera o_camera;
        private O_Mause o_mouse;
        private O_Keyboard o_keyboard;
+
        private EditMode editMode;
        private SimulationMode simulationMode;
-
+        private SelectMode selectMode;
 
 
         private void Start()
@@ -28,7 +30,7 @@ namespace Assets.Scripts.Controls
 
             editMode = new EditMode(o_mouse, o_camera.cam.transform, spawner);
             simulationMode = new SimulationMode(o_mouse, o_camera.cam.transform, spawner);
-
+            selectMode = new SelectMode(o_mouse, spawner);
 
 
 
@@ -80,7 +82,7 @@ namespace Assets.Scripts.Controls
                      if (o_keyboard.action == KeyboardAction.Move) // completely unnecessary 
                     {
                         editMode.Move();
-                        MoveAdjustConnections(spawner.GetConnections(o_mouse.selectedObjet)); // should be just b4 action addressed x
+                        MoveAdjustConnections(spawner.GetConnections(o_mouse.selectedObjet)); // should be just b4 action addressed x inside mode
                     }
                         
                 }
@@ -96,7 +98,7 @@ namespace Assets.Scripts.Controls
                     ///pass connection lenght between objects
                     simulationMode.Move(MoveAdjustConnections(spawner.GetConnections(o_mouse.selectedObjet)), spawner.GetStructure(o_mouse.selectedObjet)); // to be changed to select goAround
 
-                    simulationMode.Enlist(o_mouse.selectedObjet);
+                    //simulationMode.Enlist(o_mouse.selectedObjet);
                    // MoveAdjustConnections(spawner.GetConnections(o_mouse.selectedObjet));
 
                 //}
