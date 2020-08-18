@@ -106,6 +106,12 @@ namespace Assets.Scripts.Controls
 
 
             }
+
+           else if (CurrentMode == Mode.Select)
+            {
+
+            }
+
             
         }
 
