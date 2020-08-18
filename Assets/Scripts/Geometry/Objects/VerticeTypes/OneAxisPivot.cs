@@ -14,7 +14,7 @@ namespace Assets.Scripts.Geometry.Types
         /// <summary>
         /// can work only if all connections are on the same axis and have same rotation
         /// ellastic connection can be streched
-        /// <returns></returns>
+        /// <returns>changed lol</returns>
         /// 
 
 
@@ -23,17 +23,6 @@ namespace Assets.Scripts.Geometry.Types
             Vector3 shiftVector = Matricies.MoveToRayedPlanePossition(go, goAround);
 
 
-            /*   foreach (Structure.root c in structure.structure.ToList()) // if connection is solit on moved object part
-               {
-                   if (c.endPoint != goAround)
-                   {
-                       Vector3 connectionsShift = new Vector3();
-                       connectionsShift = c.endPoint.transform.position - go.transform.position;
-                       c.endPoint.transform.position = goAround.transform.position + shiftVector + connectionsShift;
-                   }
-               }*/
-
-            
 
             foreach (Structure.root r in roots) // getconnectedpoints could be done once per go until changes ?
             {
@@ -44,10 +33,6 @@ namespace Assets.Scripts.Geometry.Types
                     r.point.transform.position = goAround.transform.position + shiftVector + connectionsShift;
                 }
             }
-
-            
-         //   structure.GetConnectedPoints(go, goAround);
-
 
             go.transform.position = goAround.transform.position + shiftVector;
 

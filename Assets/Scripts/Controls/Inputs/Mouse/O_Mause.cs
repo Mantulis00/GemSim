@@ -12,12 +12,13 @@ namespace Assets.Scripts.Controls
 
     class O_Mause
     {
-        public GameObject selectedObjet { get; private set; }
+        public GameObject selectedObject { get; private set; }
+
         private bool noHoldLastFrame = true;
 
         public ActionsQue a_que { get; private set; }
-        public Vector2 clickCoords_s, clickCoords_f; // s - start clicking , f - finish clicking
-
+        public Vector2 clickCoords_s {get; private set; } // s - start clicking , f - finish clicking
+        public Vector2 clickCoords_f { get; private set; }
 
         public O_Mause()
         {
@@ -34,17 +35,21 @@ namespace Assets.Scripts.Controls
 
         public void Update(KeyboardAction action)
         {
-            if (action == KeyboardAction.Spawn && selectedObjet != null)
+            if (action == KeyboardAction.Spawn && selectedObject != null)
             {
                 SpawnOptions();
             }
-            else if (action == KeyboardAction.Move && selectedObjet != null)
+            else if (action == KeyboardAction.Move && selectedObject != null)
             {
                 MoveOptions();
             }
             else if (action == KeyboardAction.ManageList)
             {
                 ListOptions();
+            }
+            else if (action == KeyboardAction.Select)
+            {
+                SelectOptions();
             }
 
             else
@@ -66,7 +71,7 @@ namespace Assets.Scripts.Controls
             }
             else if (action == MouseAction.Unselect)
             {
-                selectedObjet = null;
+                selectedObject = null;
             }
         }
 
@@ -109,21 +114,36 @@ namespace Assets.Scripts.Controls
             
         }
 
+        private void SelectOptions()
+        {
+            MouseAction action = MouseControls.DetectClick(false); // can change only if last action addressed
+
+
+            if (action == MouseAction.Select)
+            {
+                SelectObject();
+                if ((a_que & ActionsQue.Select) != ActionsQue.Select)
+                {
+                    SelectObject();
+                    a_que |= ActionsQue.Select;
+                }
+            }
+        }
 
         private void ListOptions()
         {
-            if ((a_que & (ActionsQue.ListAdd | ActionsQue.ListRemove)) != (ActionsQue.ListAdd | ActionsQue.ListRemove))
+            if ((a_que & (ActionsQue.GroupAdd | ActionsQue.GroupRemove)) != (ActionsQue.GroupAdd | ActionsQue.GroupRemove))
             {
                 MouseAction action = MouseControls.DetectClick(false); // can change only if last action addressed
                 SelectObject();
 
                 if (action == MouseAction.Select)
                 {
-                    a_que |= ActionsQue.ListAdd;
+                    a_que |= ActionsQue.GroupAdd;
                 }
                 else if (action == MouseAction.Unselect)
                 {
-                    a_que |= ActionsQue.ListRemove;
+                    a_que |= ActionsQue.GroupRemove;
                 }
             }
         }
@@ -146,7 +166,7 @@ namespace Assets.Scripts.Controls
 
             if (Physics.Raycast(ray, out hit))
             {
-                 selectedObjet = hit.transform.gameObject;
+                 selectedObject = hit.transform.gameObject;
             }
         }
 
