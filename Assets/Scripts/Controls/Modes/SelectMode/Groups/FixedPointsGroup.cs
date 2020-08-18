@@ -25,9 +25,7 @@ namespace Assets.Scripts.Controls.Modes.Groups
         {
             if (goList.Contains(go)) return;
             if (!CheckStructure(structure)) return;
-
-
-
+            Debug.Log("s");
 
             structure.GetRootsFromPoints(go).dataPoint.type = StructurePointType.Fixed;
 

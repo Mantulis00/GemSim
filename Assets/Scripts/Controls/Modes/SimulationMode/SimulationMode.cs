@@ -45,19 +45,6 @@ namespace Assets.Scripts.Controls.Modes
             }
         }
 
-      /*  public void Enlist(GameObject go)
-        {
-            if ((o_mouse.a_que & ActionsQue.ListAdd) == ActionsQue.ListAdd)
-            {
-                group.Add(go, spawner.GetStructure(go));
-                o_mouse.ActionAddressed(ActionsQue.ListAdd);
-            }
-            else if ((o_mouse.a_que & ActionsQue.ListRemove) == ActionsQue.ListRemove)
-            {
-                group.Remove(go, spawner.GetStructure(go));
-                o_mouse.ActionAddressed(ActionsQue.ListRemove);
-            }
-        }*/
     }
 }
 

@@ -20,32 +20,33 @@ namespace Assets.Scripts.Controls.Modes.SelectMode
             selectManager = new SelectManager(spawner);
         }
 
-        public void CreateList(ListType type, string listName)
+        public void CreateGroup( string groupName, ListType type)
         {
-
+            selectManager.CreateList(groupName, ListType.FixedPoints);
         }
         
-
  
 
-        public void AddToList(GameObject go, string listName)
+        public void AddToGroup(string groupName, GameObject go)
         {
-            IGroup list = selectManager.GetGroup(listName);
-            if (list == null) return;
+            //if ((o_mouse.a_que & (ActionsQue.ListAdd | ActionsQue.ListRemove)) != (ActionsQue.ListAdd | ActionsQue.ListRemove)) return;
+
+            //IGroup group = selectManager.GetGroup(groupName);
+            //if (group == null) return;
 
             if ((o_mouse.a_que & ActionsQue.ListAdd) == ActionsQue.ListAdd)
             {
-                list.Add(go, spawner.GetStructure(go));
+                selectManager.Add(groupName, go);
                 o_mouse.ActionAddressed(ActionsQue.ListAdd);
             }
             else if ((o_mouse.a_que & ActionsQue.ListRemove) == ActionsQue.ListRemove)
             {
-                list.Remove(go, spawner.GetStructure(go));
+                selectManager.Remove(groupName, go);
                 o_mouse.ActionAddressed(ActionsQue.ListRemove);
             }
         }
 
-        public void RemoveFromList()
+        public void RemoveFromGroup()
         {
 
         }

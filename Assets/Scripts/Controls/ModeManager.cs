@@ -31,7 +31,7 @@ namespace Assets.Scripts.Controls
             editMode = new EditMode(o_mouse, o_camera.cam.transform, spawner);
             simulationMode = new SimulationMode(o_mouse, o_camera.cam.transform, spawner);
             selectMode = new SelectMode(o_mouse, spawner);
-
+            selectMode.CreateGroup("p", ListType.FixedPoints); // temmp
 
 
             CurrentMode = Mode.Edit; // temp
@@ -89,15 +89,20 @@ namespace Assets.Scripts.Controls
             }
            else if (CurrentMode == Mode.Simulate)
             {
-               // if (o_keyboard.action == KeyboardAction.Move)
-               // {
+                // if (o_keyboard.action == KeyboardAction.Move)
+                // {
 
+
+
+                /// pass GO around which it will move, 
+                ///pass connection lenght between objects
+                ///
+                     GameObject tempob = MoveAdjustConnections(spawner.GetConnections(o_mouse.selectedObjet));
+                if (o_mouse.selectedObjet != null)
+                selectMode.AddToGroup("p", o_mouse.selectedObjet); //temp
+                simulationMode.Move(tempob, spawner.GetStructure(o_mouse.selectedObjet)); // to be changed to select goAround
                     
-
-                    /// pass GO around which it will move, 
-                    ///pass connection lenght between objects
-                    simulationMode.Move(MoveAdjustConnections(spawner.GetConnections(o_mouse.selectedObjet)), spawner.GetStructure(o_mouse.selectedObjet)); // to be changed to select goAround
-
+                   
                     //simulationMode.Enlist(o_mouse.selectedObjet);
                    // MoveAdjustConnections(spawner.GetConnections(o_mouse.selectedObjet));
 
