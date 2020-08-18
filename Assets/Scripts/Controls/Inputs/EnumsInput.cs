@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 
 [Flags]
 enum KeyboardRotations // only for rotating
@@ -19,6 +18,7 @@ enum KeyboardAction
     Move,
     Delete,
     ManageList,
+    Select,
 }
 
 enum KeyboardSwitch
@@ -29,7 +29,7 @@ enum KeyboardSwitch
 
 
 [Flags]
-enum ActionsQue 
+enum ActionsQue
 {
     Hold = 0,
     //Spawn
@@ -39,10 +39,11 @@ enum ActionsQue
     Move = 4,
     // Delete
     Delete = 8,
-    //Add to List
-    ListAdd = 16,
-    // Remove from list
-    ListRemove = 32,
+    //Group
+    GroupAdd = 16,
+    GroupRemove = 32,
+    //Select
+    Select = 64,
 }
 
 
@@ -53,12 +54,3 @@ enum MouseAction
     Unselect = 2,
     Delete = 4,
 }
-
-enum Mode
-{
-    Hold,
-    Edit,
-    Simulate,
-    Select,
-}
-

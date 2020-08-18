@@ -3,7 +3,9 @@ using Assets.Scripts.Geometry;
 using Assets.Scripts.Geometry.Objects;
 using Assets.Scripts.Spawn.Structures.Setup;
 using Assets.Scripts.Spawn.TangentProjection;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Assets.Scripts.Controls.Modes
@@ -39,11 +41,28 @@ namespace Assets.Scripts.Controls.Modes
         {
             if ((o_mouse.a_que & ActionsQue.Move) == ActionsQue.Move)
              {
-                geometryManager.AdjustMovement(o_mouse.selectedObjet, goAround, structure);
+                geometryManager.AdjustMovement(o_mouse.selectedObject, goAround, structure);
 
+                MoveAdjustConnections(spawner.GetConnections(o_mouse.selectedObject));
                 o_mouse.ActionAddressed(ActionsQue.Move);
             }
         }
+
+
+        private void MoveAdjustConnections(List<Spawn.Structures.Setup.Structure.connection> connections) // change for edit and sim modes
+        {
+            foreach (Spawn.Structures.Setup.Structure.connection c in connections.ToList())
+            {
+
+                SpawnerManager.MoveConnection( // do this for every connector object has
+                      c.connector,
+                      c.endPoint.transform.position,
+                      o_mouse.selectedObject.transform.position);
+            }
+
+        }
+
+
 
     }
 }

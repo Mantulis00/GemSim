@@ -11,11 +11,13 @@ namespace Assets.Scripts.Controls.Modes.SelectMode
         private SpawnerManager spawner;
 
         private SelectManager selectManager;
-         
+
+        public GameObject secondarySelect { get; private set; } // temp
+
         public SelectMode(O_Mause o_mouse, SpawnerManager spawner)
         {
             this.o_mouse = o_mouse;
-            this.spawner = spawner;
+           // this.spawner = spawner;
 
             selectManager = new SelectManager(spawner);
         }
@@ -25,7 +27,17 @@ namespace Assets.Scripts.Controls.Modes.SelectMode
             selectManager.CreateList(groupName, ListType.FixedPoints);
         }
         
- 
+        public void SelectSecondary()
+        {
+            if ((o_mouse.a_que & ActionsQue.Select) == ActionsQue.Select)
+            {
+                if (secondarySelect != null) secondarySelect.GetComponent<Renderer>().material.color = Color.white;
+                secondarySelect = o_mouse.selectedObject;
+                o_mouse.selectedObject.GetComponent<Renderer>().material.color = Color.cyan;
+                o_mouse.ActionAddressed(ActionsQue.Select);
+
+            }
+        }
 
         public void AddToGroup(string groupName, GameObject go)
         {
@@ -34,15 +46,15 @@ namespace Assets.Scripts.Controls.Modes.SelectMode
             //IGroup group = selectManager.GetGroup(groupName);
             //if (group == null) return;
 
-            if ((o_mouse.a_que & ActionsQue.ListAdd) == ActionsQue.ListAdd)
+            if ((o_mouse.a_que & ActionsQue.GroupAdd) == ActionsQue.GroupAdd)
             {
                 selectManager.Add(groupName, go);
-                o_mouse.ActionAddressed(ActionsQue.ListAdd);
+                o_mouse.ActionAddressed(ActionsQue.GroupAdd);
             }
-            else if ((o_mouse.a_que & ActionsQue.ListRemove) == ActionsQue.ListRemove)
+            else if ((o_mouse.a_que & ActionsQue.GroupRemove) == ActionsQue.GroupRemove)
             {
                 selectManager.Remove(groupName, go);
-                o_mouse.ActionAddressed(ActionsQue.ListRemove);
+                o_mouse.ActionAddressed(ActionsQue.GroupRemove);
             }
         }
 

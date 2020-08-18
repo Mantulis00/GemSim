@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.Scripts.Controls
 {
@@ -13,12 +8,13 @@ namespace Assets.Scripts.Controls
         {
             KeyboardAction action = KeyboardAction.Hold;
 
-            if (Input.GetKeyDown(KeyCode.Space)) action = KeyboardAction.Reset;
+            if (Input.GetKeyDown(KeyCode.Space)) action = KeyboardAction.Reset; // move everything and make depend on mode _>_)<)_LK)
             else if (Input.GetKeyDown(KeyCode.R)) action = KeyboardAction.Rotate;
             else if (Input.GetKeyDown(KeyCode.S)) action = KeyboardAction.Spawn;
             else if (Input.GetKeyDown(KeyCode.M)) action = KeyboardAction.Move;
             else if (Input.GetKeyDown(KeyCode.D)) action = KeyboardAction.Delete;
             else if (Input.GetKeyDown(KeyCode.L)) action = KeyboardAction.ManageList;
+            else if (Input.GetKeyDown(KeyCode.J)) action = KeyboardAction.Select;
             //else if (Input.GetKeyDown(KeyCode.L)) action = KeyboardAction.SelectSecondary;
 
             return action;
