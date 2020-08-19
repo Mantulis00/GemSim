@@ -64,7 +64,12 @@ namespace Assets.Scripts.Physix
                 UpdatePhysix(frameTime, s);
             }*/
             if (structure != null)
-            UpdatePhysix( structure);
+            {
+                 tensionForces.Update(structure);
+                 speedManager.Update(structure);
+                positionManager.Update(structure);
+            }
+          //  UpdatePhysix( structure);
            
         }
 

@@ -1,9 +1,7 @@
 ﻿
 
 using Assets.Scripts.Spawn.Structures.Setup;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 
 namespace Assets.Scripts.Physix.Movement
 {

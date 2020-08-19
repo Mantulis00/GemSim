@@ -29,6 +29,7 @@ namespace Assets.Scripts.Physix.TensionForces
                     if (c.dataConnection.realLenght != c.dataConnection.originalLenght)
                     {
                         RegisterForce(r, c, structure);
+                        Debug.Log(r.point.name + " " + r.physixData.force.size);
                     }
                 }
             }
