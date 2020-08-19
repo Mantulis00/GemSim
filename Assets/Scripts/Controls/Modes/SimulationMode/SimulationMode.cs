@@ -1,9 +1,5 @@
-﻿using Assets.Scripts.Controls.Modes.Groups;
-using Assets.Scripts.Geometry;
-using Assets.Scripts.Geometry.Objects;
+﻿using Assets.Scripts.Geometry;
 using Assets.Scripts.Spawn.Structures.Setup;
-using Assets.Scripts.Spawn.TangentProjection;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -49,9 +45,9 @@ namespace Assets.Scripts.Controls.Modes
         }
 
 
-        private void MoveAdjustConnections(List<Spawn.Structures.Setup.Structure.connection> connections) // change for edit and sim modes
+        private void MoveAdjustConnections(List<Structure.connection> connections) // change for edit and sim modes
         {
-            foreach (Spawn.Structures.Setup.Structure.connection c in connections.ToList())
+            foreach (Structure.connection c in connections.ToList())
             {
 
                 SpawnerManager.MoveConnection( // do this for every connector object has

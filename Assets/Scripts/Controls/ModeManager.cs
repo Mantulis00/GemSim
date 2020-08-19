@@ -2,6 +2,7 @@
 using Assets.Scripts.Controls.Keyboard;
 using Assets.Scripts.Controls.Modes;
 using Assets.Scripts.Controls.Modes.SelectMode;
+using Assets.Scripts.Physix;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,13 @@ namespace Assets.Scripts.Controls
 {
     class ModeManager : MonoBehaviour
     {
+        //physics
+        public PhysixManager physixManager;
+
+
         public SpawnerManager spawner;
+
+
         internal Mode CurrentMode;
 
         private  O_Camera o_camera;
@@ -81,7 +88,7 @@ namespace Assets.Scripts.Controls
                      if (o_keyboard.action == KeyboardAction.Move) // completely unnecessary 
                     {
                         editMode.Move();
-                        MoveAdjustConnections(spawner.GetConnections(o_mouse.selectedObject)); // should be just b4 action addressed x inside mode
+                        //MoveAdjustConnections(spawner.GetConnections(o_mouse.selectedObject)); // should be just b4 action addressed x inside mode
                     }
                         
                 }
@@ -96,9 +103,13 @@ namespace Assets.Scripts.Controls
                 /// pass GO around which it will move, 
                 ///pass connection lenght between objects
                 ///
-                MoveAdjustConnections(spawner.GetConnections(o_mouse.selectedObject));
+               // MoveAdjustConnections(spawner.GetConnections(o_mouse.selectedObject));
                if (selectMode.secondarySelect != null)
-                simulationMode.Move(selectMode.secondarySelect, spawner.GetStructure(o_mouse.selectedObject)); // to be changed to select goAround
+                {
+                    physixManager.SetStructure(spawner.GetStructure(o_mouse.selectedObject));
+                    simulationMode.Move(selectMode.secondarySelect, spawner.GetStructure(o_mouse.selectedObject)); // to be changed to select goAround
+                }
+               
                     
                    
                     //simulationMode.Enlist(o_mouse.selectedObjet);
@@ -120,34 +131,6 @@ namespace Assets.Scripts.Controls
             }
 
             
-        }
-
-        private void MoveAdjustConnections(List<Spawn.Structures.Setup.Structure.connection> connections) // change for edit and sim modes
-        {
-            foreach (Spawn.Structures.Setup.Structure.connection c in connections.ToList())
-            {
-
-                /// gtfo this somewhere else
-                double lenght = Math.Round((c.endPoint.transform.position - o_mouse.selectedObject.transform.position).magnitude, 4);
-                Spawn.Structures.Setup.Structure.connection ce = spawner.GetStructure(c.endPoint).FindOtherSideOfConnection(o_mouse.selectedObject, c.endPoint);
-
-                ce.dataConnection.originalLenght = lenght; // does nothing
-                ce.dataConnection.realLenght = lenght;
-
-                Spawn.Structures.Setup.Structure.connection co = spawner.GetStructure(c.endPoint).FindOtherSideOfConnection( c.endPoint, o_mouse.selectedObject);
-                co.dataConnection.originalLenght = lenght;
-                co.dataConnection.realLenght = lenght;
-
-                //co.connector.GetComponent<Renderer>().material.color = Color.white;
-                ////
-
-                SpawnerManager.MoveConnection( // do this for every connector object has
-                      c.connector,
-                      c.endPoint.transform.position,
-                      o_mouse.selectedObject.transform.position);
-
-            }
-           
         }
 
     }
