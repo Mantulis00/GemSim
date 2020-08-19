@@ -21,25 +21,32 @@ namespace Assets.Scripts.Physix.TensionForces
         {
             ///could be optimized 2x if duplicate connections are cleared, but for the price of memory ?
 
-            foreach(Structure.root r in structure.structure.ToList())
+
+            foreach(Structure.root r in structure.structure.ToArray())
             {
-                foreach(Structure.connection c in r.connections)
+                foreach (Structure.connection c in r.connections.ToArray())
                 {
                     if (c.dataConnection.realLenght != c.dataConnection.originalLenght)
                     {
-                        RegisterForce( r.point, c);
+                        RegisterForce(r, c, structure);
                     }
                 }
             }
         }
 
-        private void RegisterForce(GameObject rootPoint, Structure.connection connection)
+        private void RegisterForce(Structure.root rootPoint, Structure.connection connection, Structure structure)
         {
-            Force force = connection.force;
-            force.direction = (rootPoint.transform.position - connection.endPoint.transform.position) / (rootPoint.transform.position - connection.endPoint.transform.position).magnitude;// direction part * connection.dataConnection.stretchCoefficient;
+            Force force = new Force();// connection.physixData.force;
+            force.direction = (rootPoint.point.transform.position - connection.endPoint.transform.position) / (rootPoint.point.transform.position - connection.endPoint.transform.position).magnitude;// direction part * connection.dataConnection.stretchCoefficient;
+            force.size = (float)( connection.dataConnection.originalLenght - connection.dataConnection.realLenght) * connection.dataConnection.tensionCoefficient;
 
-           
-            //Debug.Log((float)force.direction.magnitude);
+            rootPoint.physixData.force = force;
+
+          //  force = new Force();
+           // force.direction = -(rootPoint.point.transform.position - connection.endPoint.transform.position) / (rootPoint.point.transform.position - connection.endPoint.transform.position).magnitude;// direction part * connection.dataConnection.stretchCoefficient;
+           // force.size = (float)(connection.dataConnection.originalLenght - connection.dataConnection.realLenght) * connection.dataConnection.tensionCoefficient;
+
+          //  structure.GetRootsFromPoints(connection.endPoint).physixData.force = force;
         }
 
 

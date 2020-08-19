@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Physix.TensionForces;
+﻿using Assets.Scripts.Physix.Movement;
+using Assets.Scripts.Physix.TensionForces;
 using Assets.Scripts.Spawn.Structures.Setup;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,9 +14,12 @@ namespace Assets.Scripts.Physix
 
 
         List<Structure> structures; // could rly evolve into go list
-        Structure structure;
+       public Structure structure;
 
-        private ForcesConnections tensionForces;
+        private ForcesConnections tensionForces; //tbc to forces
+
+        private SpeedManager speedManager;
+        private PositionManager positionManager;
 
         private double frameTime;
 
@@ -31,10 +35,14 @@ namespace Assets.Scripts.Physix
 
         private void Start()
         {
+
             structures = new List<Structure>();
             SetupTensionForces();
+            SetupModels();
             //temp
             UpdatePhysix += tensionForces.Update;
+            UpdatePhysix += speedManager.Update;
+            UpdatePhysix += positionManager.Update;
         }
 
         private void SetupTensionForces() // TBA
@@ -42,6 +50,11 @@ namespace Assets.Scripts.Physix
             tensionForces = new ForcesConnections();
         }
 
+        private void SetupModels()
+        {
+            speedManager = new SpeedManager();
+            positionManager = new PositionManager();
+        }
 
 
         private  void Update()

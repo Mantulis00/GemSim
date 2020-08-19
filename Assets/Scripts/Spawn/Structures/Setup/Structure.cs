@@ -38,11 +38,11 @@ namespace Assets.Scripts.Spawn.Structures.Setup
         {
             public double originalLenght;
             public double realLenght;
-            public float stretchCoefficient;
+            public float tensionCoefficient;
 
             public connectionData()
             {
-                stretchCoefficient = 1f; // !CALH 
+                tensionCoefficient = 1f; // !CALH 
             }
         }
 

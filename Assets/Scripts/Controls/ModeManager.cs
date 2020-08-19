@@ -49,7 +49,7 @@ namespace Assets.Scripts.Controls
             CheckMode();
             UpdateOStatus();
 
-            if (o_mouse.a_que != 0)
+            if (o_mouse.a_que != 0 ) 
                 PerformActions();
 
         }
@@ -106,7 +106,7 @@ namespace Assets.Scripts.Controls
                // MoveAdjustConnections(spawner.GetConnections(o_mouse.selectedObject));
                if (selectMode.secondarySelect != null)
                 {
-                    physixManager.SetStructure(spawner.GetStructure(o_mouse.selectedObject));
+                   if (physixManager.structure == null) physixManager.SetStructure(spawner.GetStructure(o_mouse.selectedObject)); //// teeeeeeeeeemp temp
                     simulationMode.Move(selectMode.secondarySelect, spawner.GetStructure(o_mouse.selectedObject)); // to be changed to select goAround
                 }
                

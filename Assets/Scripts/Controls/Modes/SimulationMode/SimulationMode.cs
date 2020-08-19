@@ -35,13 +35,17 @@ namespace Assets.Scripts.Controls.Modes
 
         public void Move(GameObject goAround, Structure structure)
         {
+           
+
             if ((o_mouse.a_que & ActionsQue.Move) == ActionsQue.Move)
              {
                 geometryManager.AdjustMovement(o_mouse.selectedObject, goAround, structure);
 
-                MoveAdjustConnections(spawner.GetConnections(o_mouse.selectedObject));
                 o_mouse.ActionAddressed(ActionsQue.Move);
+                MoveAdjustConnections(spawner.GetConnections(o_mouse.selectedObject));
             }
+
+            ResetSimulationVars(structure); // temp
         }
 
 
@@ -49,13 +53,21 @@ namespace Assets.Scripts.Controls.Modes
         {
             foreach (Structure.connection c in connections.ToList())
             {
-
+                //temp
                 SpawnerManager.MoveConnection( // do this for every connector object has
                       c.connector,
                       c.endPoint.transform.position,
                       o_mouse.selectedObject.transform.position);
             }
 
+        }
+
+        private void ResetSimulationVars(Structure structure)
+        {
+            foreach(Structure.root r in structure.structure)
+            {
+                r.physixData.speed = new Vector3();
+            }
         }
 
 
