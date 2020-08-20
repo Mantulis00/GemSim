@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Assets.Scripts.Physix.Models;
+using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Linq;
 using System.Net;
@@ -22,6 +23,7 @@ namespace Assets.Scripts.Spawn.Structures.Setup
             public GameObject point; // main point
             public pointData dataPoint;
             public List<connection> connections; // this points extensions
+            public PhysixData physixData;
         }
 
         public class connection // if we have two elements both of them will have connections to each other
@@ -29,17 +31,18 @@ namespace Assets.Scripts.Spawn.Structures.Setup
             public GameObject endPoint;
             public GameObject connector;
             public connectionData dataConnection;
+            public PhysixData physixData;
         }
 
         public class connectionData // elastic, solid // lenght, streach etc. ?TBA
         {
             public double originalLenght;
             public double realLenght;
-            public float stretchCoefficient;
+            public float tensionCoefficient;
 
             public connectionData()
             {
-                stretchCoefficient = 1f; // !CALH 
+                tensionCoefficient = 1f; // !CALH 
             }
         }
 
@@ -78,6 +81,10 @@ namespace Assets.Scripts.Spawn.Structures.Setup
                 initRoot.point.transform.position,
                 StructurePointType.Loose); // !CALH - constants are left here
 
+            //physix
+            initRoot.physixData = new PhysixData();
+
+
 
             structure.Add(initRoot);
 
@@ -99,7 +106,11 @@ namespace Assets.Scripts.Spawn.Structures.Setup
                 connection lastConnection = rt.connections[rt.connections.Count - 1];
 
                 lastConnection.connector = go; // to add object reference to connector
+
+                // datas
                 lastConnection.dataConnection = GetConnectionData(rt.point, lastConnection.endPoint); // to fill connection data
+                //physics
+                lastConnection.physixData = new PhysixData();
             }
         }
 
@@ -126,7 +137,7 @@ namespace Assets.Scripts.Spawn.Structures.Setup
                     {
                         rt = NewRoot(go); // prefilled root for structure
 
-                        connectionData cData = new connectionData();
+                        //connectionData cData = new connectionData();
 
 
 
@@ -191,7 +202,7 @@ namespace Assets.Scripts.Spawn.Structures.Setup
 
        
        
-        internal void RemoveDuplicates(List<GameObject> goList) // mayb e not needed
+        private void RemoveDuplicates(List<GameObject> goList) // mayb e not needed
         {
             for (int x=0; x<goList.Count; x++)
             {
@@ -202,7 +213,7 @@ namespace Assets.Scripts.Spawn.Structures.Setup
             }
         }
 
-        internal void SearchWide(List<GameObject> inList, GameObject go) // simple search wide for structure connection endpoints
+        private void SearchWide(List<GameObject> inList, GameObject go) // simple search wide for structure connection endpoints
         {
 
             foreach (root r in structure.ToList())

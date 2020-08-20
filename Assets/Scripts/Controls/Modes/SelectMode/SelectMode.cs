@@ -8,7 +8,6 @@ namespace Assets.Scripts.Controls.Modes.SelectMode
     class SelectMode
     {
         private O_Mause o_mouse;
-        private SpawnerManager spawner;
 
         private SelectManager selectManager;
 
@@ -17,8 +16,6 @@ namespace Assets.Scripts.Controls.Modes.SelectMode
         public SelectMode(O_Mause o_mouse, SpawnerManager spawner)
         {
             this.o_mouse = o_mouse;
-           // this.spawner = spawner;
-
             selectManager = new SelectManager(spawner);
         }
 
@@ -41,10 +38,6 @@ namespace Assets.Scripts.Controls.Modes.SelectMode
 
         public void AddToGroup(string groupName, GameObject go)
         {
-            //if ((o_mouse.a_que & (ActionsQue.ListAdd | ActionsQue.ListRemove)) != (ActionsQue.ListAdd | ActionsQue.ListRemove)) return;
-
-            //IGroup group = selectManager.GetGroup(groupName);
-            //if (group == null) return;
 
             if ((o_mouse.a_que & ActionsQue.GroupAdd) == ActionsQue.GroupAdd)
             {

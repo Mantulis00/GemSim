@@ -137,7 +137,7 @@ public class SpawnerManager : MonoBehaviour
 
 
 
-    internal void DeleteGo(GameObject go)
+    internal void DeleteGo(GameObject go) // TBA?
     {
         //linesManager.DeleteGo(go);
     }
@@ -220,12 +220,12 @@ public class SpawnerManager : MonoBehaviour
                 MoveConnection(c.connector, r.point.transform.position, c.endPoint.transform.position); // ?TBC add check if can strech functionality 
 
                 /// gtfo this somewhere else
-
+                // magnitude not rly that accurate lol
                 c.dataConnection.realLenght = (double)Math.Round((c.endPoint.transform.position - r.point.transform.position).magnitude, 4);//Linear.Pythagoras3(c.endPoint.transform.position - r.point.transform.position); // refreash real lenght
 
                 if (c.dataConnection.realLenght > c.dataConnection.originalLenght) c.connector.GetComponent<Renderer>().material.color = Color.yellow;
                 else if (c.dataConnection.realLenght < c.dataConnection.originalLenght) c.connector.GetComponent<Renderer>().material.color = Color.cyan;
-               // else c.connector.GetComponent<Renderer>().material.color = Color.white;
+                else c.connector.GetComponent<Renderer>().material.color = Color.white;
 
                 ///
 
@@ -234,9 +234,32 @@ public class SpawnerManager : MonoBehaviour
 
     }
 
-   
+    public static void MoveConnectors( Structure structure)
+    {
+        foreach (Structure.root r in structure.structure.ToList())
+        {
+            foreach (Structure.connection c in r.connections.ToList())
+            {
+                MoveConnection(c.connector, r.point.transform.position, c.endPoint.transform.position); // ?TBC add check if can strech functionality 
 
- 
+                /// gtfo this somewhere else
+                // magnitude not rly that accurate lol
+                c.dataConnection.realLenght = (double)Math.Round((c.endPoint.transform.position - r.point.transform.position).magnitude, 4);//Linear.Pythagoras3(c.endPoint.transform.position - r.point.transform.position); // refreash real lenght
+
+                if (c.dataConnection.realLenght > c.dataConnection.originalLenght) c.connector.GetComponent<Renderer>().material.color = Color.yellow;
+                else if (c.dataConnection.realLenght < c.dataConnection.originalLenght) c.connector.GetComponent<Renderer>().material.color = Color.cyan;
+                else c.connector.GetComponent<Renderer>().material.color = Color.white;
+
+                ///
+
+            }
+        }
+
+    }
+
+
+
+
 
 
 }
