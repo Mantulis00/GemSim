@@ -7,11 +7,15 @@ namespace Assets.Scripts.Physix
 {
    public static class PhysixDebug
     {
-        public static double CalculateEnergy(PhysixData data, Structure.connection connection)
+        public static double CalculateEnergy(Structure.root root)
         {
             double energy = 0;
-            energy += GetKineticEnergy(data);
-            energy += GetTensionPotentialEnergy(connection);
+            energy += GetKineticEnergy(root.physixData);
+            foreach(Structure.connection c in root.connections)
+            {
+                energy += GetTensionPotentialEnergy(c);
+            }
+            
 
 
             return energy;

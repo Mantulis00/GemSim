@@ -70,9 +70,7 @@ namespace Assets.Scripts.Physix
             if (structure != null)
             {
                 test.Test(structure);
-                tensionForces.Update(structure);
-                 speedManager.Update(structure);
-                positionManager.Update(structure);
+                UpdatePhysix(structure);
             }
           //  UpdatePhysix( structure);
            
