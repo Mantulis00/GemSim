@@ -13,7 +13,7 @@ namespace Assets.Scripts.Physix.Models
         {
             speed = new Vector3();
             force = new Force();
-            mass = 1f; // temp
+            mass = 1000f; // temp
         }
 
 

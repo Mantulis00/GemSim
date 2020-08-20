@@ -42,7 +42,7 @@ namespace Assets.Scripts.Controls.Modes.SelectMode
             {
                 foreach(Structure.connection c in r.connections)
                 {
-                    c.dataConnection.tensionCoefficient = 50f;
+                    c.dataConnection.tensionCoefficient = 500f;
                 }
             }
 
@@ -62,7 +62,7 @@ namespace Assets.Scripts.Controls.Modes.SelectMode
             {
                 foreach (Structure.connection c in r.connections)
                 {
-                    c.dataConnection.tensionCoefficient = 1f;
+                    c.dataConnection.tensionCoefficient = 100f;
                 }
             }
 
