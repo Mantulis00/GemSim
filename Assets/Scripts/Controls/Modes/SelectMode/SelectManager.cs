@@ -62,7 +62,7 @@ namespace Assets.Scripts.Controls.Modes.SelectMode
             {
                 foreach (Structure.connection c in r.connections)
                 {
-                    c.dataConnection.tensionCoefficient = 100f;
+                    c.dataConnection.tensionCoefficient = 1f;
                 }
             }
 
