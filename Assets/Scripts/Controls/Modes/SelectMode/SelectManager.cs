@@ -3,6 +3,7 @@
 using Assets.Scripts.Controls.Modes.Groups;
 using Assets.Scripts.Spawn.Structures.Setup;
 using System.Collections.Generic;
+using UnityEditor.MemoryProfiler;
 using UnityEngine;
 
 namespace Assets.Scripts.Controls.Modes.SelectMode
@@ -37,6 +38,15 @@ namespace Assets.Scripts.Controls.Modes.SelectMode
             CheckGroup(group);
             if (!CheckStructure(groupsDictionary[groupName], go)) return;
             
+            foreach(Structure.root r in spawner.GetStructure(go).structure) // temp
+            {
+                foreach(Structure.connection c in r.connections)
+                {
+                    c.dataConnection.tensionCoefficient = 50f;
+                }
+            }
+
+
             group.Add(go, spawner.GetStructure(go));
         }
 
@@ -46,6 +56,17 @@ namespace Assets.Scripts.Controls.Modes.SelectMode
 
             CheckGroup(group);
             if (!CheckStructure(groupsDictionary[groupName], go)) return;
+
+
+            foreach (Structure.root r in spawner.GetStructure(go).structure) //temp
+            {
+                foreach (Structure.connection c in r.connections)
+                {
+                    c.dataConnection.tensionCoefficient = 1f;
+                }
+            }
+
+
 
             group.Remove(go, spawner.GetStructure(go));
         }

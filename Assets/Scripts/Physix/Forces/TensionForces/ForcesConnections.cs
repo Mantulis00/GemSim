@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.Physix.Data;
 using Assets.Scripts.Spawn.Structures.Setup;
 using JetBrains.Annotations;
+using System;
 using System.ComponentModel.Design.Serialization;
 using System.Linq;
 using Unity;
@@ -24,12 +25,14 @@ namespace Assets.Scripts.Physix.TensionForces
 
             foreach(Structure.root r in structure.structure.ToArray())
             {
+                r.physixData.force.direction = Vector3.zero;
+                r.physixData.force.size = 0;
+
                 foreach (Structure.connection c in r.connections.ToArray())
                 {
                     if (c.dataConnection.realLenght != c.dataConnection.originalLenght)
                     {
                         RegisterForce(r, c, structure);
-                        Debug.Log(r.point.name + " " + r.physixData.force.size);
                     }
                 }
             }
@@ -39,15 +42,31 @@ namespace Assets.Scripts.Physix.TensionForces
         {
             Force force = new Force();// connection.physixData.force;
             force.direction = (rootPoint.point.transform.position - connection.endPoint.transform.position) / (rootPoint.point.transform.position - connection.endPoint.transform.position).magnitude;// direction part * connection.dataConnection.stretchCoefficient;
-            force.size = (float)( connection.dataConnection.originalLenght - connection.dataConnection.realLenght) * connection.dataConnection.tensionCoefficient;
+            force.size = (float)(connection.dataConnection.originalLenght - connection.dataConnection.realLenght) * connection.dataConnection.tensionCoefficient;
 
-            rootPoint.physixData.force = force;
+            Vector3 newForce = force.direction * force.size;
 
-          //  force = new Force();
-           // force.direction = -(rootPoint.point.transform.position - connection.endPoint.transform.position) / (rootPoint.point.transform.position - connection.endPoint.transform.position).magnitude;// direction part * connection.dataConnection.stretchCoefficient;
-           // force.size = (float)(connection.dataConnection.originalLenght - connection.dataConnection.realLenght) * connection.dataConnection.tensionCoefficient;
+            
 
-          //  structure.GetRootsFromPoints(connection.endPoint).physixData.force = force;
+            if (Math.Abs(connection.dataConnection.originalLenght - connection.dataConnection.realLenght) > 1f) // CLH
+            {
+                rootPoint.physixData.force.size = ((rootPoint.physixData.force.direction * rootPoint.physixData.force.size) + newForce).magnitude;
+
+                rootPoint.physixData.force.direction = ((rootPoint.physixData.force.direction * rootPoint.physixData.force.size) + newForce) /
+                    ((rootPoint.physixData.force.direction * rootPoint.physixData.force.size) + newForce).magnitude;
+
+
+            }
+               
+
+
+            //rootPoint.physixData.force = force;
+
+            //  force = new Force();
+            // force.direction = -(rootPoint.point.transform.position - connection.endPoint.transform.position) / (rootPoint.point.transform.position - connection.endPoint.transform.position).magnitude;// direction part * connection.dataConnection.stretchCoefficient;
+            // force.size = (float)(connection.dataConnection.originalLenght - connection.dataConnection.realLenght) * connection.dataConnection.tensionCoefficient;
+
+            //  structure.GetRootsFromPoints(connection.endPoint).physixData.force = force;
         }
 
 
