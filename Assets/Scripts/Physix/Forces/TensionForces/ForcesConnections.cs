@@ -50,11 +50,8 @@ namespace Assets.Scripts.Physix.TensionForces
 
             if (Math.Abs(connection.dataConnection.originalLenght - connection.dataConnection.realLenght) > 0.01f) // CLH
             {
-                /*rootPoint.physixData.force.size = (float)Math.Sqrt(Math.Pow( rootPoint.physixData.force.size, 2) +
-                    Math.Pow(newForce.magnitude, 2));*/
 
-                rootPoint.physixData.force.direction = newForce;//((rootPoint.physixData.force.direction * rootPoint.physixData.force.size) + newForce); ///
-                   // rootPoint.physixData.force.size;
+                rootPoint.physixData.force.direction = ((rootPoint.physixData.force.direction * rootPoint.physixData.force.size) + newForce); ///
                    rootPoint.physixData.force.size = rootPoint.physixData.force.direction.magnitude;
                 rootPoint.physixData.force.direction /= rootPoint.physixData.force.size;
 
