@@ -53,7 +53,7 @@ namespace Assets.Scripts.Physix.TensionForces
                 /*rootPoint.physixData.force.size = (float)Math.Sqrt(Math.Pow( rootPoint.physixData.force.size, 2) +
                     Math.Pow(newForce.magnitude, 2));*/
 
-                rootPoint.physixData.force.direction = ((rootPoint.physixData.force.direction * rootPoint.physixData.force.size) + newForce); ///
+                rootPoint.physixData.force.direction = newForce;//((rootPoint.physixData.force.direction * rootPoint.physixData.force.size) + newForce); ///
                    // rootPoint.physixData.force.size;
                    rootPoint.physixData.force.size = rootPoint.physixData.force.direction.magnitude;
                 rootPoint.physixData.force.direction /= rootPoint.physixData.force.size;
@@ -64,7 +64,7 @@ namespace Assets.Scripts.Physix.TensionForces
             if (rootPoint.physixData.force.size < 0) rootPoint.physixData.force.size = 0;
 
             // if (rootPoint.physixData.force.size != 0) Debug.Log(rootPoint.physixData.force.size);
-            if (rootPoint.physixData.speed.magnitude > 0.01f) Debug.Log(PhysixDebug.CalculateEnergy(rootPoint));
+            if (rootPoint.physixData.speed.magnitude > 0.01f) PhysixDebug.CalculateEnergy(rootPoint);
             //rootPoint.physixData.force = force;
 
             //  force = new Force();

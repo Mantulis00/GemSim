@@ -26,7 +26,7 @@ namespace Assets.Scripts.Physix.Movement
                     if (Math.Abs(r.physixData.force.size) > 0.01f) // Constants here 
                     {
 
-                        r.physixData.speed += ((r.physixData.force.direction * r.physixData.force.size) / r.physixData.mass) * Time.deltaTime;
+                        r.physixData.speed += r.physixData.force.direction * (( r.physixData.force.size) / r.physixData.mass) * Time.deltaTime;
                       
                     }
                 }

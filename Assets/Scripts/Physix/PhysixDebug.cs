@@ -2,6 +2,7 @@
 
 using Assets.Scripts.Physix.Models;
 using Assets.Scripts.Spawn.Structures.Setup;
+using UnityEngine;
 
 namespace Assets.Scripts.Physix
 {
@@ -13,9 +14,9 @@ namespace Assets.Scripts.Physix
             energy += GetKineticEnergy(root.physixData);
             foreach(Structure.connection c in root.connections)
             {
-                energy += GetTensionPotentialEnergy(c);
+                energy = GetTensionPotentialEnergy(c);//+= GetTensionPotentialEnergy(c);
             }
-            
+            Debug.Log("Energy " + energy);
 
 
             return energy;
@@ -23,6 +24,7 @@ namespace Assets.Scripts.Physix
 
         private static double GetKineticEnergy(PhysixData data)
         {
+            Debug.Log("Speed " + data.speed.magnitude * data.speed.magnitude * data.mass / 2);
             return (data.speed.magnitude * data.speed.magnitude * data.mass / 2);
         }
 
@@ -30,6 +32,7 @@ namespace Assets.Scripts.Physix
         {
             double x = connection.dataConnection.originalLenght - connection.dataConnection.realLenght;
 
+            
             return connection.dataConnection.tensionCoefficient * x * x / 2;
         }
 
