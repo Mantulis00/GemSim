@@ -221,7 +221,7 @@ public class SpawnerManager : MonoBehaviour
 
                 /// gtfo this somewhere else
                 // magnitude not rly that accurate lol
-                c.dataConnection.realLenght = (double)Math.Round((c.endPoint.transform.position - r.point.transform.position).magnitude, 4);//Linear.Pythagoras3(c.endPoint.transform.position - r.point.transform.position); // refreash real lenght
+                c.dataConnection.realLenght = (c.endPoint.transform.position - r.point.transform.position).magnitude; //c.dataConnection.realLenght = (double)Math.Round((c.endPoint.transform.position - r.point.transform.position).magnitude, 4);//Linear.Pythagoras3(c.endPoint.transform.position - r.point.transform.position); // refreash real lenght
 
                 if (c.dataConnection.realLenght > c.dataConnection.originalLenght) c.connector.GetComponent<Renderer>().material.color = Color.yellow;
                 else if (c.dataConnection.realLenght < c.dataConnection.originalLenght) c.connector.GetComponent<Renderer>().material.color = Color.cyan;
@@ -244,7 +244,7 @@ public class SpawnerManager : MonoBehaviour
 
                 /// gtfo this somewhere else
                 // magnitude not rly that accurate lol
-                c.dataConnection.realLenght = (double)Math.Round((c.endPoint.transform.position - r.point.transform.position).magnitude, 4);//Linear.Pythagoras3(c.endPoint.transform.position - r.point.transform.position); // refreash real lenght
+                c.dataConnection.realLenght = (c.endPoint.transform.position - r.point.transform.position).magnitude; //(double)Math.Round((c.endPoint.transform.position - r.point.transform.position).magnitude, 4);//Linear.Pythagoras3(c.endPoint.transform.position - r.point.transform.position); // refreash real lenght
 
                 if (c.dataConnection.realLenght > c.dataConnection.originalLenght) c.connector.GetComponent<Renderer>().material.color = Color.yellow;
                 else if (c.dataConnection.realLenght < c.dataConnection.originalLenght) c.connector.GetComponent<Renderer>().material.color = Color.cyan;

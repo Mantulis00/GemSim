@@ -1,6 +1,8 @@
 ﻿using Assets.Scripts.Physix.Movement;
 using Assets.Scripts.Physix.TensionForces;
 using Assets.Scripts.Spawn.Structures.Setup;
+using Assets.Test;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,7 +13,8 @@ namespace Assets.Scripts.Physix
         public delegate void DelegateUpdatePhysix(Structure structure); // mostly for later updates TBA
         public event DelegateUpdatePhysix UpdatePhysix;
 
-
+        // tests
+        public CenterOfMassTest test;
 
         List<Structure> structures; // could rly evolve into go list
        public Structure structure;
@@ -59,15 +62,15 @@ namespace Assets.Scripts.Physix
 
         private  void Update()
         {
+
             /*foreach(Structure s in structures)
             {
                 UpdatePhysix(frameTime, s);
             }*/
             if (structure != null)
             {
-                 tensionForces.Update(structure);
-                 speedManager.Update(structure);
-                positionManager.Update(structure);
+                test.Test(structure);
+                UpdatePhysix(structure);
             }
           //  UpdatePhysix( structure);
            

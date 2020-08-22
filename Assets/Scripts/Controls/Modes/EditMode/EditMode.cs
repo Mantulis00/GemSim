@@ -79,7 +79,7 @@ namespace Assets.Scripts.Controls
             {
 
                 /// gtfo this somewhere else
-                double lenght = Math.Round((c.endPoint.transform.position - o_mouse.selectedObject.transform.position).magnitude, 4);
+                double lenght = (c.endPoint.transform.position - o_mouse.selectedObject.transform.position).magnitude;// Math.Round((c.endPoint.transform.position - o_mouse.selectedObject.transform.position).magnitude, 4);
                 Spawn.Structures.Setup.Structure.connection ce = spawner.GetStructure(c.endPoint).FindOtherSideOfConnection(o_mouse.selectedObject, c.endPoint);
 
                 ce.dataConnection.originalLenght = lenght; // does nothing

@@ -48,18 +48,20 @@ namespace Assets.Scripts.Physix.TensionForces
 
             
 
-            if (Math.Abs(connection.dataConnection.originalLenght - connection.dataConnection.realLenght) > 1f) // CLH
+            if (Math.Abs(connection.dataConnection.originalLenght - connection.dataConnection.realLenght) > 0.01f) // CLH
             {
-                rootPoint.physixData.force.size = ((rootPoint.physixData.force.direction * rootPoint.physixData.force.size) + newForce).magnitude;
 
-                rootPoint.physixData.force.direction = ((rootPoint.physixData.force.direction * rootPoint.physixData.force.size) + newForce) /
-                    ((rootPoint.physixData.force.direction * rootPoint.physixData.force.size) + newForce).magnitude;
-
+                rootPoint.physixData.force.direction = ((rootPoint.physixData.force.direction * rootPoint.physixData.force.size) + newForce); ///
+                   rootPoint.physixData.force.size = rootPoint.physixData.force.direction.magnitude;
+                rootPoint.physixData.force.direction /= rootPoint.physixData.force.size;
 
             }
-               
 
+            ///rootPoint.physixData.force.size -= rootPoint.physixData.speed.magnitude * 200f * Time.deltaTime;//(float)Math.Pow(0.001, Time.deltaTime);
+            if (rootPoint.physixData.force.size < 0) rootPoint.physixData.force.size = 0;
 
+            // if (rootPoint.physixData.force.size != 0) Debug.Log(rootPoint.physixData.force.size);
+            if (rootPoint.physixData.speed.magnitude > 0.01f) PhysixDebug.CalculateEnergy(rootPoint);
             //rootPoint.physixData.force = force;
 
             //  force = new Force();

@@ -66,7 +66,7 @@ namespace Assets.Scripts.Controls.Modes
         {
             foreach(Structure.root r in structure.structure)
             {
-                r.physixData.speed = new Vector3();
+                r.physixData = new Physix.Models.PhysixData();
             }
         }
 
