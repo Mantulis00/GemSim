@@ -43,9 +43,11 @@ namespace Assets.Scripts.Physix
             SetupTensionForces();
             SetupModels();
             //temp
-            UpdatePhysix += tensionForces.Update;
-            UpdatePhysix += speedManager.Update;
             UpdatePhysix += positionManager.Update;
+            UpdatePhysix += speedManager.Update;
+            UpdatePhysix += tensionForces.Update;
+            
+           
         }
 
         private void SetupTensionForces() // TBA

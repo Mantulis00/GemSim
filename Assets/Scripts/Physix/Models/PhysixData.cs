@@ -9,11 +9,13 @@ namespace Assets.Scripts.Physix.Models
         public Force force;
         public Vector3 speed;
         public float mass;
+        public float maxForce;
         public PhysixData()
         {
             speed = new Vector3();
             force = new Force();
-            mass = 0.01f; // temp
+            mass = 1f; // temp
+            maxForce = 0;
         }
 
 
