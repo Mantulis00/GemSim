@@ -12,11 +12,12 @@ namespace Assets.Scripts.Physix
         {
             double energy = 0;
             energy += GetKineticEnergy(root.physixData);
+            double tensionEnergy = 0;
             foreach(Structure.connection c in root.connections)
             {
-                energy = GetTensionPotentialEnergy(c);//+= GetTensionPotentialEnergy(c);
+                tensionEnergy = GetTensionPotentialEnergy(c);//+= GetTensionPotentialEnergy(c);
             }
-            Debug.Log("Energy " + energy);
+            Debug.Log("Speed " + energy + "  Tension: " + tensionEnergy + " Energy: " + (energy + tensionEnergy));
 
 
             return energy;
@@ -24,15 +25,16 @@ namespace Assets.Scripts.Physix
 
         private static double GetKineticEnergy(PhysixData data)
         {
-            Debug.Log("Speed " + data.speed.magnitude * data.speed.magnitude * data.mass / 2);
+             
+          //  Debug.Log(data.speed.magnitude);
             return (data.speed.magnitude * data.speed.magnitude * data.mass / 2);
         }
 
         private static double GetTensionPotentialEnergy(Structure.connection connection)
         {
             double x = connection.dataConnection.originalLenght - connection.dataConnection.realLenght;
+           // Debug.Log("Tension " + connection.dataConnection.tensionCoefficient * x * x / 2);
 
-            
             return connection.dataConnection.tensionCoefficient * x * x / 2;
         }
 

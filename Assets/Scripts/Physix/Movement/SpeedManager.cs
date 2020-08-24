@@ -26,8 +26,9 @@ namespace Assets.Scripts.Physix.Movement
                     if (Math.Abs(r.physixData.force.size) > 0.01f) // Constants here 
                     {
 
-                        r.physixData.speed += r.physixData.force.direction * (( r.physixData.force.size) / r.physixData.mass) * Time.deltaTime;
-                      
+                        r.physixData.speed += r.physixData.force.direction * (( r.physixData.force.size) / r.physixData.mass) * (Time.deltaTime)/2;
+                        r.physixData.speed *= (float)Math.Pow(0.99, Time.deltaTime); // temp energy coneservation error fix
+
                     }
                 }
                 else if (r.dataPoint.type == StructurePointType.Fixed)

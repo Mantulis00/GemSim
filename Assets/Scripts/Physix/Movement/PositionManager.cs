@@ -17,8 +17,8 @@ namespace Assets.Scripts.Physix.Movement
         {
             foreach ( Structure.root r in structure.structure.ToArray())
             {
-                r.point.transform.position = r.point.transform.position + r.physixData.speed * Time.deltaTime;
-                r.physixData.speed *= (float)Math.Pow(0.05 , Time.deltaTime);
+                r.point.transform.position = r.point.transform.position + r.physixData.speed * (Time.deltaTime)/2;
+              //  r.physixData.speed *= (float)Math.Pow(0.05 , Time.deltaTime);
             }
         }
 

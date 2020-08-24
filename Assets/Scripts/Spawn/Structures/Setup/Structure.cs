@@ -39,10 +39,12 @@ namespace Assets.Scripts.Spawn.Structures.Setup
             public double originalLenght;
             public double realLenght;
             public float tensionCoefficient;
+            public bool compressed;
 
             public connectionData()
             {
                 tensionCoefficient = 1f; // !CALH 
+                compressed = false;
             }
         }
 
