@@ -35,8 +35,6 @@ namespace Assets.Scripts.Physix.TensionForces
                         RegisterForce(r, c, structure);
                     }
                 }
-               // if (r.physixData.force.size > r.physixData.maxForce) r.physixData.maxForce = r.physixData.force.size;
-               // Debug.Log(r.physixData.maxForce);
             }
         }
 
@@ -50,7 +48,6 @@ namespace Assets.Scripts.Physix.TensionForces
         {
             Force force = new Force();// connection.physixData.force;
             force.size = (float)(connection.dataConnection.originalLenght - connection.dataConnection.realLenght) * connection.dataConnection.tensionCoefficient;
-            // force.size = (float)(connection.dataConnection.originalLenght - connection.dataConnection.realLenght ) * connection.dataConnection.tensionCoefficient;
             force.direction = (rootPoint.point.transform.position - connection.endPoint.transform.position) / 
                 (rootPoint.point.transform.position - connection.endPoint.transform.position).magnitude;// direction part * connection.dataConnection.stretchCoefficient;
             
@@ -60,7 +57,7 @@ namespace Assets.Scripts.Physix.TensionForces
             
 
           //  if (Math.Abs(connection.dataConnection.originalLenght - connection.dataConnection.realLenght) > 0.01f) // CLH
-          //  {
+            {
 
                 rootPoint.physixData.force.direction = ((rootPoint.physixData.force.direction * rootPoint.physixData.force.size) + newForce); ///
                    rootPoint.physixData.force.size = rootPoint.physixData.force.direction.magnitude;
@@ -70,20 +67,14 @@ namespace Assets.Scripts.Physix.TensionForces
 
 
 
-          //  }
+            }
 
-            ///rootPoint.physixData.force.size -= rootPoint.physixData.speed.magnitude * 200f * Time.deltaTime;//(float)Math.Pow(0.001, Time.deltaTime);
+
             if (rootPoint.physixData.force.size < 0) rootPoint.physixData.force.size = 0;
 
-            // if (rootPoint.physixData.force.size != 0) Debug.Log(rootPoint.physixData.force.size);
+
             if (rootPoint.physixData.speed.magnitude > 0.01f) PhysixDebug.CalculateEnergy(rootPoint);
-            //rootPoint.physixData.force = force;
 
-            //  force = new Force();
-            // force.direction = -(rootPoint.point.transform.position - connection.endPoint.transform.position) / (rootPoint.point.transform.position - connection.endPoint.transform.position).magnitude;// direction part * connection.dataConnection.stretchCoefficient;
-            // force.size = (float)(connection.dataConnection.originalLenght - connection.dataConnection.realLenght) * connection.dataConnection.tensionCoefficient;
-
-            //  structure.GetRootsFromPoints(connection.endPoint).physixData.force = force;
 
             
 

@@ -26,14 +26,13 @@ namespace Assets.Scripts.Physix
         private static double GetKineticEnergy(PhysixData data)
         {
              
-          //  Debug.Log(data.speed.magnitude);
             return (data.speed.magnitude * data.speed.magnitude * data.mass / 2);
         }
 
         private static double GetTensionPotentialEnergy(Structure.connection connection)
         {
             double x = connection.dataConnection.originalLenght - connection.dataConnection.realLenght;
-           // Debug.Log("Tension " + connection.dataConnection.tensionCoefficient * x * x / 2);
+
 
             return connection.dataConnection.tensionCoefficient * x * x / 2;
         }
